@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051899FF2A3761C500430226 /* TimelineSummaryView.swift */; };
 		05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */; };
 		05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0D2A34115D00B231CB /* ContentView.swift */; };
 		05A76A102A34115E00B231CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05A76A0F2A34115E00B231CB /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		051899FF2A3761C500430226 /* TimelineSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView.swift; sourceTree = "<group>"; };
 		05A76A082A34115D00B231CB /* MoneyBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookApp.swift; sourceTree = "<group>"; };
 		05A76A0D2A34115D00B231CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				05A76A3F2A355DE100B231CB /* TimelineItemView.swift */,
+				051899FF2A3761C500430226 /* TimelineSummaryView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 			files = (
 				05A76A152A34115E00B231CB /* Persistence.swift in Sources */,
 				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
+				05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */,
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
 				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
 				05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */,

@@ -37,7 +37,7 @@ struct TimelineItemView: View {
     }
 }
 
-private let amountFormatter: NumberFormatter = {
+public let amountFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.positivePrefix = "+"

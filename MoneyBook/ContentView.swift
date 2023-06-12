@@ -15,7 +15,19 @@ struct ContentView: View {
                 .tabItem {
                     Label("Timeline", systemImage: "calendar.day.timeline.leading")
                 }
+                .toolbarBackground(.visible, for: .tabBar)
+            
+            Color.orange
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
+            
+            Color.indigo
+                .tabItem {
+                    Label("Chart", systemImage: "chart.pie")
+                }
         }
+        .tint(.primary)
     }
 }
 

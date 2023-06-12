@@ -39,34 +39,39 @@ struct TimelineView: View {
     
     
     var body: some View {
-        List {
-            ForEach(mockItems, id: \.id) { item in
-                if item.amount > 0 {
-                    HStack {
-                        TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                        Spacer(minLength: 80)
+        ZStack(alignment: .bottom) {
+            List {
+                ForEach(mockItems, id: \.id) { item in
+                    if item.amount > 0 {
+                        HStack {
+                            TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                            Spacer(minLength: 80)
+                        }
+                        .listRowSeparator(.hidden)
+                    } else {
+                        HStack {
+                            Spacer(minLength: 80)
+                            TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                        }
+                        .listRowSeparator(.hidden)
                     }
-                    .listRowSeparator(.hidden)
-                } else {
-                    HStack {
-                        Spacer(minLength: 80)
-                        TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                }
+                .onDelete(perform: deleteItems)
+            }
+            .listStyle(.plain)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+                ToolbarItem {
+                    Button(action: addItem) {
+                        Label("Add Item", systemImage: "plus")
                     }
-                    .listRowSeparator(.hidden)
                 }
             }
-            .onDelete(perform: deleteItems)
-        }
-        .listStyle(.plain)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                EditButton()
-            }
-            ToolbarItem {
-                Button(action: addItem) {
-                    Label("Add Item", systemImage: "plus")
-                }
-            }
+            
+            TimelineSummaryView(paid: -770000, earning: 800000)
+                .frame(height: 69)
         }
     }
     
