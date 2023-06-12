@@ -16,6 +16,8 @@
 		05A76A222A34115E00B231CB /* MoneyBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A212A34115E00B231CB /* MoneyBookTests.swift */; };
 		05A76A2C2A34115E00B231CB /* MoneyBookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A2B2A34115E00B231CB /* MoneyBookUITests.swift */; };
 		05A76A2E2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */; };
+		05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3C2A355D4B00B231CB /* TimelineView.swift */; };
+		05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3F2A355DE100B231CB /* TimelineItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		05A76A272A34115E00B231CB /* MoneyBookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoneyBookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A76A2B2A34115E00B231CB /* MoneyBookUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookUITests.swift; sourceTree = "<group>"; };
 		05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		05A76A3C2A355D4B00B231CB /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		05A76A3F2A355DE100B231CB /* TimelineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,7 @@
 		05A76A0A2A34115D00B231CB /* MoneyBook */ = {
 			isa = PBXGroup;
 			children = (
+				05A76A3A2A355D2E00B231CB /* Timeline */,
 				05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */,
 				05A76A0D2A34115D00B231CB /* ContentView.swift */,
 				05A76A0F2A34115E00B231CB /* Assets.xcassets */,
@@ -131,6 +136,23 @@
 				05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */,
 			);
 			path = MoneyBookUITests;
+			sourceTree = "<group>";
+		};
+		05A76A3A2A355D2E00B231CB /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				05A76A3B2A355D3800B231CB /* SubViews */,
+				05A76A3C2A355D4B00B231CB /* TimelineView.swift */,
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
+		05A76A3B2A355D3800B231CB /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				05A76A3F2A355DE100B231CB /* TimelineItemView.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,6 +286,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				05A76A152A34115E00B231CB /* Persistence.swift in Sources */,
+				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
+				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
 				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
 				05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
