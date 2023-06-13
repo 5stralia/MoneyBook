@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051899FF2A3761C500430226 /* TimelineSummaryView.swift */; };
+		05189A0E2A38969500430226 /* ItemEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05189A0A2A38969500430226 /* ItemEntity+CoreDataClass.swift */; };
+		05189A0F2A38969500430226 /* ItemEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05189A0B2A38969500430226 /* ItemEntity+CoreDataProperties.swift */; };
+		05189A102A38969500430226 /* GroupEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05189A0C2A38969500430226 /* GroupEntity+CoreDataClass.swift */; };
+		05189A112A38969500430226 /* GroupEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05189A0D2A38969500430226 /* GroupEntity+CoreDataProperties.swift */; };
 		05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */; };
 		05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0D2A34115D00B231CB /* ContentView.swift */; };
 		05A76A102A34115E00B231CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05A76A0F2A34115E00B231CB /* Assets.xcassets */; };
@@ -40,6 +44,10 @@
 
 /* Begin PBXFileReference section */
 		051899FF2A3761C500430226 /* TimelineSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView.swift; sourceTree = "<group>"; };
+		05189A0A2A38969500430226 /* ItemEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		05189A0B2A38969500430226 /* ItemEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		05189A0C2A38969500430226 /* GroupEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		05189A0D2A38969500430226 /* GroupEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		05A76A082A34115D00B231CB /* MoneyBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookApp.swift; sourceTree = "<group>"; };
 		05A76A0D2A34115D00B231CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,6 +89,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05189A092A38966100430226 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				05189A0A2A38969500430226 /* ItemEntity+CoreDataClass.swift */,
+				05189A0B2A38969500430226 /* ItemEntity+CoreDataProperties.swift */,
+				05189A0C2A38969500430226 /* GroupEntity+CoreDataClass.swift */,
+				05189A0D2A38969500430226 /* GroupEntity+CoreDataProperties.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		05A769FF2A34115D00B231CB = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +123,7 @@
 		05A76A0A2A34115D00B231CB /* MoneyBook */ = {
 			isa = PBXGroup;
 			children = (
+				05189A092A38966100430226 /* Model */,
 				05A76A3A2A355D2E00B231CB /* Timeline */,
 				05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */,
 				05A76A0D2A34115D00B231CB /* ContentView.swift */,
@@ -288,11 +308,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05189A112A38969500430226 /* GroupEntity+CoreDataProperties.swift in Sources */,
+				05189A102A38969500430226 /* GroupEntity+CoreDataClass.swift in Sources */,
 				05A76A152A34115E00B231CB /* Persistence.swift in Sources */,
+				05189A0E2A38969500430226 /* ItemEntity+CoreDataClass.swift in Sources */,
 				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
 				05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */,
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
 				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
+				05189A0F2A38969500430226 /* ItemEntity+CoreDataProperties.swift in Sources */,
 				05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
 			);

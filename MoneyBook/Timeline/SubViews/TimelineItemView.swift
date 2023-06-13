@@ -11,7 +11,7 @@ struct TimelineItemView: View {
     let title: String
     let imageName: String
     let categoryName: String
-    let amount: Int
+    let amount: Double
     
     var body: some View {
         HStack {

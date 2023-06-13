@@ -5,43 +5,21 @@
 //  Created by Hoju Choi on 2023/06/11.
 //
 
+import CoreData
 import SwiftUI
-
-struct Model {
-    let id = UUID()
-    
-    let title: String
-    let category: String
-    let amount: Int
-}
-let mockItems: [Model] = [
-    Model(title: "Title 1", category: "Category 1", amount: 10000),
-    Model(title: "Title 2", category: "CCtegory 1", amount: -10000),
-    Model(title: "Title 3", category: "CCtegory 1", amount: 10000),
-    Model(title: "Title 4", category: "CCtegory 1", amount: 10000),
-    Model(title: "Title 5", category: "CCtegory 1", amount: 10000),
-    Model(title: "Title 6", category: "CCtegory 1", amount: -50000),
-    Model(title: "Title 7", category: "CCtegory 1", amount: 10000),
-    Model(title: "Title 8", category: "CCtegory 1", amount: -10000),
-    Model(title: "Title 9", category: "CCtegory 1", amount: 10000),
-    Model(title: "Title 10", category: "CCtegory 1", amount: 15000),
-    Model(title: "Title 11", category: "CCtegory 1", amount: 10000),
-]
-
 
 struct TimelineView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \ItemEntity.timestamp, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<Item>
-    
+    private var items: FetchedResults<ItemEntity>
     
     var body: some View {
         ZStack(alignment: .bottom) {
             List {
-                ForEach(mockItems, id: \.id) { item in
+                ForEach(items, id: \.id) { item in
                     if item.amount > 0 {
                         HStack {
                             TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
@@ -77,7 +55,7 @@ struct TimelineView: View {
     
     private func addItem() {
         withAnimation {
-            let newItem = Item(context: viewContext)
+            let newItem = ItemEntity(context: viewContext)
             newItem.timestamp = Date()
 
             do {
@@ -117,5 +95,6 @@ private let itemFormatter: DateFormatter = {
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
         TimelineView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
