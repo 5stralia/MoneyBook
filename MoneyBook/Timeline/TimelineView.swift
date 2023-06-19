@@ -38,57 +38,94 @@ struct TimelineView: View {
         
         return result
     }
+    private var earning: Double {
+        self.items.filter { $0.amount > 0 }.map { $0.amount }.reduce(0, +)
+    }
+    private var paid: Double {
+        self.items.filter { $0.amount < 0 }.map { $0.amount }.reduce(0, +)
+    }
+    
+    @State var selectedDate: Date = Date()
     
     var body: some View {
-        VStack(spacing: 0) {
-            ZStack(alignment: .bottom) {
-                List {
-                    ForEach(groupedItems, id: \.date) { group in
-                        HStack {
-                            Spacer()
-                            TimelineDateView(date: group.date)
-                            Spacer()
-                        }
-                        ForEach(group.items, id: \.id) { item in
-                            if item.amount > 0 {
-                                HStack {
-                                    TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                                    Spacer(minLength: 80)
-                                }
-                                .listRowSeparator(.hidden)
-                            } else {
-                                HStack {
-                                    Spacer(minLength: 80)
-                                    TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                                }
-                                .listRowSeparator(.hidden)
+        NavigationView {
+            VStack(spacing: 0) {
+                ZStack(alignment: .bottom) {
+                    List {
+                        ForEach(groupedItems, id: \.date) { group in
+                            HStack {
+                                Spacer()
+                                TimelineDateView(date: group.date)
+                                Spacer()
                             }
+                            .listRowSeparator(.hidden)
+                            ForEach(group.items, id: \.id) { item in
+                                if item.amount > 0 {
+                                    HStack {
+                                        TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                        Spacer(minLength: 80)
+                                    }
+                                    .listRowSeparator(.hidden)
+                                } else {
+                                    HStack {
+                                        Spacer(minLength: 80)
+                                        TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                    }
+                                    .listRowSeparator(.hidden)
+                                }
+                            }
+                            .onDelete(perform: deleteItems)
                         }
+                        
+                        Color.clear
+                            .frame(height: 37)
+                            .listRowSeparator(.hidden)
                     }
-                    .onDelete(perform: deleteItems)
+                    .listStyle(.plain)
                     
-                    Color.clear
+                    TimelineSummaryValueView(paid: paid, earning: earning)
                         .frame(height: 37)
-                        .listRowSeparator(.hidden)
                 }
-                .listStyle(.plain)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
-                    }
-                    ToolbarItem {
-                        Button(action: addItem) {
-                            Label("Add Item", systemImage: "plus")
-                        }
+                
+                TimelineSummaryView(paid: paid, earning: earning)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+                ToolbarItem {
+                    Button(action: addItem) {
+                        Label("Add Item", systemImage: "plus")
                     }
                 }
                 
-                TimelineSummaryValueView(paid: 300000, earning: 500000)
-                    .frame(height: 37)
+                ToolbarItem(placement: .navigationBarLeading) {
+                    NavigationLink {
+                        Text("This is Settings")
+                    } label: {
+                        Label("Open Settings", systemImage: "gearshape")
+                    }
+                }
+                
+                ToolbarItem(placement: .principal) {
+                    Button(action: changeDate) {
+                        HStack(spacing: 5) {
+                            Text("2023년 6월")
+                            Image(systemName: "chevron.down")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 10)
+                        }
+                    }
+                }
             }
-            
-            TimelineSummaryView(totalValue: 700000)
+            .toolbar(.visible, for: .navigationBar)
+            .foregroundColor(.primary)
         }
+    }
+    
+    private func changeDate() {
+        
     }
     
     private func addItem() {

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TimelineSummaryValueView: View {
-    let paid: Int
-    let earning: Int
+    let paid: Double
+    let earning: Double
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -32,6 +32,6 @@ struct TimelineSummaryValueView: View {
 
 struct TimelineSummaryValueView_Previews: PreviewProvider {
     static var previews: some View {
-        TimelineSummaryValueView(paid: 700000, earning: 800000)
+        TimelineSummaryValueView(paid: -700000, earning: 800000)
     }
 }

@@ -189,8 +189,8 @@
 			children = (
 				05A76A3F2A355DE100B231CB /* TimelineItemView.swift */,
 				051899FF2A3761C500430226 /* TimelineSummaryView.swift */,
-				0584B3582A40574F004758AE /* TimelineDateView.swift */,
 				0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */,
+				0584B3582A40574F004758AE /* TimelineDateView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
