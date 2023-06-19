@@ -40,46 +40,54 @@ struct TimelineView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            List {
-                ForEach(groupedItems, id: \.date) { group in
-                    HStack {
-                        Spacer()
-                        TimelineDateView(date: group.date)
-                        Spacer()
+        VStack(spacing: 0) {
+            ZStack(alignment: .bottom) {
+                List {
+                    ForEach(groupedItems, id: \.date) { group in
+                        HStack {
+                            Spacer()
+                            TimelineDateView(date: group.date)
+                            Spacer()
+                        }
+                        ForEach(group.items, id: \.id) { item in
+                            if item.amount > 0 {
+                                HStack {
+                                    TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                    Spacer(minLength: 80)
+                                }
+                                .listRowSeparator(.hidden)
+                            } else {
+                                HStack {
+                                    Spacer(minLength: 80)
+                                    TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                }
+                                .listRowSeparator(.hidden)
+                            }
+                        }
                     }
-                    ForEach(group.items, id: \.id) { item in
-                        if item.amount > 0 {
-                            HStack {
-                                TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                                Spacer(minLength: 80)
-                            }
-                            .listRowSeparator(.hidden)
-                        } else {
-                            HStack {
-                                Spacer(minLength: 80)
-                                TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                            }
-                            .listRowSeparator(.hidden)
+                    .onDelete(perform: deleteItems)
+                    
+                    Color.clear
+                        .frame(height: 37)
+                        .listRowSeparator(.hidden)
+                }
+                .listStyle(.plain)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+                    ToolbarItem {
+                        Button(action: addItem) {
+                            Label("Add Item", systemImage: "plus")
                         }
                     }
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .listStyle(.plain)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
+                
+                TimelineSummaryValueView(paid: 300000, earning: 500000)
+                    .frame(height: 37)
             }
             
-            TimelineSummaryView(paid: -770000, earning: 800000)
-                .frame(height: 69)
+            TimelineSummaryView(totalValue: 700000)
         }
     }
     
