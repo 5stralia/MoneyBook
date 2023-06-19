@@ -15,23 +15,53 @@ struct TimelineView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \ItemEntity.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<ItemEntity>
+    private var groupedItems: [GroupedItem] {
+        self.groupItems(Array(self.items))
+    }
+    
+    struct GroupedItem {
+        let date: Date
+        var items: [ItemEntity]
+    }
+    private func groupItems(_ items: [ItemEntity]) -> [GroupedItem] {
+        var result = [GroupedItem]()
+        
+        for item in items {
+            if let index = result.firstIndex(where: { finding in
+                finding.date.isEqualDateOnly(item.timestamp)
+            }) {
+                result[index].items.append(item)
+            } else {
+                result.append(GroupedItem(date: item.timestamp, items: [item]))
+            }
+        }
+        
+        return result
+    }
     
     var body: some View {
         ZStack(alignment: .bottom) {
             List {
-                ForEach(items, id: \.id) { item in
-                    if item.amount > 0 {
-                        HStack {
-                            TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                            Spacer(minLength: 80)
+                ForEach(groupedItems, id: \.date) { group in
+                    HStack {
+                        Spacer()
+                        TimelineDateView(date: group.date)
+                        Spacer()
+                    }
+                    ForEach(group.items, id: \.id) { item in
+                        if item.amount > 0 {
+                            HStack {
+                                TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                Spacer(minLength: 80)
+                            }
+                            .listRowSeparator(.hidden)
+                        } else {
+                            HStack {
+                                Spacer(minLength: 80)
+                                TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                            }
+                            .listRowSeparator(.hidden)
                         }
-                        .listRowSeparator(.hidden)
-                    } else {
-                        HStack {
-                            Spacer(minLength: 80)
-                            TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                        }
-                        .listRowSeparator(.hidden)
                     }
                 }
                 .onDelete(perform: deleteItems)

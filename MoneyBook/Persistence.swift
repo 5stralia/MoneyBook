@@ -17,13 +17,15 @@ struct PersistenceController {
         let now = Date()
         let group_id = UUID()
         for i in 0..<10 {
-            let newItem = ItemEntity(context: viewContext)
-            newItem.title = "Title \(i)"
-            newItem.note = "Note \(i)"
-            newItem.timestamp = Date(timeInterval: -(60 * 60 * 24), since: now)
-            newItem.category = "Category"
-            newItem.amount = 1000 * Double(i) * (i % 3 == 0 ? -1 : 1)
-            newItem.group_id = group_id
+            for j in 0..<3 {
+                let newItem = ItemEntity(context: viewContext)
+                newItem.title = "Title \(i)_\(j)"
+                newItem.note = "Note \(i)_\(j)"
+                newItem.timestamp = Date(timeInterval: TimeInterval(-(60 * 60 * 24) * i - j), since: now)
+                newItem.category = "Category"
+                newItem.amount = 1000 * Double(j) * (j % 2 == 0 ? 1 : -1)
+                newItem.group_id = group_id
+            }
         }
         do {
             try viewContext.save()
