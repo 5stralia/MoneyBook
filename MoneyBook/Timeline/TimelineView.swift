@@ -62,14 +62,14 @@ struct TimelineView: View {
                             ForEach(group.items, id: \.id) { item in
                                 if item.amount > 0 {
                                     HStack {
-                                        TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
                                         Spacer(minLength: 80)
+                                        TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
                                     }
                                     .listRowSeparator(.hidden)
                                 } else {
                                     HStack {
-                                        Spacer(minLength: 80)
                                         TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                        Spacer(minLength: 80)
                                     }
                                     .listRowSeparator(.hidden)
                                 }
