@@ -94,7 +94,9 @@ struct TimelineView: View {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: addItem) {
+                    NavigationLink {
+                        AppendingItemView()
+                    } label: {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
