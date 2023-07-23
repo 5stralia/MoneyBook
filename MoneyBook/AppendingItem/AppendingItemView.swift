@@ -108,12 +108,17 @@ struct AppendingItemView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State var isPaid = false
+    @State var selection = 0
     
     var body: some View {
-        VStack(spacing: 0) {
-            AppendingItemTypeView(isPaid: isPaid)
-                .frame(width: 200, height: 44)
-                .padding([.top, .bottom], 40)
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .center) {
+                Spacer()
+                AppendingItemTypeView(isPaid: isPaid)
+                    .frame(width: 200, height: 44)
+                    .padding([.top, .bottom], 40)
+                Spacer()
+            }
             AppendingItemTextInputView(image: Image(systemName: "t.square"), title: "Title")
                 .padding([.leading, .trailing], 32)
                 .padding([.top, .bottom], 10)
@@ -123,9 +128,22 @@ struct AppendingItemView: View {
             AppendingItemDateInputView()
                 .padding([.leading, .trailing], 32)
                 .padding([.top, .bottom], 10)
-            AppendingItemCategoryInputView(image: Image(systemName: "carrot"), title: "식비")
-                .padding([.leading, .trailing], 32)
-                .padding([.top, .bottom], 10)
+            
+            HStack {
+                Text("카테고리")
+                    .padding(.leading, 16)
+                Spacer()
+                Picker("카테고리", selection: $selection) {
+                    ForEach((0..<50)) { i in
+                        Text("Selection \(i)").tag(i)
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(.primary)
+            }
+            .background(.white)
+            .cornerRadius(8)
+            .padding([.leading, .trailing], 32)
             
             Button {
                 //
