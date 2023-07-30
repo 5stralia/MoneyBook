@@ -5,6 +5,7 @@
 //  Created by Hoju Choi on 2023/06/27.
 //
 
+import Combine
 import SwiftUI
 
 struct AppendingItemTypeView: View {
@@ -40,6 +41,30 @@ struct AppendingItemTypeView: View {
     }
 }
 
+struct AppendingItemNumberInputView: View {
+    let image: Image
+    let title: String
+    
+    @Binding var value: Double?
+    
+    var body: some View {
+        HStack(spacing: 0) {
+            image
+                .frame(width: 28)
+                .padding(.all, 8)
+            TextField("Amount", value: $value, format: .number)
+                .keyboardType(.decimalPad)
+                .onReceive(Just(value)) { newValue in
+                    guard let newValue, newValue < 0 else { return }
+                    self.value = -newValue
+                }
+            Spacer()
+        }
+        .background()
+        .cornerRadius(8)
+    }
+}
+
 struct AppendingItemTextInputView: View {
     let image: Image
     let title: String
@@ -63,7 +88,7 @@ struct AppendingItemDateInputView: View {
     @Binding var date: Date
     
     var body: some View {
-        DatePicker("Date", selection: $date, displayedComponents: [.date])
+        DatePicker("Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
             .datePickerStyle(.graphical)
             .padding(.all, 8)
             .background()
@@ -104,7 +129,7 @@ struct AppendingItemView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var title = ""
-    @State private var amount = ""
+    @State private var amount: Double? = nil
     @State private var date = Date()
     @State private var isPaid = false
     @State private var selection: String = "카테고리 1"
@@ -119,7 +144,7 @@ struct AppendingItemView: View {
                     Spacer()
                 }
                 AppendingItemTextInputView(image: Image(systemName: "t.square"), title: "Title", text: $title)
-                AppendingItemTextInputView(image: Image(systemName: "dollarsign"), title: "Amount", text: $amount)
+                AppendingItemNumberInputView(image: Image(systemName: "dollarsign"), title: "Amount", value: $amount)
                 AppendingItemDateInputView(date: $date)
                 AppendingItemCategoryInputView(selection: $selection)
                     .background(.background)
@@ -144,7 +169,7 @@ struct AppendingItemView: View {
     }
     
     private func addItem() {
-        let amount = (self.isPaid ? -1 : 1) * (Double(self.amount) ?? 0)
+        let amount = (self.isPaid ? -1 : 1) * (self.amount ?? 0)
         let item = ItemEntity(
             amount: amount,
             category: self.selection,
