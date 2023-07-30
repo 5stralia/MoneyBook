@@ -15,18 +15,21 @@ struct TimelineView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \ItemCoreEntity.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<ItemCoreEntity>
-    private var groupedItems: [GroupedItem] {
-        self.groupItems(Array(self.items))
-    }
     
     struct GroupedItem {
         let date: Date
         var items: [ItemCoreEntity]
     }
-    private func groupItems(_ items: [ItemCoreEntity]) -> [GroupedItem] {
+    private func groupItems(_ items: [ItemCoreEntity], year: Int, month: Int) -> [GroupedItem] {
         var result = [GroupedItem]()
         
-        for item in items {
+        let filteredItems = items.filter { item in
+            let itemYear = Calendar.current.component(.year, from: item.timestamp)
+            let itemMonth = Calendar.current.component(.month, from: item.timestamp)
+            
+            return year == itemYear && month == itemMonth
+        }
+        for item in filteredItems {
             if let index = result.firstIndex(where: { finding in
                 finding.date.isEqualDateOnly(item.timestamp)
             }) {
@@ -45,52 +48,89 @@ struct TimelineView: View {
         self.items.filter { $0.amount < 0 }.map { $0.amount }.reduce(0, +)
     }
     
-    @State var selectedDate: Date = Date()
+    @State var year: Int = Calendar.current.component(.year, from: Date())
+    @State var month: Int = Calendar.current.component(.month, from: Date())
+    
+    @State var isHiddenPicker: Bool = true
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                ZStack(alignment: .bottom) {
-                    List {
-                        ForEach(groupedItems, id: \.date) { group in
-                            HStack {
-                                Spacer()
-                                TimelineDateView(date: group.date)
-                                Spacer()
-                            }
-                            .listRowSeparator(.hidden)
-                            ForEach(group.items, id: \.id) { item in
-                                if item.amount > 0 {
-                                    HStack {
-                                        Spacer(minLength: 80)
-                                        TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                                    }
-                                    .listRowSeparator(.hidden)
-                                } else {
-                                    HStack {
-                                        TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                                        Spacer(minLength: 80)
-                                    }
-                                    .listRowSeparator(.hidden)
+            ZStack(alignment: .bottom) {
+                VStack(spacing: 0) {
+                    ZStack(alignment: .bottom) {
+                        List {
+                            ForEach(self.groupItems(Array(self.items), year: year, month: month), id: \.date) { group in
+                                HStack {
+                                    Spacer()
+                                    TimelineDateView(date: group.date)
+                                    Spacer()
                                 }
+                                .listRowSeparator(.hidden)
+                                ForEach(group.items, id: \.id) { item in
+                                    if item.amount > 0 {
+                                        HStack {
+                                            Spacer(minLength: 80)
+                                            TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                        }
+                                        .listRowSeparator(.hidden)
+                                    } else {
+                                        HStack {
+                                            TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                            Spacer(minLength: 80)
+                                        }
+                                        .listRowSeparator(.hidden)
+                                    }
+                                }
+                                .onDelete(perform: { indexSet in
+                                    let deletedItems = indexSet.map { group.items[$0] }
+                                    self.deleteItems(items: deletedItems)
+                                })
                             }
-                            .onDelete(perform: { indexSet in
-                                let deletedItems = indexSet.map { group.items[$0] }
-                                self.deleteItems(items: deletedItems)
-                            })
+                            
+                            Color.clear
+                                .frame(height: 37)
+                                .listRowSeparator(.hidden)
                         }
+                        .listStyle(.plain)
                         
-                        Color.clear
+                        TimelineSummaryValueView(paid: paid, earning: earning)
                             .frame(height: 37)
-                            .listRowSeparator(.hidden)
                     }
-                    .listStyle(.plain)
                     
-                    TimelineSummaryValueView(paid: paid, earning: earning)
-                        .frame(height: 37)
+                    TimelineSummaryView(paid: paid, earning: earning)
                 }
                 
-                TimelineSummaryView(paid: paid, earning: earning)
+                if !isHiddenPicker {
+                    VStack(spacing: 5) {
+                        HStack {
+                            Picker("Year", selection: $year) {
+                                ForEach((2000...2100), id: \.self) { i in
+                                    Text(String(i))
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                            Picker("Month", selection: $month) {
+                                ForEach((1...12), id: \.self) { i in
+                                    Text(String(i))
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                        }
+                        
+                        Button {
+                            withAnimation {
+                                self.isHiddenPicker.toggle()
+                            }
+                        } label: {
+                            Text("Done")
+                        }
+
+                    }
+                        .padding(.bottom, 32)
+                        .background(.background)
+                        .clipShape(RoundedCorner(radius: 16, corners: [.topLeft, .topRight]))
+                        .shadow(radius: 8)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -115,7 +155,7 @@ struct TimelineView: View {
                 ToolbarItem(placement: .principal) {
                     Button(action: changeDate) {
                         HStack(spacing: 5) {
-                            Text("2023년 6월")
+                            Text(verbatim: "\(year)년 \(month)월")
                             Image(systemName: "chevron.down")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -131,7 +171,9 @@ struct TimelineView: View {
     }
     
     private func changeDate() {
-        
+        withAnimation {
+            self.isHiddenPicker.toggle()
+        }
     }
     
     private func deleteItems(items: [ItemCoreEntity]) {
@@ -161,5 +203,15 @@ struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
         TimelineView()
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    }
+}
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+    
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
     }
 }
