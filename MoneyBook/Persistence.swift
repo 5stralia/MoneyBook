@@ -9,6 +9,8 @@ import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
+    let container: NSPersistentContainer
+    var viewContext: NSManagedObjectContext { self.container.viewContext }
 
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
@@ -18,7 +20,7 @@ struct PersistenceController {
         let group_id = UUID()
         for i in 0..<10 {
             for j in 1..<4 {
-                let newItem = ItemEntity(context: viewContext)
+                let newItem = ItemCoreEntity(context: viewContext)
                 newItem.title = "Title \(i)_\(j)"
                 newItem.note = "Note \(i)_\(j)"
                 newItem.timestamp = Date(timeInterval: TimeInterval(-(60 * 60 * 24) * i - j), since: now)
@@ -38,7 +40,6 @@ struct PersistenceController {
         return result
     }()
 
-    let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "MoneyBook")
@@ -62,5 +63,17 @@ struct PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+    
+    func addItem(_ item: ItemEntity) throws {
+        let newItem = ItemCoreEntity(context: self.viewContext)
+        newItem.timestamp = item.timestamp
+        newItem.title = item.title
+        newItem.note = item.note
+        newItem.amount = item.amount
+        newItem.category = item.category
+        newItem.group_id = item.group_id
+        
+        try self.viewContext.save()
     }
 }

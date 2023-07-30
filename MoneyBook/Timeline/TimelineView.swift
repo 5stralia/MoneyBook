@@ -12,18 +12,18 @@ struct TimelineView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ItemEntity.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \ItemCoreEntity.timestamp, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<ItemEntity>
+    private var items: FetchedResults<ItemCoreEntity>
     private var groupedItems: [GroupedItem] {
         self.groupItems(Array(self.items))
     }
     
     struct GroupedItem {
         let date: Date
-        var items: [ItemEntity]
+        var items: [ItemCoreEntity]
     }
-    private func groupItems(_ items: [ItemEntity]) -> [GroupedItem] {
+    private func groupItems(_ items: [ItemCoreEntity]) -> [GroupedItem] {
         var result = [GroupedItem]()
         
         for item in items {
@@ -74,7 +74,10 @@ struct TimelineView: View {
                                     .listRowSeparator(.hidden)
                                 }
                             }
-                            .onDelete(perform: deleteItems)
+                            .onDelete(perform: { indexSet in
+                                let deletedItems = indexSet.map { group.items[$0] }
+                                self.deleteItems(items: deletedItems)
+                            })
                         }
                         
                         Color.clear
@@ -122,6 +125,7 @@ struct TimelineView: View {
                 }
             }
             .toolbar(.visible, for: .navigationBar)
+            .navigationBarTitleDisplayMode(.inline)
             .foregroundColor(.primary)
         }
     }
@@ -130,25 +134,9 @@ struct TimelineView: View {
         
     }
     
-    private func addItem() {
+    private func deleteItems(items: [ItemCoreEntity]) {
         withAnimation {
-            let newItem = ItemEntity(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            items.forEach { viewContext.delete($0) }
 
             do {
                 try viewContext.save()
