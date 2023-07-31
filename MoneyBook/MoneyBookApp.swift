@@ -14,6 +14,18 @@ struct MoneyBookApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear(perform: {
+                    do {
+                        let categories = try persistenceController.viewContext.fetch(CategoryCoreEntity.fetchRequest())
+                        if categories.isEmpty {
+                            try ["식비", "생활비", "교통비", "통신비", "기타"].forEach { category in
+                                try persistenceController.addCategory(category)
+                            }
+                        }
+                    } catch {
+                        print("에러다다다!!!")
+                    }
+                })
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

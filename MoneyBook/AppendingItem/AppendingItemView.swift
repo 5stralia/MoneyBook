@@ -17,7 +17,7 @@ struct AppendingItemTypeView: View {
             .overlay {
                 HStack(spacing: 0) {
                     Capsule()
-                        .fill(isPaid ? .clear : .gray)
+                        .fill(isPaid ? .clear : .indigo)
                         .overlay {
                             Button {
                                 self.isPaid = false
@@ -27,7 +27,7 @@ struct AppendingItemTypeView: View {
                             }
                         }
                     Capsule()
-                        .fill(isPaid ? .gray : .clear)
+                        .fill(isPaid ? .orange : .clear)
                         .overlay {
                             Button {
                                 self.isPaid = true
@@ -97,29 +97,67 @@ struct AppendingItemDateInputView: View {
 }
 
 struct AppendingItemCategoryInputView: View {
+    @State var isAlertPresented = false
+    @State var addingCategory = ""
     @Binding var selection: String
     
-    var categories: [String] = [
-        "카테고리 1",
-        "카테고리 2",
-        "카테고리 3",
-        "카테고리 4",
-        "카테고리 5",
-        "카테고리 6",
-    ]
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \CategoryCoreEntity.title, ascending: true)],
+        animation: .default)
+    private var categories: FetchedResults<CategoryCoreEntity>
     
     var body: some View {
         HStack {
             Text("Category")
                 .padding(.leading, 16)
             Spacer()
-            Picker("Category", selection: $selection) {
-                ForEach(self.categories, id: \.self) { category in
-                    Text(category).tag(category)
+            Menu {
+                ForEach(self.categories) { category in
+                    Button(category.title, action: { self.setCategory(category.title) })
+                }
+                Section {
+                    Button("Add Category") {
+                        self.isAlertPresented.toggle()
+                    }
+                }
+            } label: {
+                Label(selection, systemImage: "chevron.down")
+                    .labelStyle(RightImageLabelStyle())
+                    .padding(.all, 8)
+                    .foregroundColor(.blue)
+            }
+            .menuStyle(.button)
+            .alert("Add Category", isPresented: $isAlertPresented) {
+                TextField("category", text: $addingCategory)
+                Button("OK") {
+                    self.addCategory(self.addingCategory)
+                    isAlertPresented.toggle()
+                }
+                Button("Cancel") {
+                    isAlertPresented.toggle()
                 }
             }
-            .pickerStyle(.menu)
-            .tint(.primary)
+        }
+    }
+    
+    private func setCategory(_ category: String) {
+        self.selection = category
+    }
+    
+    private func addCategory(_ category: String) {
+        do {
+            try PersistenceController.shared.addCategory(category)
+        } catch {
+            print("에러닷!!!")
+        }
+    }
+}
+
+struct RightImageLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            configuration.title
+            configuration.icon
         }
     }
 }
@@ -150,7 +188,7 @@ struct AppendingItemView: View {
             self._amount = State(initialValue: nil)
             self._date = State(initialValue: Date())
             self._isPaid = State(initialValue: false)
-            self._selection = State(initialValue: "카테고리 1")
+            self._selection = State(initialValue: "기타")
         }
     }
     

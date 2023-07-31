@@ -17,6 +17,8 @@
 		0584B37B2A766442004758AE /* GroupCoreEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3772A766442004758AE /* GroupCoreEntity+CoreDataClass.swift */; };
 		0584B37C2A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3782A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift */; };
 		0584B3802A76647D004758AE /* ItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B37F2A76647D004758AE /* ItemEntity.swift */; };
+		0584B3832A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3812A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift */; };
+		0584B3842A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3822A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift */; };
 		05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */; };
 		05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0D2A34115D00B231CB /* ContentView.swift */; };
 		05A76A102A34115E00B231CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05A76A0F2A34115E00B231CB /* Assets.xcassets */; };
@@ -58,6 +60,8 @@
 		0584B3772A766442004758AE /* GroupCoreEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupCoreEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0584B3782A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupCoreEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0584B37F2A76647D004758AE /* ItemEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEntity.swift; sourceTree = "<group>"; };
+		0584B3812A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryCoreEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0584B3822A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryCoreEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		05A76A082A34115D00B231CB /* MoneyBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookApp.swift; sourceTree = "<group>"; };
 		05A76A0D2A34115D00B231CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -127,10 +131,9 @@
 		0584B37D2A766466004758AE /* CoreEntity */ = {
 			isa = PBXGroup;
 			children = (
-				0584B3752A766442004758AE /* ItemCoreEntity+CoreDataClass.swift */,
-				0584B3762A766442004758AE /* ItemCoreEntity+CoreDataProperties.swift */,
-				0584B3772A766442004758AE /* GroupCoreEntity+CoreDataClass.swift */,
-				0584B3782A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift */,
+				0584B3872A77F49C004758AE /* Category */,
+				0584B3862A77F495004758AE /* Group */,
+				0584B3852A77F48F004758AE /* Item */,
 			);
 			path = CoreEntity;
 			sourceTree = "<group>";
@@ -141,6 +144,33 @@
 				0584B37F2A76647D004758AE /* ItemEntity.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		0584B3852A77F48F004758AE /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				0584B3752A766442004758AE /* ItemCoreEntity+CoreDataClass.swift */,
+				0584B3762A766442004758AE /* ItemCoreEntity+CoreDataProperties.swift */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		0584B3862A77F495004758AE /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				0584B3772A766442004758AE /* GroupCoreEntity+CoreDataClass.swift */,
+				0584B3782A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		0584B3872A77F49C004758AE /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				0584B3812A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift */,
+				0584B3822A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		05A769FF2A34115D00B231CB = {
@@ -358,6 +388,7 @@
 				05A76A152A34115E00B231CB /* Persistence.swift in Sources */,
 				0584B3612A4A468F004758AE /* AppendingItemView.swift in Sources */,
 				0584B37B2A766442004758AE /* GroupCoreEntity+CoreDataClass.swift in Sources */,
+				0584B3842A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift in Sources */,
 				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
 				0584B3592A40574F004758AE /* TimelineDateView.swift in Sources */,
 				0584B35E2A408B2C004758AE /* TimelineSummaryValueView.swift in Sources */,
@@ -371,6 +402,7 @@
 				0584B35C2A40682C004758AE /* Date.swift in Sources */,
 				0584B3792A766442004758AE /* ItemCoreEntity+CoreDataClass.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
+				0584B3832A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
