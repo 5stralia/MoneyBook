@@ -53,8 +53,10 @@ struct TimelineView: View {
     
     @State var isHiddenPicker: Bool = true
     
+    @State private var path = NavigationPath()
+    
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             ZStack(alignment: .bottom) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .bottom) {
@@ -65,27 +67,32 @@ struct TimelineView: View {
                                     TimelineDateView(date: group.date)
                                     Spacer()
                                 }
-                                .listRowSeparator(.hidden)
                                 ForEach(group.items, id: \.id) { item in
-                                    if item.amount > 0 {
-                                        HStack {
-                                            Spacer(minLength: 80)
-                                            TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                    Button {
+                                        path.append(item)
+                                    } label: {
+                                        if item.amount > 0 {
+                                            HStack {
+                                                Spacer(minLength: 80)
+                                                TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                            }
+                                        } else {
+                                            HStack {
+                                                TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                                Spacer(minLength: 80)
+                                            }
                                         }
-                                        .listRowSeparator(.hidden)
-                                    } else {
-                                        HStack {
-                                            TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
-                                            Spacer(minLength: 80)
-                                        }
-                                        .listRowSeparator(.hidden)
                                     }
+                                    .navigationDestination(for: ItemCoreEntity.self, destination: { item in
+                                        AppendingItemView(item: item)
+                                    })
                                 }
                                 .onDelete(perform: { indexSet in
                                     let deletedItems = indexSet.map { group.items[$0] }
                                     self.deleteItems(items: deletedItems)
                                 })
                             }
+                            .listRowSeparator(.hidden)
                             
                             Color.clear
                                 .frame(height: 37)
@@ -138,7 +145,7 @@ struct TimelineView: View {
                 }
                 ToolbarItem {
                     NavigationLink {
-                        AppendingItemView()
+                        AppendingItemView(item: nil)
                     } label: {
                         Label("Add Item", systemImage: "plus")
                     }

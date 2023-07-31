@@ -128,11 +128,31 @@ struct AppendingItemView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
-    @State private var title = ""
-    @State private var amount: Double? = nil
-    @State private var date = Date()
-    @State private var isPaid = false
-    @State private var selection: String = "카테고리 1"
+    @State private var title: String
+    @State private var amount: Double?
+    @State private var date: Date
+    @State private var isPaid: Bool
+    @State private var selection: String
+    
+    private let item: ItemCoreEntity?
+    
+    init(item: ItemCoreEntity?) {
+        self.item = item
+        
+        if let item {
+            self._title = State(initialValue: item.title)
+            self._amount = State(initialValue: abs(item.amount))
+            self._date = State(initialValue: item.timestamp)
+            self._isPaid = State(initialValue: item.amount < 0)
+            self._selection = State(initialValue: item.category)
+        } else {
+            self._title = State(initialValue: "")
+            self._amount = State(initialValue: nil)
+            self._date = State(initialValue: Date())
+            self._isPaid = State(initialValue: false)
+            self._selection = State(initialValue: "카테고리 1")
+        }
+    }
     
     var body: some View {
         ScrollView {
@@ -150,7 +170,7 @@ struct AppendingItemView: View {
                     .background(.background)
                     .cornerRadius(8)
                 
-                Button(action: self.addItem) {
+                Button(action: self.submit) {
                     Text("Done")
                         .font(.callout)
                         .fontWeight(.bold)
@@ -168,7 +188,7 @@ struct AppendingItemView: View {
         .background(Color(uiColor: .secondarySystemBackground))
     }
     
-    private func addItem() {
+    private func submit() {
         let amount = (self.isPaid ? -1 : 1) * (self.amount ?? 0)
         let item = ItemEntity(
             amount: amount,
@@ -183,8 +203,24 @@ struct AppendingItemView: View {
             dismiss()
         }
         
+        if let coreItem = self.item {
+            self.updateItem(item, coreItem: coreItem)
+        } else {
+            self.addItem(item)
+        }
+    }
+    
+    private func addItem(_ item: ItemEntity) {
         do {
             try PersistenceController.shared.addItem(item)
+        } catch {
+            print("에러닷")
+        }
+    }
+    
+    private func updateItem(_ item: ItemEntity, coreItem: ItemCoreEntity) {
+        do {
+            try PersistenceController.shared.updateItem(item, coreItem: coreItem)
         } catch {
             print("에러닷")
         }
@@ -193,6 +229,6 @@ struct AppendingItemView: View {
 
 struct AppendingItemView_Previews: PreviewProvider {
     static var previews: some View {
-        AppendingItemView()
+        AppendingItemView(item: nil)
     }
 }

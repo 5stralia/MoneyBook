@@ -76,4 +76,15 @@ struct PersistenceController {
         
         try self.viewContext.save()
     }
+    
+    func updateItem(_ item: ItemEntity, coreItem: ItemCoreEntity) throws {
+        coreItem.title = item.title
+        coreItem.timestamp = item.timestamp
+        coreItem.note = item.note
+        coreItem.amount = item.amount
+        coreItem.category = item.category
+        coreItem.group_id = item.group_id
+        
+        try self.viewContext.save()
+    }
 }
