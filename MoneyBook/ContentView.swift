@@ -21,7 +21,7 @@ struct ContentView: View {
                     Label("Search", systemImage: "magnifyingglass")
                 }
             
-            Color.indigo
+            ChartView()
                 .tabItem {
                     Label("Chart", systemImage: "chart.pie")
                 }

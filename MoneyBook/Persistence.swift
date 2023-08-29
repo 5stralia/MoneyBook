@@ -29,7 +29,12 @@ struct PersistenceController {
                 newItem.group_id = group_id
             }
         }
+        
         do {
+            try ["식비", "생활비", "교통비", "통신비", "기타"].forEach { category in
+                try result.addCategory(category)
+            }
+            
             try viewContext.save()
         } catch {
             // Replace this implementation with code to handle the error appropriately.
