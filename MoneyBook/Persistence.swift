@@ -24,7 +24,7 @@ struct PersistenceController {
                 newItem.title = "Title \(i)_\(j)"
                 newItem.note = "Note \(i)_\(j)"
                 newItem.timestamp = Date(timeInterval: TimeInterval(-(60 * 60 * 24) * i - j), since: now)
-                newItem.category = "Category"
+                newItem.category = "Category\(i % 3)"
                 newItem.amount = 1000 * Double(j) * (j % 2 == 0 ? -1 : 1)
                 newItem.group_id = group_id
             }

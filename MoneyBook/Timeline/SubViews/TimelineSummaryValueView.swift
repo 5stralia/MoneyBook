@@ -16,14 +16,14 @@ struct TimelineSummaryValueView: View {
             Rectangle()
                 .fill(LinearGradient(colors: [.clear, .init(uiColor: .systemBackground)], startPoint: .top, endPoint: .bottom))
             HStack {
-                Text(amountFormatter.string(for: paid) ?? "")
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(.indigo)
-                    .padding(.leading, 16)
-                Spacer()
                 Text(amountFormatter.string(for: earning) ?? "")
                     .font(.system(size: 13, weight: .bold))
                     .foregroundColor(.orange)
+                    .padding(.leading, 16)
+                Spacer()
+                Text(amountFormatter.string(for: paid) ?? "")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(.indigo)
                     .padding(.trailing, 16)
             }
         }

@@ -9,9 +9,17 @@ import Foundation
 import Charts
 import SwiftUI
 
-struct ValuePerCategory {
+fileprivate struct ValuePerCategory {
     var category: String
     var value: Double
+}
+
+fileprivate struct ChartData: Identifiable {
+    let category: String
+    let value: Double
+    let yearMonth: String
+    
+    let id: UUID = UUID()
 }
 
 struct ChartView: View {
@@ -22,44 +30,73 @@ struct ChartView: View {
         animation: .default)
     private var items: FetchedResults<ItemCoreEntity>
     
-    private var values: [ValuePerCategory] {
-        let grouping = Dictionary(grouping: self.items) { $0.category }
-        
-        return grouping.map { key, value in
-            ValuePerCategory(category: key, value: value.reduce(0, { $0 + $1.amount }))
+    var body: some View {
+        ScrollView {
+            Chart {
+                ForEach(self.incomeData(self.items.map({ $0 }))) { item in
+                    BarMark(
+                        x: .value("month", item.yearMonth),
+                        y: .value("amount", item.value)
+                    )
+                    .foregroundStyle(by: .value("category", item.category))
+                }
+            }
+            .chartScrollableAxes(.horizontal)
+            .chartXVisibleDomain(length: 5)
+            
+            
+            Chart {
+                ForEach(self.expendData(self.items.map({ $0 }))) { item in
+                    BarMark(
+                        x: .value("month", item.yearMonth),
+                        y: .value("amount", -item.value)
+                    )
+                    .foregroundStyle(by: .value("category", item.category))
+                }
+            }
+            .chartScrollableAxes(.horizontal)
+            .chartXVisibleDomain(length: 5)
         }
     }
     
-    var body: some View {
-        ScrollView {
-            Chart(self.values.sorted(by: { $0.value > $1.value }), id: \.category) { item in
-                BarMark(
-                    x: .value("Value", item.value),
-                    stacking: .normalized
-                )
-                .foregroundStyle(by: .value("Category", item.category))
+    private func incomeData(_ items: [ItemCoreEntity]) -> [ChartData] {
+        var result: [ChartData] = []
+        
+        let items = items.filter { $0.amount >= 0 }
+        let grouping = Dictionary(grouping: items, by: { $0.category })
+        for (category, values) in grouping {
+            let gp = Dictionary(grouping: values, by: { "\($0.timestamp.getYear()). \($0.timestamp.getMonth())" })
+            for (yearMonth, values2) in gp {
+                result.append(ChartData(category: category, value: values2.map(\.amount).reduce(0, +), yearMonth: yearMonth))
             }
-            
-            Chart(self.values.sorted(by: { $0.value > $1.value }), id: \.category) { item in
-                BarMark(
-                    x: .value("Value", item.value),
-                    y: .value("Category", item.category)
-                )
-                .annotation(position: .trailing, alignment: .trailing) {
-                    HStack {
-                        Text(item.category)
-                            .font(.caption)
-                        Text("(\(formatter.string(from: item.value as NSNumber)!))")
-                            .font(.caption2)
-                    }
-                }
-            }
-            .chartYAxis(.hidden)
-            .frame(height: CGFloat(self.values.count) * 32)
-            .tint(.blue)
-            
         }
-        .padding([.leading, .trailing], 8)
+        
+        return result.sorted(using: KeyPathComparator(\.yearMonth))
+    }
+    
+    private func expendData(_ items: [ItemCoreEntity]) -> [ChartData] {
+        var result: [ChartData] = []
+        
+        let items = items.filter { $0.amount < 0 }
+        let grouping = Dictionary(grouping: items, by: { $0.category })
+        for (category, values) in grouping {
+            let gp = Dictionary(grouping: values, by: { "\($0.timestamp.getYear()). \($0.timestamp.getMonth())" })
+            for (yearMonth, values2) in gp {
+                result.append(ChartData(category: category, value: values2.map(\.amount).reduce(0, +), yearMonth: yearMonth))
+            }
+        }
+        
+        return result.sorted(using: KeyPathComparator(\.yearMonth))
+    }
+}
+
+extension Date {
+    fileprivate func getYear() -> Int {
+        return Calendar.current.component(.year, from: self)
+    }
+    
+    fileprivate func getMonth() -> Int {
+        return Calendar.current.component(.month, from: self)
     }
 }
 

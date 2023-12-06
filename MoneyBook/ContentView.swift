@@ -16,11 +16,6 @@ struct ContentView: View {
                 }
                 .toolbarBackground(.visible, for: .tabBar)
             
-            Color.orange
-                .tabItem {
-                    Label("Search", systemImage: "magnifyingglass")
-                }
-            
             ChartView()
                 .tabItem {
                     Label("Chart", systemImage: "chart.pie")
