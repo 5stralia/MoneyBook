@@ -30,39 +30,85 @@ struct ChartView: View {
         animation: .default)
     private var items: FetchedResults<ItemCoreEntity>
     
+    @State private var year = 2023
+    @State private var month = 1
+    @State private var chartVisibleLength = 4
+    
     var body: some View {
-        ScrollView {
-            Chart {
-                ForEach(self.incomeData(self.items.map({ $0 }))) { item in
-                    BarMark(
-                        x: .value("month", item.yearMonth),
-                        y: .value("amount", item.value)
-                    )
-                    .foregroundStyle(by: .value("category", item.category))
+        NavigationStack {
+            ScrollView {
+                Chart {
+                    ForEach(self.incomeData(self.items.map({ $0 }), year: year, month: month, length: chartVisibleLength)) { item in
+                        BarMark(
+                            x: .value("month", item.yearMonth),
+                            y: .value("amount", item.value)
+                        )
+                        .foregroundStyle(by: .value("category", item.category))
+                    }
+                }
+                .frame(height: 200)
+                .padding(.all, 8)
+                
+                Chart {
+                    ForEach(self.expendData(self.items.map({ $0 }), year: year, month: month, length: chartVisibleLength)) { item in
+                        BarMark(
+                            x: .value("month", item.yearMonth),
+                            y: .value("amount", -item.value)
+                        )
+                        .foregroundStyle(by: .value("category", item.category))
+                    }
+                }
+                .frame(height: 200)
+                .padding(.all, 8)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("plus", systemImage: "plus") {
+                        guard self.chartVisibleLength < 10 else { return }
+                        self.chartVisibleLength += 2
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("minus", systemImage: "minus") {
+                        guard self.chartVisibleLength > 2 else { return }
+                        self.chartVisibleLength -= 2
+                    }
                 }
             }
-            .chartScrollableAxes(.horizontal)
-            .chartXVisibleDomain(length: 5)
-            
-            
-            Chart {
-                ForEach(self.expendData(self.items.map({ $0 }))) { item in
-                    BarMark(
-                        x: .value("month", item.yearMonth),
-                        y: .value("amount", -item.value)
-                    )
-                    .foregroundStyle(by: .value("category", item.category))
-                }
-            }
-            .chartScrollableAxes(.horizontal)
-            .chartXVisibleDomain(length: 5)
+            .toolbar(.visible, for: .navigationBar)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Chart")
         }
+        .onAppear(perform: {
+            let date = Date()
+            self.year = date.getYear()
+            self.month = date.getMonth()
+        })
     }
     
-    private func incomeData(_ items: [ItemCoreEntity]) -> [ChartData] {
+    private func incomeData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int) -> [ChartData] {
         var result: [ChartData] = []
         
-        let items = items.filter { $0.amount >= 0 }
+        let items = items.filter { item in
+            let minDiff = month - length
+            let minMonth = (minDiff <= 0) ? (12 + minDiff) : minDiff
+            let minYear = (minDiff <= 0) ? (year - 1) : year
+            
+            let maxDiff = month + length
+            let maxMonth = (maxDiff > 12) ? (maxDiff - 12) : maxDiff
+            let maxYear = (maxDiff > 12) ? (year + 1) : year
+            
+            guard let minDate = Calendar.current.date(from: DateComponents(year: minYear, month: minMonth)),
+                  let maxDate = Calendar.current.date(from: DateComponents(year: maxYear, month: maxMonth))
+            else {
+                return false
+            }
+            
+            return item.amount >= 0 &&
+            minDate <= item.timestamp &&
+            item.timestamp <= maxDate
+        }
+        
         let grouping = Dictionary(grouping: items, by: { $0.category })
         for (category, values) in grouping {
             let gp = Dictionary(grouping: values, by: { "\($0.timestamp.getYear()). \($0.timestamp.getMonth())" })
@@ -74,10 +120,28 @@ struct ChartView: View {
         return result.sorted(using: KeyPathComparator(\.yearMonth))
     }
     
-    private func expendData(_ items: [ItemCoreEntity]) -> [ChartData] {
+    private func expendData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int) -> [ChartData] {
         var result: [ChartData] = []
         
-        let items = items.filter { $0.amount < 0 }
+        let items = items.filter { item in
+            let minDiff = month - length
+            let minMonth = (minDiff <= 0) ? (12 + minDiff) : minDiff
+            let minYear = (minDiff <= 0) ? (year - 1) : year
+            
+            let maxDiff = month + length
+            let maxMonth = (maxDiff > 12) ? (maxDiff - 12) : maxDiff
+            let maxYear = (maxDiff > 12) ? (year + 1) : year
+            
+            guard let minDate = Calendar.current.date(from: DateComponents(year: minYear, month: minMonth)),
+                  let maxDate = Calendar.current.date(from: DateComponents(year: maxYear, month: maxMonth))
+            else {
+                return false
+            }
+            
+            return item.amount < 0 &&
+            minDate <= item.timestamp &&
+            item.timestamp <= maxDate
+        }
         let grouping = Dictionary(grouping: items, by: { $0.category })
         for (category, values) in grouping {
             let gp = Dictionary(grouping: values, by: { "\($0.timestamp.getYear()). \($0.timestamp.getMonth())" })

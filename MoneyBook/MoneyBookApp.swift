@@ -9,7 +9,8 @@ import SwiftUI
 
 @main
 struct MoneyBookApp: App {
-    let persistenceController = PersistenceController.shared
+//    let persistenceController = PersistenceController.shared
+    let persistenceController = PersistenceController.preview
 
     var body: some Scene {
         WindowGroup {

@@ -20,6 +20,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("Chart", systemImage: "chart.pie")
                 }
+                .toolbarBackground(.visible, for: .tabBar)
         }
         .tint(.primary)
     }
