@@ -33,45 +33,31 @@ struct ChartView: View {
     @State private var year = 2023
     @State private var month = 1
     @State private var chartVisibleLength = 4
+    @State private var selectedExpenseCategories = ["category0"]
+    @State private var selectedIncomeCategories = ["category0"]
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                Chart {
-                    ForEach(self.incomeData(self.items.map({ $0 }), year: year, month: month, length: chartVisibleLength)) { item in
-                        BarMark(
-                            x: .value("month", item.yearMonth),
-                            y: .value("amount", item.value)
-                        )
-                        .foregroundStyle(by: .value("category", item.category))
-                    }
-                }
-                .frame(height: 200)
-                .padding(.all, 8)
+                StatisticsChart(
+                    title: "지출",
+                    selectedCategories: self.selectedExpenseCategories,
+                    items: self.incomeData(self.items.map({ $0 }), year: year, month: month, length: chartVisibleLength)
+                )
                 
-                Chart {
-                    ForEach(self.expendData(self.items.map({ $0 }), year: year, month: month, length: chartVisibleLength)) { item in
-                        BarMark(
-                            x: .value("month", item.yearMonth),
-                            y: .value("amount", -item.value)
-                        )
-                        .foregroundStyle(by: .value("category", item.category))
-                    }
-                }
-                .frame(height: 200)
-                .padding(.all, 8)
+                StatisticsChart(
+                    title: "소득",
+                    selectedCategories: self.selectedIncomeCategories,
+                    items: self.expendData(self.items.map({ $0 }), year: year, month: month, length: chartVisibleLength))
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("plus", systemImage: "plus") {
-                        guard self.chartVisibleLength < 10 else { return }
-                        self.chartVisibleLength += 2
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("minus", systemImage: "minus") {
-                        guard self.chartVisibleLength > 2 else { return }
-                        self.chartVisibleLength -= 2
+                    Button("plus", systemImage: self.chartVisibleLength == 8 ? "minus.magnifyingglass" : "plus.magnifyingglass") {
+                        if self.chartVisibleLength == 8 {
+                            self.chartVisibleLength = 2
+                        } else {
+                            self.chartVisibleLength += 2
+                        }
                     }
                 }
             }
@@ -146,11 +132,43 @@ struct ChartView: View {
         for (category, values) in grouping {
             let gp = Dictionary(grouping: values, by: { "\($0.timestamp.getYear()). \($0.timestamp.getMonth())" })
             for (yearMonth, values2) in gp {
-                result.append(ChartData(category: category, value: values2.map(\.amount).reduce(0, +), yearMonth: yearMonth))
+                result.append(ChartData(category: category, value: values2.map(\.amount).reduce(0, -), yearMonth: yearMonth))
             }
         }
         
         return result.sorted(using: KeyPathComparator(\.yearMonth))
+    }
+}
+
+struct StatisticsChart: View {
+    var title: String
+    var selectedCategories: [String]
+    fileprivate var items: [ChartData]
+
+    var body: some View {
+        HStack {
+            Text(self.title)
+                .font(.title)
+            Spacer()
+            Button(action: {
+                
+            }, label: {
+                Text(self.selectedCategories.joined(separator: ", "))
+            })
+        }
+        .padding([.leading, .trailing], 16)
+            
+        Chart {
+            ForEach(items) { item in
+                BarMark(
+                    x: .value("month", item.yearMonth),
+                    y: .value("amount", item.value)
+                )
+                .foregroundStyle(by: .value("category", item.category))
+            }
+        }
+        .frame(height: 200)
+        .padding(.all, 8)
     }
 }
 
