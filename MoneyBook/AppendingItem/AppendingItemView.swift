@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AppendingItemTypeView: View {
     @Binding var isPaid: Bool
-    
+
     var body: some View {
         Capsule()
             .fill(.background)
@@ -44,9 +44,9 @@ struct AppendingItemTypeView: View {
 struct AppendingItemNumberInputView: View {
     let image: Image
     let title: String
-    
+
     @Binding var value: Double?
-    
+
     var body: some View {
         HStack(spacing: 0) {
             image
@@ -68,9 +68,9 @@ struct AppendingItemNumberInputView: View {
 struct AppendingItemTextInputView: View {
     let image: Image
     let title: String
-    
+
     @Binding var text: String
-    
+
     var body: some View {
         HStack(spacing: 0) {
             image
@@ -86,7 +86,7 @@ struct AppendingItemTextInputView: View {
 
 struct AppendingItemDateInputView: View {
     @Binding var date: Date
-    
+
     var body: some View {
         DatePicker("Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
             .datePickerStyle(.graphical)
@@ -100,12 +100,12 @@ struct AppendingItemCategoryInputView: View {
     @State var isAlertPresented = false
     @State var addingCategory = ""
     @Binding var selection: String
-    
+
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \CategoryCoreEntity.title, ascending: true)],
         animation: .default)
     private var categories: FetchedResults<CategoryCoreEntity>
-    
+
     var body: some View {
         HStack {
             Text("Category")
@@ -139,11 +139,11 @@ struct AppendingItemCategoryInputView: View {
             }
         }
     }
-    
+
     private func setCategory(_ category: String) {
         self.selection = category
     }
-    
+
     private func addCategory(_ category: String) {
         do {
             try PersistenceController.shared.addCategory(category)
@@ -165,18 +165,18 @@ struct RightImageLabelStyle: LabelStyle {
 struct AppendingItemView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var title: String
     @State private var amount: Double?
     @State private var date: Date
     @State private var isPaid: Bool
     @State private var selection: String
-    
+
     private let item: ItemCoreEntity?
-    
+
     init(item: ItemCoreEntity?) {
         self.item = item
-        
+
         if let item {
             self._title = State(initialValue: item.title)
             self._amount = State(initialValue: abs(item.amount))
@@ -191,7 +191,7 @@ struct AppendingItemView: View {
             self._selection = State(initialValue: "기타")
         }
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
@@ -207,7 +207,7 @@ struct AppendingItemView: View {
                 AppendingItemCategoryInputView(selection: $selection)
                     .background(.background)
                     .cornerRadius(8)
-                
+
                 Button(action: self.submit) {
                     Text("Done")
                         .font(.callout)
@@ -217,15 +217,15 @@ struct AppendingItemView: View {
                 .background()
                 .cornerRadius(8)
                 .padding(.top, 40)
-                
+
                 Spacer()
             }
             .padding([.leading, .trailing], 32)
- 
+
         }
         .background(Color(uiColor: .secondarySystemBackground))
     }
-    
+
     private func submit() {
         let amount = (self.isPaid ? -1 : 1) * (self.amount ?? 0)
         let item = ItemEntity(
@@ -236,18 +236,18 @@ struct AppendingItemView: View {
             timestamp: self.date,
             title: self.title
         )
-        
+
         defer {
             dismiss()
         }
-        
+
         if let coreItem = self.item {
             self.updateItem(item, coreItem: coreItem)
         } else {
             self.addItem(item)
         }
     }
-    
+
     private func addItem(_ item: ItemEntity) {
         do {
             try PersistenceController.shared.addItem(item)
@@ -255,7 +255,7 @@ struct AppendingItemView: View {
             print("에러닷")
         }
     }
-    
+
     private func updateItem(_ item: ItemEntity, coreItem: ItemCoreEntity) {
         do {
             try PersistenceController.shared.updateItem(item, coreItem: coreItem)

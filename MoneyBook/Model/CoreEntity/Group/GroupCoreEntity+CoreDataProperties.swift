@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension GroupCoreEntity {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<GroupCoreEntity> {
@@ -21,6 +20,6 @@ extension GroupCoreEntity {
 
 }
 
-extension GroupCoreEntity : Identifiable {
+extension GroupCoreEntity: Identifiable {
 
 }

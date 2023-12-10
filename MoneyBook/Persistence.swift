@@ -11,11 +11,11 @@ struct PersistenceController {
     static let shared = PersistenceController()
     let container: NSPersistentContainer
     var viewContext: NSManagedObjectContext { self.container.viewContext }
-    
+
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        
+
         let now = Date()
         let group_id = UUID()
         for k in 0..<12 {
@@ -31,12 +31,12 @@ struct PersistenceController {
                 }
             }
         }
-        
+
         do {
             try ["식비", "생활비", "교통비", "통신비", "기타"].forEach { category in
                 try result.addCategory(category)
             }
-            
+
             try viewContext.save()
         } catch {
             // Replace this implementation with code to handle the error appropriately.
@@ -46,18 +46,17 @@ struct PersistenceController {
         }
         return result
     }()
-    
-    
+
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "MoneyBook")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
+
                 /*
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
@@ -71,7 +70,7 @@ struct PersistenceController {
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
-    
+
     func addItem(_ item: ItemEntity) throws {
         let newItem = ItemCoreEntity(context: self.viewContext)
         newItem.timestamp = item.timestamp
@@ -80,10 +79,10 @@ struct PersistenceController {
         newItem.amount = item.amount
         newItem.category = item.category
         newItem.group_id = item.group_id
-        
+
         try self.viewContext.save()
     }
-    
+
     func updateItem(_ item: ItemEntity, coreItem: ItemCoreEntity) throws {
         coreItem.title = item.title
         coreItem.timestamp = item.timestamp
@@ -91,14 +90,14 @@ struct PersistenceController {
         coreItem.amount = item.amount
         coreItem.category = item.category
         coreItem.group_id = item.group_id
-        
+
         try self.viewContext.save()
     }
-    
+
     func addCategory(_ category: String) throws {
         let newCategory = CategoryCoreEntity(context: self.viewContext)
         newCategory.title = category
-        
+
         try self.viewContext.save()
     }
 }

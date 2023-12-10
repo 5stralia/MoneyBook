@@ -10,7 +10,7 @@ import SwiftUI
 struct TimelineSummaryValueView: View {
     let paid: Double
     let earning: Double
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
             Rectangle()

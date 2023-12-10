@@ -15,18 +15,18 @@ struct TimelineView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \ItemCoreEntity.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<ItemCoreEntity>
-    
+
     struct GroupedItem {
         let date: Date
         var items: [ItemCoreEntity]
     }
     private func groupItems(_ items: [ItemCoreEntity], year: Int, month: Int) -> [GroupedItem] {
         var result = [GroupedItem]()
-        
+
         let filteredItems = items.filter { item in
             let itemYear = Calendar.current.component(.year, from: item.timestamp)
             let itemMonth = Calendar.current.component(.month, from: item.timestamp)
-            
+
             return year == itemYear && month == itemMonth
         }
         for item in filteredItems {
@@ -38,7 +38,7 @@ struct TimelineView: View {
                 result.append(GroupedItem(date: item.timestamp, items: [item]))
             }
         }
-        
+
         return result
     }
     private var earning: Double {
@@ -47,14 +47,14 @@ struct TimelineView: View {
     private var paid: Double {
         self.items.filter { $0.amount < 0 }.map { $0.amount }.reduce(0, +)
     }
-    
+
     @State var year: Int = Calendar.current.component(.year, from: Date())
     @State var month: Int = Calendar.current.component(.month, from: Date())
-    
+
     @State var isHiddenPicker: Bool = true
-    
+
     @State private var path = NavigationPath()
-    
+
     var body: some View {
         NavigationStack(path: $path) {
             ZStack(alignment: .bottom) {
@@ -93,20 +93,20 @@ struct TimelineView: View {
                                 })
                             }
                             .listRowSeparator(.hidden)
-                            
+
                             Color.clear
                                 .frame(height: 37)
                                 .listRowSeparator(.hidden)
                         }
                         .listStyle(.plain)
-                        
+
                         TimelineSummaryValueView(paid: paid, earning: earning)
                             .frame(height: 37)
                     }
-                    
+
                     TimelineSummaryView(paid: paid, earning: earning)
                 }
-                
+
                 if !isHiddenPicker {
                     VStack(spacing: 5) {
                         HStack {
@@ -123,7 +123,7 @@ struct TimelineView: View {
                             }
                             .pickerStyle(.wheel)
                         }
-                        
+
                         Button {
                             withAnimation {
                                 self.isHiddenPicker.toggle()
@@ -150,7 +150,7 @@ struct TimelineView: View {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
-                
+
                 ToolbarItem(placement: .navigationBarLeading) {
                     NavigationLink {
                         Text("This is Settings")
@@ -158,7 +158,7 @@ struct TimelineView: View {
                         Label("Open Settings", systemImage: "gearshape")
                     }
                 }
-                
+
                 ToolbarItem(placement: .principal) {
                     Button(action: changeDate) {
                         HStack(spacing: 5) {
@@ -176,13 +176,13 @@ struct TimelineView: View {
             .foregroundColor(.primary)
         }
     }
-    
+
     private func changeDate() {
         withAnimation {
             self.isHiddenPicker.toggle()
         }
     }
-    
+
     private func deleteItems(items: [ItemCoreEntity]) {
         withAnimation {
             items.forEach { viewContext.delete($0) }
@@ -216,7 +216,7 @@ struct TimelineView_Previews: PreviewProvider {
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners
-    
+
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)

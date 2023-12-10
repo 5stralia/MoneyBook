@@ -9,16 +9,16 @@ import Foundation
 import Charts
 import SwiftUI
 
-fileprivate struct ValuePerCategory {
+private struct ValuePerCategory {
     var category: String
     var value: Double
 }
 
-fileprivate struct ChartData: Identifiable {
+private struct ChartData: Identifiable {
     let category: String
     let value: Double
     let yearMonth: String
-    
+
     let id: UUID = UUID()
 }
 
@@ -29,15 +29,15 @@ struct ChartView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \ItemCoreEntity.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<ItemCoreEntity>
-    
+
     @State private var year = 2023
     @State private var month = 1
     @State private var chartVisibleLength = 4
-    
+
     @State private var isItemsLoaded: Bool = false
     @State private var selection1: [String] = []
     @State private var selection2: [String] = []
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -63,7 +63,7 @@ struct ChartView: View {
                         )
                     }
                 )
-                
+
                 StatisticsChart(
                     title: "소득",
                     selectedCategories: self.selection2,
@@ -97,16 +97,16 @@ struct ChartView: View {
             let date = Date()
             self.year = date.getYear()
             self.month = date.getMonth()
-            
+
             if !self.isItemsLoaded {
                 if self.selection1.isEmpty { self.selection1 = self.getAllCategories(isIncome: false) }
                 if self.selection2.isEmpty { self.selection2 = self.getAllCategories(isIncome: true) }
-                
+
                 self.isItemsLoaded = true
             }
         })
     }
-    
+
     private func getAllCategories(isIncome: Bool) -> [String] {
         let filtered = self.items.filter { item in
             if isIncome {
@@ -115,10 +115,10 @@ struct ChartView: View {
                 return item.amount < 0
             }
         }
-        
+
         return Dictionary(grouping: filtered, by: { $0.category }).map { $0.key }
     }
-    
+
     private func filteredItems(
         _ items: [ItemCoreEntity],
         year: Int,
@@ -128,22 +128,22 @@ struct ChartView: View {
         selctedCategories: [String]
     ) -> [ChartData] {
         var result: [ChartData] = []
-        
+
         let items = items.filter { item in
             let minDiff = month - length
             let minMonth = (minDiff <= 0) ? (12 + minDiff) : minDiff
             let minYear = (minDiff <= 0) ? (year - 1) : year
-            
+
             let maxDiff = month + length
             let maxMonth = (maxDiff > 12) ? (maxDiff - 12) : maxDiff
             let maxYear = (maxDiff > 12) ? (year + 1) : year
-            
+
             guard let minDate = Calendar.current.date(from: DateComponents(year: minYear, month: minMonth)),
                   let maxDate = Calendar.current.date(from: DateComponents(year: maxYear, month: maxMonth))
             else {
                 return false
             }
-           
+
             if isIncome {
                 return item.amount >= 0 &&
                 minDate <= item.timestamp &&
@@ -155,7 +155,7 @@ struct ChartView: View {
             }
         }
             .filter { selctedCategories.contains($0.category) }
-        
+
         let grouping = Dictionary(grouping: items, by: { $0.category })
         for (category, values) in grouping {
             let gp = Dictionary(grouping: values, by: { "\($0.timestamp.getYear()). \($0.timestamp.getMonth())" })
@@ -167,33 +167,33 @@ struct ChartView: View {
                 }
             }
         }
-        
+
         return result.sorted(using: KeyPathComparator(\.yearMonth))
     }
-    
+
     private func incomeData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int) -> [ChartData] {
         var result: [ChartData] = []
-        
+
         let items = items.filter { item in
             let minDiff = month - length
             let minMonth = (minDiff <= 0) ? (12 + minDiff) : minDiff
             let minYear = (minDiff <= 0) ? (year - 1) : year
-            
+
             let maxDiff = month + length
             let maxMonth = (maxDiff > 12) ? (maxDiff - 12) : maxDiff
             let maxYear = (maxDiff > 12) ? (year + 1) : year
-            
+
             guard let minDate = Calendar.current.date(from: DateComponents(year: minYear, month: minMonth)),
                   let maxDate = Calendar.current.date(from: DateComponents(year: maxYear, month: maxMonth))
             else {
                 return false
             }
-            
+
             return item.amount >= 0 &&
             minDate <= item.timestamp &&
             item.timestamp <= maxDate
         }
-        
+
         let grouping = Dictionary(grouping: items, by: { $0.category })
         for (category, values) in grouping {
             let gp = Dictionary(grouping: values, by: { "\($0.timestamp.getYear()). \($0.timestamp.getMonth())" })
@@ -201,28 +201,28 @@ struct ChartView: View {
                 result.append(ChartData(category: category, value: values2.map(\.amount).reduce(0, +), yearMonth: yearMonth))
             }
         }
-        
+
         return result.sorted(using: KeyPathComparator(\.yearMonth))
     }
-    
+
     private func expendData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int) -> [ChartData] {
         var result: [ChartData] = []
-        
+
         let items = items.filter { item in
             let minDiff = month - length
             let minMonth = (minDiff <= 0) ? (12 + minDiff) : minDiff
             let minYear = (minDiff <= 0) ? (year - 1) : year
-            
+
             let maxDiff = month + length
             let maxMonth = (maxDiff > 12) ? (maxDiff - 12) : maxDiff
             let maxYear = (maxDiff > 12) ? (year + 1) : year
-            
+
             guard let minDate = Calendar.current.date(from: DateComponents(year: minYear, month: minMonth)),
                   let maxDate = Calendar.current.date(from: DateComponents(year: maxYear, month: maxMonth))
             else {
                 return false
             }
-            
+
             return item.amount < 0 &&
             minDate <= item.timestamp &&
             item.timestamp <= maxDate
@@ -234,7 +234,7 @@ struct ChartView: View {
                 result.append(ChartData(category: category, value: values2.map(\.amount).reduce(0, -), yearMonth: yearMonth))
             }
         }
-        
+
         return result.sorted(using: KeyPathComparator(\.yearMonth))
     }
 }
@@ -243,7 +243,7 @@ struct StatisticsChart<Destination>: View where Destination: View {
     var title: String
     var selectedCategories: [String]
     fileprivate var items: [ChartData]
-    
+
     @ViewBuilder var destination: () -> Destination
 
     var body: some View {
@@ -258,7 +258,7 @@ struct StatisticsChart<Destination>: View where Destination: View {
             }
         }
         .padding([.leading, .trailing], 16)
-            
+
         if items.isEmpty {
             Text("Empty Data")
                 .font(.title)
@@ -283,7 +283,7 @@ extension Date {
     fileprivate func getYear() -> Int {
         return Calendar.current.component(.year, from: self)
     }
-    
+
     fileprivate func getMonth() -> Int {
         return Calendar.current.component(.month, from: self)
     }

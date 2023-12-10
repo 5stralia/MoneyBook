@@ -15,7 +15,7 @@ struct ContentView: View {
                     Label("Timeline", systemImage: "calendar.day.timeline.leading")
                 }
                 .toolbarBackground(.visible, for: .tabBar)
-            
+
             ChartView()
                 .tabItem {
                     Label("Chart", systemImage: "chart.pie")

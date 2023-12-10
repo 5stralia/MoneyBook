@@ -10,13 +10,13 @@ import SwiftUI
 struct TimelineSummaryView: View {
     let paid: Double
     let earning: Double
-    
+
     var earningMultiplier: Double {
         guard earning > 0 else { return 0 }
-        
+
         return earning / (-paid + earning)
     }
-    
+
     var body: some View {
         VStack(spacing: 0) {
             GeometryReader { metrics in
@@ -27,7 +27,7 @@ struct TimelineSummaryView: View {
                 }
             }
             .frame(height: 5)
-            
+
             HStack {
                 Text("합계")
                     .font(.system(size: 12, weight: .medium))

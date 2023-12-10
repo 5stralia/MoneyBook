@@ -12,7 +12,7 @@ struct TimelineItemView: View {
     let imageName: String
     let categoryName: String
     let amount: Double
-    
+
     var body: some View {
         HStack {
             Image(systemName: self.imageName)
