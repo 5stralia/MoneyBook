@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct MoneyBookApp: App {
-//    let persistenceController = PersistenceController.shared
+    //    let persistenceController = PersistenceController.shared
     let persistenceController = PersistenceController.preview
 
     var body: some Scene {
@@ -17,7 +17,8 @@ struct MoneyBookApp: App {
             ContentView()
                 .onAppear(perform: {
                     do {
-                        let categories = try persistenceController.viewContext.fetch(CategoryCoreEntity.fetchRequest())
+                        let categories = try persistenceController.viewContext.fetch(
+                            CategoryCoreEntity.fetchRequest())
                         if categories.isEmpty {
                             try ["식비", "생활비", "교통비", "통신비", "기타"].forEach { category in
                                 try persistenceController.addCategory(category)

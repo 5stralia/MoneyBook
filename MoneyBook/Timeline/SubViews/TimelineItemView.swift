@@ -49,9 +49,15 @@ struct TimelineItemView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             TimelineItemView(title: "신미방 마라탕", imageName: "carrot", categoryName: "식비", amount: 32000)
-                .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/250.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/80.0/*@END_MENU_TOKEN@*/))
+                .previewLayout(
+                    .fixed(
+                        width: /*@START_MENU_TOKEN@*/ 250.0 /*@END_MENU_TOKEN@*/,
+                        height: /*@START_MENU_TOKEN@*/ 80.0 /*@END_MENU_TOKEN@*/))
             TimelineItemView(title: "신미방 마라탕", imageName: "carrot", categoryName: "식비", amount: -32000)
-                .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/250.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/80.0/*@END_MENU_TOKEN@*/))
+                .previewLayout(
+                    .fixed(
+                        width: /*@START_MENU_TOKEN@*/ 250.0 /*@END_MENU_TOKEN@*/,
+                        height: /*@START_MENU_TOKEN@*/ 80.0 /*@END_MENU_TOKEN@*/))
         }
     }
 }

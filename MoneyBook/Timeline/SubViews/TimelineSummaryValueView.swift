@@ -14,7 +14,10 @@ struct TimelineSummaryValueView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             Rectangle()
-                .fill(LinearGradient(colors: [.clear, .init(uiColor: .systemBackground)], startPoint: .top, endPoint: .bottom))
+                .fill(
+                    LinearGradient(
+                        colors: [.clear, .init(uiColor: .systemBackground)], startPoint: .top, endPoint: .bottom
+                    ))
             HStack {
                 Text(amountFormatter.string(for: earning) ?? "")
                     .font(.system(size: 13, weight: .bold))

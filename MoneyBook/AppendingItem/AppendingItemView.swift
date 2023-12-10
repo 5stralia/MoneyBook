@@ -201,8 +201,10 @@ struct AppendingItemView: View {
                         .frame(width: 200, height: 44)
                     Spacer()
                 }
-                AppendingItemTextInputView(image: Image(systemName: "t.square"), title: "Title", text: $title)
-                AppendingItemNumberInputView(image: Image(systemName: "dollarsign"), title: "Amount", value: $amount)
+                AppendingItemTextInputView(
+                    image: Image(systemName: "t.square"), title: "Title", text: $title)
+                AppendingItemNumberInputView(
+                    image: Image(systemName: "dollarsign"), title: "Amount", value: $amount)
                 AppendingItemDateInputView(date: $date)
                 AppendingItemCategoryInputView(selection: $selection)
                     .background(.background)

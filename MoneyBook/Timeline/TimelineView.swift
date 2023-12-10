@@ -61,7 +61,8 @@ struct TimelineView: View {
                 VStack(spacing: 0) {
                     ZStack(alignment: .bottom) {
                         List {
-                            ForEach(self.groupItems(Array(self.items), year: year, month: month), id: \.date) { group in
+                            ForEach(self.groupItems(Array(self.items), year: year, month: month), id: \.date) {
+                                group in
                                 HStack {
                                     Spacer()
                                     TimelineDateView(date: group.date)
@@ -74,18 +75,24 @@ struct TimelineView: View {
                                         if item.amount > 0 {
                                             HStack {
                                                 Spacer(minLength: 80)
-                                                TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                                TimelineItemView(
+                                                    title: item.title, imageName: "carrot", categoryName: item.category,
+                                                    amount: item.amount)
                                             }
                                         } else {
                                             HStack {
-                                                TimelineItemView(title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount)
+                                                TimelineItemView(
+                                                    title: item.title, imageName: "carrot", categoryName: item.category,
+                                                    amount: item.amount)
                                                 Spacer(minLength: 80)
                                             }
                                         }
                                     }
-                                    .navigationDestination(for: ItemCoreEntity.self, destination: { item in
-                                        AppendingItemView(item: item)
-                                    })
+                                    .navigationDestination(
+                                        for: ItemCoreEntity.self,
+                                        destination: { item in
+                                            AppendingItemView(item: item)
+                                        })
                                 }
                                 .onDelete(perform: { indexSet in
                                     let deletedItems = indexSet.map { group.items[$0] }
@@ -133,10 +140,10 @@ struct TimelineView: View {
                         }
 
                     }
-                        .padding(.bottom, 32)
-                        .background(.background)
-                        .clipShape(RoundedCorner(radius: 16, corners: [.topLeft, .topRight]))
-                        .shadow(radius: 8)
+                    .padding(.bottom, 32)
+                    .background(.background)
+                    .clipShape(RoundedCorner(radius: 16, corners: [.topLeft, .topRight]))
+                    .shadow(radius: 8)
                 }
             }
             .toolbar {
@@ -218,7 +225,9 @@ struct RoundedCorner: Shape {
     var corners: UIRectCorner = .allCorners
 
     func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let path = UIBezierPath(
+            roundedRect: rect, byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
     }
 }

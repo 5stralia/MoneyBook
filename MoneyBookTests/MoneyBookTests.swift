@@ -6,6 +6,7 @@
 //
 
 import XCTest
+
 @testable import MoneyBook
 
 final class MoneyBookTests: XCTestCase {

@@ -6,8 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(GroupCoreEntity)
 public class GroupCoreEntity: NSManagedObject {

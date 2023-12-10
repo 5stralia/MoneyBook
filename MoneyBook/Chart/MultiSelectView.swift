@@ -39,12 +39,14 @@ struct MultiSelectView: View {
             }
             .navigationTitle("hello")
             .toolbar {
-                Button(action: {
-                    self.selection = items.filter({ $0.isSelected }).map({ $0.name })
-                    dismiss()
-                }, label: {
-                    Text("Done")
-                })
+                Button(
+                    action: {
+                        self.selection = items.filter({ $0.isSelected }).map({ $0.name })
+                        dismiss()
+                    },
+                    label: {
+                        Text("Done")
+                    })
             }
         }
 
@@ -57,7 +59,7 @@ struct MultiSelectView: View {
             SelectionItem(name: "one", isSelected: false),
             SelectionItem(name: "two", isSelected: true),
             SelectionItem(name: "three", isSelected: true),
-            SelectionItem(name: "four", isSelected: false)
+            SelectionItem(name: "four", isSelected: false),
         ],
         selection: State(initialValue: [])
     )

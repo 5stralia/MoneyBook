@@ -6,8 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(ItemCoreEntity)
 public class ItemCoreEntity: NSManagedObject {
