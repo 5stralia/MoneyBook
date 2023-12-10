@@ -33,22 +33,50 @@ struct ChartView: View {
     @State private var year = 2023
     @State private var month = 1
     @State private var chartVisibleLength = 4
-    @State private var selectedExpenseCategories = ["category0"]
-    @State private var selectedIncomeCategories = ["category0"]
+    
+    @State private var isItemsLoaded: Bool = false
+    @State private var selection1: [String] = []
+    @State private var selection2: [String] = []
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 StatisticsChart(
                     title: "지출",
-                    selectedCategories: self.selectedExpenseCategories,
-                    items: self.incomeData(self.items.map({ $0 }), year: year, month: month, length: chartVisibleLength)
+                    selectedCategories: self.selection1,
+                    items: self.filteredItems(
+                        self.items.map({ $0 }),
+                        year: year,
+                        month: month,
+                        length: self.chartVisibleLength,
+                        isIncome: false,
+                        selctedCategories: self.selection1
+                    ),
+                    destination: {
+                        MultiSelectView(
+                            items: self.getAllCategories(isIncome: false)
+                                .map { category in
+                                    let selected = self.selection1
+                                    return SelectionItem(name: category, isSelected: selected.contains(category))
+                                },
+                            selection: self._selection1
+                        )
+                    }
                 )
                 
                 StatisticsChart(
                     title: "소득",
-                    selectedCategories: self.selectedIncomeCategories,
-                    items: self.expendData(self.items.map({ $0 }), year: year, month: month, length: chartVisibleLength))
+                    selectedCategories: self.selection2,
+                    items: self.filteredItems(
+                        self.items.map({ $0 }),
+                        year: year,
+                        month: month,
+                        length: self.chartVisibleLength,
+                        isIncome: true,
+                        selctedCategories: self.selection2
+                    ),
+                    destination: { MultiSelectView(items: [], selection: self._selection2) }
+                )
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -69,7 +97,78 @@ struct ChartView: View {
             let date = Date()
             self.year = date.getYear()
             self.month = date.getMonth()
+            
+            if !self.isItemsLoaded {
+                if self.selection1.isEmpty { self.selection1 = self.getAllCategories(isIncome: false) }
+                if self.selection2.isEmpty { self.selection2 = self.getAllCategories(isIncome: true) }
+                
+                self.isItemsLoaded = true
+            }
         })
+    }
+    
+    private func getAllCategories(isIncome: Bool) -> [String] {
+        let filtered = self.items.filter { item in
+            if isIncome {
+                return item.amount >= 0
+            } else {
+                return item.amount < 0
+            }
+        }
+        
+        return Dictionary(grouping: filtered, by: { $0.category }).map { $0.key }
+    }
+    
+    private func filteredItems(
+        _ items: [ItemCoreEntity],
+        year: Int,
+        month: Int,
+        length: Int,
+        isIncome: Bool,
+        selctedCategories: [String]
+    ) -> [ChartData] {
+        var result: [ChartData] = []
+        
+        let items = items.filter { item in
+            let minDiff = month - length
+            let minMonth = (minDiff <= 0) ? (12 + minDiff) : minDiff
+            let minYear = (minDiff <= 0) ? (year - 1) : year
+            
+            let maxDiff = month + length
+            let maxMonth = (maxDiff > 12) ? (maxDiff - 12) : maxDiff
+            let maxYear = (maxDiff > 12) ? (year + 1) : year
+            
+            guard let minDate = Calendar.current.date(from: DateComponents(year: minYear, month: minMonth)),
+                  let maxDate = Calendar.current.date(from: DateComponents(year: maxYear, month: maxMonth))
+            else {
+                return false
+            }
+           
+            if isIncome {
+                return item.amount >= 0 &&
+                minDate <= item.timestamp &&
+                item.timestamp <= maxDate
+            } else {
+                return item.amount < 0 &&
+                minDate <= item.timestamp &&
+                item.timestamp <= maxDate
+            }
+        }
+            .filter { selctedCategories.contains($0.category) }
+        
+        let grouping = Dictionary(grouping: items, by: { $0.category })
+        for (category, values) in grouping {
+            let gp = Dictionary(grouping: values, by: { "\($0.timestamp.getYear()). \($0.timestamp.getMonth())" })
+            for (yearMonth, values2) in gp {
+                if isIncome {
+                    result.append(ChartData(category: category, value: values2.map(\.amount).reduce(0, +), yearMonth: yearMonth))
+                } else {
+                    result.append(ChartData(category: category, value: values2.map(\.amount).reduce(0, -), yearMonth: yearMonth))
+                }
+            }
+        }
+        
+        return result.sorted(using: KeyPathComparator(\.yearMonth))
     }
     
     private func incomeData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int) -> [ChartData] {
@@ -140,35 +239,43 @@ struct ChartView: View {
     }
 }
 
-struct StatisticsChart: View {
+struct StatisticsChart<Destination>: View where Destination: View {
     var title: String
     var selectedCategories: [String]
     fileprivate var items: [ChartData]
+    
+    @ViewBuilder var destination: () -> Destination
 
     var body: some View {
         HStack {
             Text(self.title)
                 .font(.title)
             Spacer()
-            Button(action: {
-                
-            }, label: {
-                Text(self.selectedCategories.joined(separator: ", "))
-            })
+            NavigationLink {
+                self.destination()
+            } label: {
+                Label(self.selectedCategories.joined(separator: ", "), systemImage: "checkmark.square")
+            }
         }
         .padding([.leading, .trailing], 16)
             
-        Chart {
-            ForEach(items) { item in
-                BarMark(
-                    x: .value("month", item.yearMonth),
-                    y: .value("amount", item.value)
-                )
-                .foregroundStyle(by: .value("category", item.category))
+        if items.isEmpty {
+            Text("Empty Data")
+                .font(.title)
+                .frame(height: 200)
+        } else {
+            Chart {
+                ForEach(items) { item in
+                    BarMark(
+                        x: .value("month", item.yearMonth),
+                        y: .value("amount", item.value)
+                    )
+                    .foregroundStyle(by: .value("category", item.category))
+                }
             }
+            .frame(height: 200)
+            .padding(.all, 8)
         }
-        .frame(height: 200)
-        .padding(.all, 8)
     }
 }
 

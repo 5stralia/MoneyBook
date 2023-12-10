@@ -31,6 +31,7 @@
 		05A76A2E2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */; };
 		05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3C2A355D4B00B231CB /* TimelineView.swift */; };
 		05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3F2A355DE100B231CB /* TimelineItemView.swift */; };
+		05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B76D482B25D3DE0048C757 /* MultiSelectView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		05A76A3C2A355D4B00B231CB /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		05A76A3F2A355DE100B231CB /* TimelineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineItemView.swift; sourceTree = "<group>"; };
+		05B76D482B25D3DE0048C757 /* MultiSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				05A719A72A8521AE00260837 /* ChartView.swift */,
+				05B76D482B25D3DE0048C757 /* MultiSelectView.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 			files = (
 				05A76A152A34115E00B231CB /* Persistence.swift in Sources */,
 				0584B3612A4A468F004758AE /* AppendingItemView.swift in Sources */,
+				05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */,
 				0584B37B2A766442004758AE /* GroupCoreEntity+CoreDataClass.swift in Sources */,
 				0584B3842A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift in Sources */,
 				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
