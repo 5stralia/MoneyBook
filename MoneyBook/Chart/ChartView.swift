@@ -22,6 +22,11 @@ private struct ChartData: Identifiable {
     let id: UUID = UUID()
 }
 
+enum Recording {
+    case expense
+    case income
+}
+
 struct ChartView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
@@ -38,52 +43,91 @@ struct ChartView: View {
     @State private var selection1: [String] = []
     @State private var selection2: [String] = []
 
+    @State private var pickerSelection: Recording = .expense
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                StatisticsChart(
-                    title: "지출",
-                    selectedCategories: self.selection1,
-                    items: self.filteredItems(
-                        self.items.map({ $0 }),
-                        year: year,
-                        month: month,
-                        length: self.chartVisibleLength,
-                        isIncome: false,
-                        selctedCategories: self.selection1
-                    ),
-                    destination: {
-                        MultiSelectView(
-                            items: self.getAllCategories(isIncome: false)
-                                .map { category in
-                                    let selected = self.selection1
-                                    return SelectionItem(name: category, isSelected: selected.contains(category))
-                                },
-                            selection: self._selection1
-                        )
-                    }
-                )
 
-                StatisticsChart(
-                    title: "소득",
-                    selectedCategories: self.selection2,
-                    items: self.filteredItems(
-                        self.items.map({ $0 }),
-                        year: year,
-                        month: month,
-                        length: self.chartVisibleLength,
-                        isIncome: true,
-                        selctedCategories: self.selection2
-                    ),
-                    destination: { MultiSelectView(items: [], selection: self._selection2) }
-                )
+                Picker("type", selection: $pickerSelection) {
+                    Text("지출").tag(Recording.expense)
+                    Text("소득").tag(Recording.income)
+                }
+                .pickerStyle(.segmented)
+
+                Spacer(minLength: 20)
+
+                if self.pickerSelection == .expense {
+                    CategoryPieChart(
+                        items: self.filterCurrentMonthItems(
+                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: false)
+                    )
+                    .frame(height: 200)
+
+                    Spacer(minLength: 20)
+
+                    StatisticsChart(
+                        title: "지출",
+                        selectedCategories: self.selection1,
+                        items: self.filteredItems(
+                            self.items.map({ $0 }),
+                            year: year,
+                            month: month,
+                            length: self.chartVisibleLength,
+                            isIncome: false,
+                            selctedCategories: self.selection1
+                        ),
+                        destination: {
+                            MultiSelectView(
+                                items: self.getAllCategories(isIncome: false)
+                                    .map { category in
+                                        let selected = self.selection1
+                                        return SelectionItem(name: category, isSelected: selected.contains(category))
+                                    },
+                                selection: self._selection1
+                            )
+                        }
+                    )
+                } else {
+                    CategoryPieChart(
+                        items: self.filterCurrentMonthItems(
+                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: true)
+                    )
+                    .frame(height: 200)
+
+                    Spacer(minLength: 20)
+
+                    StatisticsChart(
+                        title: "소득",
+                        selectedCategories: self.selection2,
+                        items: self.filteredItems(
+                            self.items.map({ $0 }),
+                            year: year,
+                            month: month,
+                            length: self.chartVisibleLength,
+                            isIncome: true,
+                            selctedCategories: self.selection2
+                        ),
+                        destination: {
+                            MultiSelectView(
+                                items: self.getAllCategories(isIncome: true)
+                                    .map { category in
+                                        let selected = self.selection2
+                                        return SelectionItem(name: category, isSelected: selected.contains(category))
+                                    },
+                                selection: self._selection2
+                            )
+                        }
+                    )
+                }
             }
+            .padding([.leading, .trailing], 8)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(
                         "plus",
                         systemImage: self.chartVisibleLength == 8
-                            ? "minus.magnifyingglass" : "plus.magnifyingglass"
+                            ? "plus.magnifyingglass" : "minus.magnifyingglass"
                     ) {
                         if self.chartVisibleLength == 8 {
                             self.chartVisibleLength = 2
@@ -121,6 +165,27 @@ struct ChartView: View {
         }
 
         return Dictionary(grouping: filtered, by: { $0.category }).map { $0.key }
+    }
+
+    private func filterCurrentMonthItems(
+        _ items: [ItemCoreEntity],
+        year: Int,
+        month: Int,
+        isIncome: Bool
+    ) -> [ChartData] {
+        let items = items.filter { $0.timestamp.getYear() == year && $0.timestamp.getMonth() == month }
+            .filter { isIncome ? $0.amount < 0 : $0.amount >= 0 }
+
+        let grouping = Dictionary(grouping: items, by: { $0.category })
+        return grouping.map { (key, value) in
+            ChartData(
+                category: key,
+                value: value.filter({ isIncome ? $0.amount < 0 : $0.amount > 0 })
+                    .map({ isIncome ? -$0.amount : $0.amount })
+                    .reduce(0, +),
+                yearMonth: "\(year). \(month)"
+            )
+        }
     }
 
     private func filteredItems(
@@ -253,6 +318,24 @@ struct ChartView: View {
     }
 }
 
+struct CategoryPieChart: View {
+    fileprivate var items: [ChartData]
+
+    var body: some View {
+        Chart {
+            ForEach(items) { item in
+                SectorMark(
+                    angle: .value("category", item.value),
+                    innerRadius: .ratio(0.6),
+                    outerRadius: .ratio(1.0),
+                    angularInset: 10
+                )
+                .foregroundStyle(by: .value("category", item.category))
+            }
+        }
+    }
+}
+
 struct StatisticsChart<Destination>: View where Destination: View {
     var title: String
     var selectedCategories: [String]
@@ -271,7 +354,6 @@ struct StatisticsChart<Destination>: View where Destination: View {
                 Label(self.selectedCategories.joined(separator: ", "), systemImage: "checkmark.square")
             }
         }
-        .padding([.leading, .trailing], 16)
 
         if items.isEmpty {
             Text("Empty Data")
@@ -288,7 +370,6 @@ struct StatisticsChart<Destination>: View where Destination: View {
                 }
             }
             .frame(height: 200)
-            .padding(.all, 8)
         }
     }
 }

@@ -22,7 +22,6 @@ struct ContentView: View {
                 }
                 .toolbarBackground(.visible, for: .tabBar)
         }
-        .tint(.primary)
     }
 }
 
