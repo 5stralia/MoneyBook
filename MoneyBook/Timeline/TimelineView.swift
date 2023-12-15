@@ -180,7 +180,6 @@ struct TimelineView: View {
             }
             .toolbar(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
-            .foregroundColor(.primary)
         }
     }
 

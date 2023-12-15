@@ -1,0 +1,137 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Add Category" : {
+
+    },
+    "Add Item" : {
+
+    },
+    "amount" : {
+
+    },
+    "Amount" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "category" : {
+
+    },
+    "Category" : {
+
+    },
+    "Chart" : {
+
+    },
+    "Date" : {
+
+    },
+    "done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "done"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인"
+          }
+        }
+      }
+    },
+    "Done" : {
+
+    },
+    "Empty Data" : {
+
+    },
+    "expense" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "expense"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지출"
+          }
+        }
+      }
+    },
+    "income" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "income"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "소득"
+          }
+        }
+      }
+    },
+    "month" : {
+
+    },
+    "Month" : {
+
+    },
+    "OK" : {
+
+    },
+    "Open Settings" : {
+
+    },
+    "plus" : {
+
+    },
+    "This is Settings" : {
+
+    },
+    "Timeline" : {
+
+    },
+    "total" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "합계"
+          }
+        }
+      }
+    },
+    "type" : {
+
+    },
+    "Year" : {
+
+    },
+    "수입" : {
+
+    },
+    "지출" : {
+
+    },
+    "합계" : {
+
+    }
+  },
+  "version" : "1.0"
+}

@@ -50,8 +50,8 @@ struct ChartView: View {
             ScrollView {
 
                 Picker("type", selection: $pickerSelection) {
-                    Text("지출").tag(Recording.expense)
-                    Text("소득").tag(Recording.income)
+                    Text("expense").tag(Recording.expense)
+                    Text("income").tag(Recording.income)
                 }
                 .pickerStyle(.segmented)
 
@@ -67,7 +67,7 @@ struct ChartView: View {
                     Spacer(minLength: 20)
 
                     StatisticsChart(
-                        title: "지출",
+                        title: "",
                         selectedCategories: self.selection1,
                         items: self.filteredItems(
                             self.items.map({ $0 }),
@@ -98,7 +98,7 @@ struct ChartView: View {
                     Spacer(minLength: 20)
 
                     StatisticsChart(
-                        title: "소득",
+                        title: "",
                         selectedCategories: self.selection2,
                         items: self.filteredItems(
                             self.items.map({ $0 }),
@@ -186,6 +186,7 @@ struct ChartView: View {
                 yearMonth: "\(year). \(month)"
             )
         }
+        .sorted(using: KeyPathComparator(\.value))
     }
 
     private func filteredItems(
@@ -240,6 +241,7 @@ struct ChartView: View {
         }
 
         return result.sorted(using: KeyPathComparator(\.yearMonth))
+            .sorted(using: KeyPathComparator(\.value, order: .reverse))
     }
 
     private func incomeData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int)

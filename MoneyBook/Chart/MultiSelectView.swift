@@ -37,7 +37,6 @@ struct MultiSelectView: View {
                     item.isSelected.toggle()
                 }
             }
-            .navigationTitle("hello")
             .toolbar {
                 Button(
                     action: {
@@ -45,7 +44,7 @@ struct MultiSelectView: View {
                         dismiss()
                     },
                     label: {
-                        Text("Done")
+                        Text("done")
                     })
             }
         }

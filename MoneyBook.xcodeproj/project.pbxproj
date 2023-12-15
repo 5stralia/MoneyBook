@@ -32,6 +32,13 @@
 		05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3C2A355D4B00B231CB /* TimelineView.swift */; };
 		05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3F2A355DE100B231CB /* TimelineItemView.swift */; };
 		05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B76D482B25D3DE0048C757 /* MultiSelectView.swift */; };
+		05BA7BDF2B29DDEE00D159FB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */; };
+		05BA7BE72B2B38D800D159FB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BA7BE62B2B38D800D159FB /* WidgetKit.framework */; };
+		05BA7BE92B2B38D800D159FB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BA7BE82B2B38D800D159FB /* SwiftUI.framework */; };
+		05BA7BEC2B2B38D800D159FB /* MoneyBookWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA7BEB2B2B38D800D159FB /* MoneyBookWidgetsBundle.swift */; };
+		05BA7BEE2B2B38D800D159FB /* MoneyBookWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA7BED2B2B38D800D159FB /* MoneyBookWidgets.swift */; };
+		05BA7BF02B2B38D900D159FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05BA7BEF2B2B38D900D159FB /* Assets.xcassets */; };
+		05BA7BF42B2B38D900D159FB /* MoneyBookWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 05BA7BE42B2B38D800D159FB /* MoneyBookWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +56,28 @@
 			remoteGlobalIDString = 05A76A072A34115D00B231CB;
 			remoteInfo = MoneyBook;
 		};
+		05BA7BF22B2B38D900D159FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 05A76A002A34115D00B231CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 05BA7BE32B2B38D800D159FB;
+			remoteInfo = MoneyBookWidgetsExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		05BA7BF82B2B38D900D159FB /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				05BA7BF42B2B38D900D159FB /* MoneyBookWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		051899FF2A3761C500430226 /* TimelineSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView.swift; sourceTree = "<group>"; };
@@ -80,6 +108,14 @@
 		05A76A3C2A355D4B00B231CB /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		05A76A3F2A355DE100B231CB /* TimelineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineItemView.swift; sourceTree = "<group>"; };
 		05B76D482B25D3DE0048C757 /* MultiSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectView.swift; sourceTree = "<group>"; };
+		05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		05BA7BE42B2B38D800D159FB /* MoneyBookWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoneyBookWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		05BA7BE62B2B38D800D159FB /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		05BA7BE82B2B38D800D159FB /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		05BA7BEB2B2B38D800D159FB /* MoneyBookWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookWidgetsBundle.swift; sourceTree = "<group>"; };
+		05BA7BED2B2B38D800D159FB /* MoneyBookWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookWidgets.swift; sourceTree = "<group>"; };
+		05BA7BEF2B2B38D900D159FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		05BA7BF12B2B38D900D159FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +140,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		05BA7BE12B2B38D800D159FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05BA7BE92B2B38D800D159FB /* SwiftUI.framework in Frameworks */,
+				05BA7BE72B2B38D800D159FB /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -114,13 +159,6 @@
 				0584B37D2A766466004758AE /* CoreEntity */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		053913082A9E219F00C72EDD /* Search */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Search;
 			sourceTree = "<group>";
 		};
 		0584B35A2A406822004758AE /* Extension */ = {
@@ -199,6 +237,8 @@
 				05A76A0A2A34115D00B231CB /* MoneyBook */,
 				05A76A202A34115E00B231CB /* MoneyBookTests */,
 				05A76A2A2A34115E00B231CB /* MoneyBookUITests */,
+				05BA7BEA2B2B38D800D159FB /* MoneyBookWidgets */,
+				05BA7BE52B2B38D800D159FB /* Frameworks */,
 				05A76A092A34115D00B231CB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -209,6 +249,7 @@
 				05A76A082A34115D00B231CB /* MoneyBook.app */,
 				05A76A1D2A34115E00B231CB /* MoneyBookTests.xctest */,
 				05A76A272A34115E00B231CB /* MoneyBookUITests.xctest */,
+				05BA7BE42B2B38D800D159FB /* MoneyBookWidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -216,7 +257,7 @@
 		05A76A0A2A34115D00B231CB /* MoneyBook */ = {
 			isa = PBXGroup;
 			children = (
-				053913082A9E219F00C72EDD /* Search */,
+				05BA7BDD2B29DDCE00D159FB /* Resource */,
 				05A719A62A85219D00260837 /* Chart */,
 				0584B35F2A4A4666004758AE /* AppendingItem */,
 				0584B35A2A406822004758AE /* Extension */,
@@ -224,9 +265,7 @@
 				05A76A3A2A355D2E00B231CB /* Timeline */,
 				05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */,
 				05A76A0D2A34115D00B231CB /* ContentView.swift */,
-				05A76A0F2A34115E00B231CB /* Assets.xcassets */,
 				05A76A142A34115E00B231CB /* Persistence.swift */,
-				05A76A162A34115E00B231CB /* MoneyBook.xcdatamodeld */,
 				05A76A112A34115E00B231CB /* Preview Content */,
 			);
 			path = MoneyBook;
@@ -277,6 +316,36 @@
 			path = SubViews;
 			sourceTree = "<group>";
 		};
+		05BA7BDD2B29DDCE00D159FB /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				05A76A0F2A34115E00B231CB /* Assets.xcassets */,
+				05A76A162A34115E00B231CB /* MoneyBook.xcdatamodeld */,
+				05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		05BA7BE52B2B38D800D159FB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				05BA7BE62B2B38D800D159FB /* WidgetKit.framework */,
+				05BA7BE82B2B38D800D159FB /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		05BA7BEA2B2B38D800D159FB /* MoneyBookWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				05BA7BEB2B2B38D800D159FB /* MoneyBookWidgetsBundle.swift */,
+				05BA7BED2B2B38D800D159FB /* MoneyBookWidgets.swift */,
+				05BA7BEF2B2B38D900D159FB /* Assets.xcassets */,
+				05BA7BF12B2B38D900D159FB /* Info.plist */,
+			);
+			path = MoneyBookWidgets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -287,10 +356,12 @@
 				05A76A042A34115D00B231CB /* Sources */,
 				05A76A052A34115D00B231CB /* Frameworks */,
 				05A76A062A34115D00B231CB /* Resources */,
+				05BA7BF82B2B38D900D159FB /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				05BA7BF32B2B38D900D159FB /* PBXTargetDependency */,
 			);
 			name = MoneyBook;
 			productName = MoneyBook;
@@ -333,6 +404,23 @@
 			productReference = 05A76A272A34115E00B231CB /* MoneyBookUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		05BA7BE32B2B38D800D159FB /* MoneyBookWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05BA7BF52B2B38D900D159FB /* Build configuration list for PBXNativeTarget "MoneyBookWidgetsExtension" */;
+			buildPhases = (
+				05BA7BE02B2B38D800D159FB /* Sources */,
+				05BA7BE12B2B38D800D159FB /* Frameworks */,
+				05BA7BE22B2B38D800D159FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MoneyBookWidgetsExtension;
+			productName = MoneyBookWidgetsExtension;
+			productReference = 05BA7BE42B2B38D800D159FB /* MoneyBookWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -340,7 +428,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1510;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					05A76A072A34115D00B231CB = {
@@ -354,6 +442,9 @@
 						CreatedOnToolsVersion = 14.3;
 						TestTargetID = 05A76A072A34115D00B231CB;
 					};
+					05BA7BE32B2B38D800D159FB = {
+						CreatedOnToolsVersion = 15.1;
+					};
 				};
 			};
 			buildConfigurationList = 05A76A032A34115D00B231CB /* Build configuration list for PBXProject "MoneyBook" */;
@@ -363,6 +454,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 05A769FF2A34115D00B231CB;
 			productRefGroup = 05A76A092A34115D00B231CB /* Products */;
@@ -372,6 +464,7 @@
 				05A76A072A34115D00B231CB /* MoneyBook */,
 				05A76A1C2A34115E00B231CB /* MoneyBookTests */,
 				05A76A262A34115E00B231CB /* MoneyBookUITests */,
+				05BA7BE32B2B38D800D159FB /* MoneyBookWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -383,6 +476,7 @@
 			files = (
 				05A76A132A34115E00B231CB /* Preview Assets.xcassets in Resources */,
 				05A76A102A34115E00B231CB /* Assets.xcassets in Resources */,
+				05BA7BDF2B29DDEE00D159FB /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +491,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05BA7BE22B2B38D800D159FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05BA7BF02B2B38D900D159FB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +549,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		05BA7BE02B2B38D800D159FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05BA7BEC2B2B38D800D159FB /* MoneyBookWidgetsBundle.swift in Sources */,
+				05BA7BEE2B2B38D800D159FB /* MoneyBookWidgets.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -459,6 +570,11 @@
 			isa = PBXTargetDependency;
 			target = 05A76A072A34115D00B231CB /* MoneyBook */;
 			targetProxy = 05A76A282A34115E00B231CB /* PBXContainerItemProxy */;
+		};
+		05BA7BF32B2B38D900D159FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 05BA7BE32B2B38D800D159FB /* MoneyBookWidgetsExtension */;
+			targetProxy = 05BA7BF22B2B38D900D159FB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -580,6 +696,7 @@
 		05A76A322A34115E00B231CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -609,6 +726,7 @@
 		05A76A332A34115E00B231CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -711,6 +829,71 @@
 			};
 			name = Release;
 		};
+		05BA7BF62B2B38D900D159FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BG5DA8S34C;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MoneyBookWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MoneyBookWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hoju.MoneyBook.MoneyBookWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		05BA7BF72B2B38D900D159FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BG5DA8S34C;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MoneyBookWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MoneyBookWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hoju.MoneyBook.MoneyBookWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -746,6 +929,15 @@
 			buildConfigurations = (
 				05A76A382A34115E00B231CB /* Debug */,
 				05A76A392A34115E00B231CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05BA7BF52B2B38D900D159FB /* Build configuration list for PBXNativeTarget "MoneyBookWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05BA7BF62B2B38D900D159FB /* Debug */,
+				05BA7BF72B2B38D900D159FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
