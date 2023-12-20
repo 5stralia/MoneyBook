@@ -60,10 +60,19 @@ struct ChartView: View {
                 if self.pickerSelection == .expense {
                     CategoryPieChart(
                         items: self.filterCurrentMonthItems(
-                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: false)
+                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: false
+                        )
                     )
                     .frame(height: 200)
 
+                    Spacer(minLength: 20)
+                    
+                    StatisticsMonthlyChart(
+                        items: self.filterCurrentMonthItems(
+                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: false
+                        )
+                    )
+                    
                     Spacer(minLength: 20)
 
                     StatisticsChart(
@@ -95,6 +104,14 @@ struct ChartView: View {
                     )
                     .frame(height: 200)
 
+                    Spacer(minLength: 20)
+                    
+                    StatisticsMonthlyChart(
+                        items: self.filterCurrentMonthItems(
+                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: false
+                        )
+                    )
+                    
                     Spacer(minLength: 20)
 
                     StatisticsChart(
@@ -186,7 +203,7 @@ struct ChartView: View {
                 yearMonth: "\(year). \(month)"
             )
         }
-        .sorted(using: KeyPathComparator(\.value))
+        .sorted(using: KeyPathComparator(\.value, order: .reverse))
     }
 
     private func filteredItems(
@@ -335,6 +352,35 @@ struct CategoryPieChart: View {
                 .foregroundStyle(by: .value("category", item.category))
             }
         }
+        .chartLegend(.hidden)
+    }
+}
+
+fileprivate let percentageFomatter: NumberFormatter = {
+    let fomatter = NumberFormatter()
+    fomatter.numberStyle = .percent
+    return fomatter
+}()
+struct StatisticsMonthlyChart: View {
+    fileprivate var items: [ChartData]
+    private var sum: Double { self.items.reduce(0, { $0 + $1.value }) }
+    
+    var body: some View {
+        Chart {
+            ForEach(self.items) { item in
+                BarMark(
+                    x: .value("amount", item.value),
+                    y: .value("category", item.category),
+                    width: .fixed(20)
+                )
+                .foregroundStyle(by: .value("category", item.category))
+                .annotation(position: .trailing) {
+                    let percentage = percentageFomatter.string(from: NSNumber(value: item.value / self.sum))
+                    Text(percentage ?? "?")
+                }
+            }
+        }
+        .frame(height: 60 * CGFloat(self.items.count))
     }
 }
 
@@ -353,7 +399,7 @@ struct StatisticsChart<Destination>: View where Destination: View {
             NavigationLink {
                 self.destination()
             } label: {
-                Label(self.selectedCategories.joined(separator: ", "), systemImage: "checkmark.square")
+                Image(systemName: "checkmark.square")
             }
         }
 
