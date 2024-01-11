@@ -337,6 +337,38 @@ struct ChartView: View {
     }
 }
 
+struct Header: View {
+    let topText: String
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            
+            HStack {
+                Spacer()
+                VStack {
+                    Text(self.topText)
+                        .font(.Pretendard(size: 12))
+                        .foregroundStyle(Color.white)
+                    Button(action: self.action, label: {
+                        HStack {
+                            Text(self.title)
+                                .font(.Pretendard(size: 23))
+                            Image(systemName: "chevron.down")
+                        }
+                        .foregroundStyle(Color.white)
+                    })
+                }
+                Spacer()
+            }
+        }
+        .padding(.bottom, 11)
+        .frame(height: 116)
+        .background(Color(red: 255/255, green: 195/255, blue: 117/255))
+    }
+}
 struct CategoryPieChart: View {
     fileprivate var items: [ChartData]
 
