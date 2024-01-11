@@ -39,6 +39,16 @@
 		05BA7BEE2B2B38D800D159FB /* MoneyBookWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA7BED2B2B38D800D159FB /* MoneyBookWidgets.swift */; };
 		05BA7BF02B2B38D900D159FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05BA7BEF2B2B38D900D159FB /* Assets.xcassets */; };
 		05BA7BF42B2B38D900D159FB /* MoneyBookWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 05BA7BE42B2B38D800D159FB /* MoneyBookWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		05D7E54A2B4D844000554496 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5412B4D844000554496 /* Pretendard-Black.otf */; };
+		05D7E54B2B4D844000554496 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5422B4D844000554496 /* Pretendard-ExtraBold.otf */; };
+		05D7E54C2B4D844000554496 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5432B4D844000554496 /* Pretendard-Bold.otf */; };
+		05D7E54D2B4D844000554496 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5442B4D844000554496 /* Pretendard-Light.otf */; };
+		05D7E54E2B4D844000554496 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5452B4D844000554496 /* Pretendard-Regular.otf */; };
+		05D7E54F2B4D844000554496 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5462B4D844000554496 /* Pretendard-Medium.otf */; };
+		05D7E5502B4D844000554496 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5472B4D844000554496 /* Pretendard-ExtraLight.otf */; };
+		05D7E5512B4D844000554496 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5482B4D844000554496 /* Pretendard-SemiBold.otf */; };
+		05D7E5522B4D844000554496 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5492B4D844000554496 /* Pretendard-Thin.otf */; };
+		05D7E5552B4D851C00554496 /* Font+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D7E5542B4D851C00554496 /* Font+custom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +126,16 @@
 		05BA7BED2B2B38D800D159FB /* MoneyBookWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookWidgets.swift; sourceTree = "<group>"; };
 		05BA7BEF2B2B38D900D159FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05BA7BF12B2B38D900D159FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05D7E5412B4D844000554496 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		05D7E5422B4D844000554496 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		05D7E5432B4D844000554496 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		05D7E5442B4D844000554496 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		05D7E5452B4D844000554496 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		05D7E5462B4D844000554496 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		05D7E5472B4D844000554496 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		05D7E5482B4D844000554496 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		05D7E5492B4D844000554496 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		05D7E5542B4D851C00554496 /* Font+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+custom.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				0584B35B2A40682C004758AE /* Date.swift */,
+				05D7E5542B4D851C00554496 /* Font+custom.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -319,6 +340,7 @@
 		05BA7BDD2B29DDCE00D159FB /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				05D7E5402B4D842700554496 /* Fonts */,
 				05A76A0F2A34115E00B231CB /* Assets.xcassets */,
 				05A76A162A34115E00B231CB /* MoneyBook.xcdatamodeld */,
 				05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */,
@@ -344,6 +366,22 @@
 				05BA7BF12B2B38D900D159FB /* Info.plist */,
 			);
 			path = MoneyBookWidgets;
+			sourceTree = "<group>";
+		};
+		05D7E5402B4D842700554496 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				05D7E5412B4D844000554496 /* Pretendard-Black.otf */,
+				05D7E5432B4D844000554496 /* Pretendard-Bold.otf */,
+				05D7E5422B4D844000554496 /* Pretendard-ExtraBold.otf */,
+				05D7E5472B4D844000554496 /* Pretendard-ExtraLight.otf */,
+				05D7E5442B4D844000554496 /* Pretendard-Light.otf */,
+				05D7E5462B4D844000554496 /* Pretendard-Medium.otf */,
+				05D7E5452B4D844000554496 /* Pretendard-Regular.otf */,
+				05D7E5482B4D844000554496 /* Pretendard-SemiBold.otf */,
+				05D7E5492B4D844000554496 /* Pretendard-Thin.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -474,9 +512,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05D7E5512B4D844000554496 /* Pretendard-SemiBold.otf in Resources */,
 				05A76A132A34115E00B231CB /* Preview Assets.xcassets in Resources */,
+				05D7E54C2B4D844000554496 /* Pretendard-Bold.otf in Resources */,
+				05D7E5522B4D844000554496 /* Pretendard-Thin.otf in Resources */,
+				05D7E5502B4D844000554496 /* Pretendard-ExtraLight.otf in Resources */,
 				05A76A102A34115E00B231CB /* Assets.xcassets in Resources */,
+				05D7E54B2B4D844000554496 /* Pretendard-ExtraBold.otf in Resources */,
+				05D7E54D2B4D844000554496 /* Pretendard-Light.otf in Resources */,
+				05D7E54E2B4D844000554496 /* Pretendard-Regular.otf in Resources */,
+				05D7E54A2B4D844000554496 /* Pretendard-Black.otf in Resources */,
 				05BA7BDF2B29DDEE00D159FB /* Localizable.xcstrings in Resources */,
+				05D7E54F2B4D844000554496 /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +572,7 @@
 				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
 				0584B37C2A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift in Sources */,
 				05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */,
+				05D7E5552B4D851C00554496 /* Font+custom.swift in Sources */,
 				0584B35C2A40682C004758AE /* Date.swift in Sources */,
 				0584B3792A766442004758AE /* ItemCoreEntity+CoreDataClass.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
