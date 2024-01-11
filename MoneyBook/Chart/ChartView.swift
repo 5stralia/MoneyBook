@@ -47,116 +47,13 @@ struct ChartView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-
-                Picker("type", selection: $pickerSelection) {
-                    Text("expense").tag(Recording.expense)
-                    Text("income").tag(Recording.income)
-                }
-                .pickerStyle(.segmented)
-
-                Spacer(minLength: 20)
-
-                if self.pickerSelection == .expense {
-                    CategoryPieChart(
-                        items: self.filterCurrentMonthItems(
-                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: false
-                        )
-                    )
-                    .frame(height: 200)
-
-                    Spacer(minLength: 20)
-                    
-                    StatisticsMonthlyChart(
-                        items: self.filterCurrentMonthItems(
-                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: false
-                        )
-                    )
-                    
-                    Spacer(minLength: 20)
-
-                    StatisticsChart(
-                        title: "",
-                        selectedCategories: self.selection1,
-                        items: self.filteredItems(
-                            self.items.map({ $0 }),
-                            year: year,
-                            month: month,
-                            length: self.chartVisibleLength,
-                            isIncome: false,
-                            selctedCategories: self.selection1
-                        ),
-                        destination: {
-                            MultiSelectView(
-                                items: self.getAllCategories(isIncome: false)
-                                    .map { category in
-                                        let selected = self.selection1
-                                        return SelectionItem(name: category, isSelected: selected.contains(category))
-                                    },
-                                selection: self._selection1
-                            )
-                        }
-                    )
-                } else {
-                    CategoryPieChart(
-                        items: self.filterCurrentMonthItems(
-                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: true)
-                    )
-                    .frame(height: 200)
-
-                    Spacer(minLength: 20)
-                    
-                    StatisticsMonthlyChart(
-                        items: self.filterCurrentMonthItems(
-                            self.items.map({ $0 }), year: self.year, month: self.month, isIncome: false
-                        )
-                    )
-                    
-                    Spacer(minLength: 20)
-
-                    StatisticsChart(
-                        title: "",
-                        selectedCategories: self.selection2,
-                        items: self.filteredItems(
-                            self.items.map({ $0 }),
-                            year: year,
-                            month: month,
-                            length: self.chartVisibleLength,
-                            isIncome: true,
-                            selctedCategories: self.selection2
-                        ),
-                        destination: {
-                            MultiSelectView(
-                                items: self.getAllCategories(isIncome: true)
-                                    .map { category in
-                                        let selected = self.selection2
-                                        return SelectionItem(name: category, isSelected: selected.contains(category))
-                                    },
-                                selection: self._selection2
-                            )
-                        }
-                    )
+            VStack {
+                Header(topText: "월별 지출", title: "2023.12", action: { })
+                ScrollView {
+                    ChangingGraph()
+                        .frame(height: 240)
                 }
             }
-            .padding([.leading, .trailing], 8)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(
-                        "plus",
-                        systemImage: self.chartVisibleLength == 8
-                            ? "plus.magnifyingglass" : "minus.magnifyingglass"
-                    ) {
-                        if self.chartVisibleLength == 8 {
-                            self.chartVisibleLength = 2
-                        } else {
-                            self.chartVisibleLength += 2
-                        }
-                    }
-                }
-            }
-            .toolbar(.visible, for: .navigationBar)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Chart")
         }
         .onAppear(perform: {
             let date = Date()
@@ -369,6 +266,85 @@ struct Header: View {
         .background(Color(red: 255/255, green: 195/255, blue: 117/255))
     }
 }
+
+struct DateEntity: Identifiable {
+    let text: String
+    let value: Int
+    
+    let id = UUID()
+}
+struct ChangingGraph: View {
+    static let itemCount = 5
+    
+    var dateEntities: [DateEntity] = [
+        .init(text: "10", value: 614050),
+        .init(text: "11", value: 410050),
+        .init(text: "12", value: 1234050),
+        .init(text: "1", value: 0),
+        .init(text: "2", value: 0),
+//        .init(text: "1", value: 535050),
+//        .init(text: "2", value: 635050),
+    ]
+    
+    var body: some View {
+        VStack {
+//            HStack {
+            EqualSizeHStack {
+                ForEach(self.dateEntities) { entity in
+                    VStack {
+                        Text(entity.text)
+                            .font(.Pretendard(size: 10))
+                            .foregroundStyle(Color(red: 1, green: 1, blue: 1, opacity: 0.5))
+                        Text(entity.value.formatted())
+                            .font(.Pretendard(size: 12))
+                            .foregroundStyle(Color(red: 1, green: 1, blue: 1, opacity: 0.5))
+                    }
+                }
+            }
+            
+            if let maxValue = self.dateEntities.map(\.value).max(),
+               let minValue = self.dateEntities.map(\.value).min() {
+                GeometryReader { geometry in
+                    
+                    let range = maxValue - minValue
+                    let w = geometry.size.width / CGFloat(ChangingGraph.itemCount)
+                    
+                    Path { path in
+                        for (offset, entity) in dateEntities.enumerated() {
+                            let x = (CGFloat(offset) + 0.5) * w
+                            let y = (geometry.size.height - 20) * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
+                            
+                            if entity.value == maxValue {
+                                path.addEllipse(in: CGRect(x: x - 5, y: y - 5, width: 10, height: 10))
+                            } else {
+                                path.addEllipse(in: CGRect(x: x - 3, y: y - 3, width: 6, height: 6))
+                            }
+                        }
+                        
+                    }
+                    .foregroundStyle(Color.white)
+                    
+                    Path { path in
+                        for (offset, entity) in dateEntities.enumerated() {
+                            let x = (CGFloat(offset) + 0.5) * w
+                            let y = (geometry.size.height - 20) * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
+                            
+                            if offset == 0 {
+                                path.move(to: CGPoint(x: x, y: y))
+                            } else {
+                                path.addLine(to: CGPoint(x: x, y: y))
+                            }
+                        }
+                    }
+                    .stroke(style: StrokeStyle(lineWidth: 2, dash: [1.5]))
+                    .foregroundStyle(Color.white)
+                }
+            }
+        }
+        .background(Color(red: 244/255, green: 169/255, blue: 72/255))
+    }
+}
+
 struct CategoryPieChart: View {
     fileprivate var items: [ChartData]
 
@@ -475,4 +451,25 @@ struct ChartView_Previews: PreviewProvider {
         ChartView()
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
+}
+
+
+struct EqualSizeHStack: Layout {
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let height = subviews.map({ $0.sizeThatFits(.unspecified).height }).max() ?? 0
+        let width = proposal.replacingUnspecifiedDimensions().width
+        
+        return CGSize(width: width, height: height)
+    }
+    
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let subViewWidth = bounds.width / CGFloat(subviews.count)
+        let y = bounds.height / 2
+        
+        for (offset, subView) in subviews.enumerated() {
+            subView.place(at: CGPoint(x: (CGFloat(offset) * subViewWidth) + (subViewWidth / 2), y: y), anchor: .center, proposal: .unspecified)
+        }
+    }
+    
+    
 }
