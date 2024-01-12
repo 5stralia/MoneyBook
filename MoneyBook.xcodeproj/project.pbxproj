@@ -49,6 +49,8 @@
 		05D7E5512B4D844000554496 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5482B4D844000554496 /* Pretendard-SemiBold.otf */; };
 		05D7E5522B4D844000554496 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05D7E5492B4D844000554496 /* Pretendard-Thin.otf */; };
 		05D7E5552B4D851C00554496 /* Font+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D7E5542B4D851C00554496 /* Font+custom.swift */; };
+		05DA4E192B5180C800ED1C49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05DA4E182B5180C800ED1C49 /* Images.xcassets */; };
+		05DA4E1B2B518B7E00ED1C49 /* Color+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +138,8 @@
 		05D7E5482B4D844000554496 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		05D7E5492B4D844000554496 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		05D7E5542B4D851C00554496 /* Font+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+custom.swift"; sourceTree = "<group>"; };
+		05DA4E182B5180C800ED1C49 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+custom.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +190,7 @@
 			children = (
 				0584B35B2A40682C004758AE /* Date.swift */,
 				05D7E5542B4D851C00554496 /* Font+custom.swift */,
+				05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				05D7E5452B4D844000554496 /* Pretendard-Regular.otf */,
 				05D7E5482B4D844000554496 /* Pretendard-SemiBold.otf */,
 				05D7E5492B4D844000554496 /* Pretendard-Thin.otf */,
+				05DA4E182B5180C800ED1C49 /* Images.xcassets */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -515,6 +521,7 @@
 				05D7E5512B4D844000554496 /* Pretendard-SemiBold.otf in Resources */,
 				05A76A132A34115E00B231CB /* Preview Assets.xcassets in Resources */,
 				05D7E54C2B4D844000554496 /* Pretendard-Bold.otf in Resources */,
+				05DA4E192B5180C800ED1C49 /* Images.xcassets in Resources */,
 				05D7E5522B4D844000554496 /* Pretendard-Thin.otf in Resources */,
 				05D7E5502B4D844000554496 /* Pretendard-ExtraLight.otf in Resources */,
 				05A76A102A34115E00B231CB /* Assets.xcassets in Resources */,
@@ -574,6 +581,7 @@
 				05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */,
 				05D7E5552B4D851C00554496 /* Font+custom.swift in Sources */,
 				0584B35C2A40682C004758AE /* Date.swift in Sources */,
+				05DA4E1B2B518B7E00ED1C49 /* Color+custom.swift in Sources */,
 				0584B3792A766442004758AE /* ItemCoreEntity+CoreDataClass.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
 				0584B3832A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift in Sources */,

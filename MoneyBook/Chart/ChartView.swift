@@ -48,10 +48,16 @@ struct ChartView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Header(topText: "월별 지출", title: "2023.12", action: { })
+                Header(topText: "월별 지출", title: "\(self.year).\(self.month)", action: { })
                 ScrollView {
                     ChangingGraph()
+                        .padding([.top, .bottom], 20)
                         .frame(height: 240)
+                        .background(Color(red: 244/255, green: 169/255, blue: 72/255))
+                    MonthlySummaryView()
+                        .frame(height: 240)
+                        .padding([.leading, .trailing], 20)
+                        .background(Color(red: 244/255, green: 169/255, blue: 72/255))
                 }
             }
         }
@@ -234,6 +240,88 @@ struct ChartView: View {
     }
 }
 
+struct MonthlyItem {
+    let value: Double
+    let color: Color
+}
+struct MonthlySummaryView: View {
+    @State var items: [Double] = [614050, 410050, 1234050, 535050, 635050]
+    
+    var body: some View {
+        HStack {
+            Chart {
+                ForEach(self.items.sorted(using: KeyPathComparator(\.self, order: .reverse)).enumerated().map({ MonthlyItem(value: $1, color: Color.brownColors[$0])}), id: \.color) { item in
+                    SectorMark(
+                        angle: .value("value", item.value),
+                        innerRadius: .ratio(0),
+                        outerRadius: .ratio(1.0),
+                        angularInset: 1
+                    )
+                    .foregroundStyle(item.color)
+                }
+            }
+            .frame(width: 160, height: 160)
+            
+            VStack(alignment: .leading) {
+                HStack {
+                    Image("star")
+                        .foregroundStyle(Color.white)
+                        .frame(width: 89, height: 37)
+                    Spacer()
+                }
+                
+                MonthlyHotItemView(title: "소비요정 1등!", category: "식비", changing: 0, color: .brown1)
+                    .frame(height: 34)
+                    .padding(.leading, 10)
+                MonthlyHotItemView(title: "라이징 스타!", category: "패션미용", changing: 1.58, color: .brown2)
+                    .frame(height: 34)
+                    .padding(.leading, 10)
+                MonthlyHotItemView(title: "명예소방관", category: "데이트", changing: -0.68, color: .brown3)
+                    .frame(height: 34)
+                    .padding(.leading, 10)
+                
+                HStack {
+                    Text("지출 합계")
+                        .font(.Pretendard(size: 12))
+                    Spacer()
+                    Text(1235050.formatted())
+                        .font(.Pretendard(size: 19))
+                }
+            }
+            .foregroundStyle(Color.white)
+        }
+    }
+}
+
+struct MonthlyHotItemView: View {
+    let title: String
+    let category: String
+    let changing: Double
+    let color: Color
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            Text(self.title)
+                .font(.Pretendard(size: 12))
+                .frame(width: 70, alignment: .leading)
+                .padding(.top, 2)
+            RoundedCorner(radius: 2)
+                .frame(width: 11, height: 11)
+                .padding(.top, 3)
+                .foregroundStyle(self.color)
+            
+            VStack {
+                Text(self.category)
+                    .font(.Pretendard(size: 15))
+                Text("( \(self.changing >= 0 ? "+" : "") \(Int(self.changing * 100))% )")
+                    .font(.Pretendard(size: 11))
+            }
+            
+            Spacer()
+        }
+    }
+}
+
 struct Header: View {
     let topText: String
     let title: String
@@ -288,7 +376,6 @@ struct ChangingGraph: View {
     
     var body: some View {
         VStack {
-//            HStack {
             EqualSizeHStack {
                 ForEach(self.dateEntities) { entity in
                     VStack {
@@ -341,7 +428,6 @@ struct ChangingGraph: View {
                 }
             }
         }
-        .background(Color(red: 244/255, green: 169/255, blue: 72/255))
     }
 }
 
@@ -467,7 +553,7 @@ struct EqualSizeHStack: Layout {
         let y = bounds.height / 2
         
         for (offset, subView) in subviews.enumerated() {
-            subView.place(at: CGPoint(x: (CGFloat(offset) * subViewWidth) + (subViewWidth / 2), y: y), anchor: .center, proposal: .unspecified)
+            subView.place(at: CGPoint(x: (CGFloat(offset) * subViewWidth) + (subViewWidth / 2), y: bounds.minY + y), anchor: .center, proposal: .unspecified)
         }
     }
     
