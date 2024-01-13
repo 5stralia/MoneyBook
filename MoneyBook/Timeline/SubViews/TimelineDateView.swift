@@ -15,16 +15,35 @@ private let dateFormatter: DateFormatter = {
 
 struct TimelineDateView: View {
     let date: Date
+    let totalValue: Double?
+
+    internal init(date: Date, totalValue: Double? = nil) {
+        self.date = date
+        self.totalValue = totalValue
+    }
 
     var body: some View {
-        Text(dateFormatter.string(from: date))
-            .font(.system(.caption))
-            .foregroundColor(Color(uiColor: .systemGray))
+        ZStack {
+            Text(dateFormatter.string(from: date))
+                .font(.Pretendard(size: 15))
+
+            if let totalValue,
+                let text = abs(totalValue).string(digits: Locale.isKorean ? 0 : 2)
+            {
+                HStack {
+                    Spacer()
+                    Text("\(totalValue > 0 ? "+" : "-") \(text)")
+                        .font(.Pretendard(size: 15))
+                }
+            }
+        }
+        .foregroundColor(Color(uiColor: .systemGray3))
     }
 }
 
-struct TimelineDateView_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview {
+    VStack {
         TimelineDateView(date: Date())
+        TimelineDateView(date: Date(), totalValue: -154_000_000)
     }
 }

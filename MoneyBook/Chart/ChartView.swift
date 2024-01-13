@@ -52,10 +52,18 @@ struct ChartView: View {
                             .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
 
                         ForEach(self.monthlyCategoryItems) { item in
-                            MonthlyCategoryItemView(item: item)
-                                .frame(height: 46)
-                                .padding([.leading, .trailing], 20)
+                            NavigationLink(value: item) {
+                                MonthlyCategoryItemView(item: item)
+                                    .frame(height: 46)
+                                    .padding(.leading, 20)
+                                    .padding(.trailing, 14)
+                            }
                         }
+                        .navigationDestination(
+                            for: MonthlyCategoryItem.self,
+                            destination: { item in
+                                Text(item.title)
+                            })
                     }
                 }
             }
@@ -106,12 +114,11 @@ struct MonthlySummaryView: View {
             }
             .frame(width: 160, height: 160)
 
+            Spacer(minLength: 15)
+
             VStack(alignment: .leading) {
-                HStack {
-                    Image("star")
-                        .frame(width: 89, height: 37)
-                    Spacer()
-                }
+                Image("star")
+                    .frame(width: 89, height: 37)
 
                 MonthlyHotItemView(title: "소비요정 1등!", category: "식비", changing: 0, color: .brown1)
                     .frame(height: 34)
@@ -143,6 +150,11 @@ struct MonthlyCategoryItem: Identifiable {
 
     let id = UUID()
 }
+extension MonthlyCategoryItem: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self)
+    }
+}
 struct MonthlyCategoryItemView: View {
     let item: MonthlyCategoryItem
 
@@ -168,6 +180,13 @@ struct MonthlyCategoryItemView: View {
             Spacer()
 
             Text(self.item.value.string(digits: Locale.isKorean ? 0 : 2) ?? "unknown")
+                .foregroundStyle(Color(uiColor: .systemGray))
+
+            Image(systemName: "chevron.right")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding([.top, .bottom], 18)
+                .foregroundStyle(Color(uiColor: .systemGray))
         }
     }
 }
@@ -207,29 +226,25 @@ struct Header: View {
     let action: () -> Void
 
     var body: some View {
-        VStack {
+        HStack {
             Spacer()
-
-            HStack {
-                Spacer()
-                VStack {
-                    Text(self.topText)
-                        .font(.Pretendard(size: 12))
-                    Button(
-                        action: self.action,
-                        label: {
-                            HStack {
-                                Text(self.title)
-                                    .font(.Pretendard(size: 23))
-                                Image(systemName: "chevron.down")
-                            }
-                        })
-                }
-                Spacer()
+            VStack {
+                Text(self.topText)
+                    .font(.Pretendard(size: 12))
+                Button(
+                    action: self.action,
+                    label: {
+                        HStack {
+                            Text(self.title)
+                                .font(.Pretendard(size: 23))
+                            Image(systemName: "chevron.down")
+                        }
+                    })
             }
+            Spacer()
         }
         .padding(.bottom, 11)
-        .frame(height: 116)
+        .padding(.top, 20)
         .background(Color(red: 255 / 255, green: 195 / 255, blue: 117 / 255))
         .foregroundStyle(Color.dynamicWhite)
     }
@@ -238,6 +253,7 @@ struct Header: View {
 struct DateEntity: Identifiable {
     let text: String
     let value: Int
+    let color: Color
 
     let id = UUID()
 }
@@ -245,11 +261,11 @@ struct ChangingGraph: View {
     static let itemCount = 5
 
     var dateEntities: [DateEntity] = [
-        .init(text: "10", value: 614050),
-        .init(text: "11", value: 410050),
-        .init(text: "12", value: 1_234_050),
-        .init(text: "1", value: 0),
-        .init(text: "2", value: 0),
+        .init(text: "10", value: 614050, color: Color.dynamicWhite.opacity(0.5)),
+        .init(text: "11", value: 410050, color: Color.dynamicWhite.opacity(0.5)),
+        .init(text: "12", value: 1_234_050, color: Color.dynamicWhite),
+        .init(text: "1", value: 0, color: Color.dynamicWhite.opacity(0.5)),
+        .init(text: "2", value: 0, color: Color.dynamicWhite.opacity(0.5)),
         //        .init(text: "1", value: 535050),
         //        .init(text: "2", value: 635050),
     ]
@@ -264,6 +280,7 @@ struct ChangingGraph: View {
                         Text(entity.value.formatted())
                             .font(.Pretendard(size: 12))
                     }
+                    .foregroundStyle(entity.color)
                 }
             }
             .foregroundStyle(Color.dynamicWhite.opacity(0.5))
@@ -315,12 +332,16 @@ struct ChangingGraph: View {
 }
 
 extension Date {
-    fileprivate func getYear() -> Int {
+    func getYear() -> Int {
         return Calendar.current.component(.year, from: self)
     }
 
-    fileprivate func getMonth() -> Int {
+    func getMonth() -> Int {
         return Calendar.current.component(.month, from: self)
+    }
+
+    func getDay() -> Int {
+        return Calendar.current.component(.day, from: self)
     }
 }
 

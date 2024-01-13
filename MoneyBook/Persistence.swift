@@ -27,7 +27,7 @@ struct PersistenceController {
                     newItem.timestamp = Date(
                         timeInterval: TimeInterval(-(60 * 60 * 24 * 30) * k)
                             + TimeInterval(-(60 * 60 * 24) * i - j), since: now)
-                    newItem.category = "Category\(i % 3)"
+                    newItem.category = j % 2 == 0 ? "용돈" : "식비"
                     newItem.amount = 1000 * Double(j) * (j % 2 == 0 ? -1 : 1)
                     newItem.group_id = group_id
                 }

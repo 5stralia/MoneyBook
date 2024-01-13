@@ -34,6 +34,7 @@
 		05B6500A2B52624800389A32 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05B650092B52624800389A32 /* Colors.xcassets */; };
 		05B6500C2B52673000389A32 /* Double+format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500B2B52673000389A32 /* Double+format.swift */; };
 		05B6500E2B5267FF00389A32 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500D2B5267FF00389A32 /* Locale.swift */; };
+		05B650112B52B07F00389A32 /* CategoryStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B650102B52B07F00389A32 /* CategoryStatisticsView.swift */; };
 		05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B76D482B25D3DE0048C757 /* MultiSelectView.swift */; };
 		05BA7BDF2B29DDEE00D159FB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */; };
 		05BA7BE72B2B38D800D159FB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BA7BE62B2B38D800D159FB /* WidgetKit.framework */; };
@@ -125,6 +126,7 @@
 		05B650092B52624800389A32 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		05B6500B2B52673000389A32 /* Double+format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+format.swift"; sourceTree = "<group>"; };
 		05B6500D2B5267FF00389A32 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
+		05B650102B52B07F00389A32 /* CategoryStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryStatisticsView.swift; sourceTree = "<group>"; };
 		05B76D482B25D3DE0048C757 /* MultiSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectView.swift; sourceTree = "<group>"; };
 		05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		05BA7BE42B2B38D800D159FB /* MoneyBookWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoneyBookWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -259,6 +261,7 @@
 		05A719A62A85219D00260837 /* Chart */ = {
 			isa = PBXGroup;
 			children = (
+				05B6500F2B52AFF900389A32 /* CategoryStatistics */,
 				05A719A72A8521AE00260837 /* ChartView.swift */,
 				05B76D482B25D3DE0048C757 /* MultiSelectView.swift */,
 			);
@@ -348,6 +351,14 @@
 				0584B3582A40574F004758AE /* TimelineDateView.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		05B6500F2B52AFF900389A32 /* CategoryStatistics */ = {
+			isa = PBXGroup;
+			children = (
+				05B650102B52B07F00389A32 /* CategoryStatisticsView.swift */,
+			);
+			path = CategoryStatistics;
 			sourceTree = "<group>";
 		};
 		05BA7BDD2B29DDCE00D159FB /* Resource */ = {
@@ -588,6 +599,7 @@
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
 				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
 				0584B37C2A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift in Sources */,
+				05B650112B52B07F00389A32 /* CategoryStatisticsView.swift in Sources */,
 				05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */,
 				05D7E5552B4D851C00554496 /* Font+custom.swift in Sources */,
 				0584B35C2A40682C004758AE /* Date.swift in Sources */,
