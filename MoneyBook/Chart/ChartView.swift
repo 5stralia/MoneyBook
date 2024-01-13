@@ -44,7 +44,7 @@ struct ChartView: View {
     @State private var selection2: [String] = []
 
     @State private var pickerSelection: Recording = .expense
-    
+
     @State var monthlyCategoryItems: [MonthlyCategoryItem] = [
         .init(ratio: 0.66, title: "식비", value: 759090),
         .init(ratio: 0.13, title: "패션미용", value: 159080),
@@ -52,14 +52,14 @@ struct ChartView: View {
         .init(ratio: 0.7, title: "택시비", value: 89300),
         .init(ratio: 0.7, title: "경조사", value: 59590),
         .init(ratio: 0.7, title: "편의점", value: 39040),
-        .init(ratio: 0.7, title: "데이트", value: 19080),
+        .init(ratio: 0.7, title: "데이트", value: 19080)
     ]
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 Header(topText: "월별 지출", title: "\(self.year).\(self.month)", action: { })
-                
+
                 ScrollView {
                     VStack(spacing: 0) {
                         ChangingGraph()
@@ -70,7 +70,7 @@ struct ChartView: View {
                             .frame(height: 240)
                             .padding([.leading, .trailing], 20)
                             .background(Color(red: 244/255, green: 169/255, blue: 72/255))
-                        
+
                         ForEach(self.monthlyCategoryItems) { item in
                             MonthlyCategoryItemView(item: item)
                                 .frame(height: 46)
@@ -184,8 +184,7 @@ struct ChartView: View {
     }
 
     private func incomeData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int)
-        -> [ChartData]
-    {
+        -> [ChartData] {
         var result: [ChartData] = []
 
         let items = items.filter { item in
@@ -222,8 +221,7 @@ struct ChartView: View {
     }
 
     private func expendData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int)
-        -> [ChartData]
-    {
+        -> [ChartData] {
         var result: [ChartData] = []
 
         let items = items.filter { item in
@@ -265,7 +263,7 @@ struct MonthlyItem {
 }
 struct MonthlySummaryView: View {
     @State var items: [Double] = [614050, 410050, 1234050, 535050, 635050]
-    
+
     var body: some View {
         HStack {
             Chart {
@@ -280,14 +278,14 @@ struct MonthlySummaryView: View {
                 }
             }
             .frame(width: 160, height: 160)
-            
+
             VStack(alignment: .leading) {
                 HStack {
                     Image("star")
                         .frame(width: 89, height: 37)
                     Spacer()
                 }
-                
+
                 MonthlyHotItemView(title: "소비요정 1등!", category: "식비", changing: 0, color: .brown1)
                     .frame(height: 34)
                     .padding(.leading, 10)
@@ -297,7 +295,7 @@ struct MonthlySummaryView: View {
                 MonthlyHotItemView(title: "명예소방관", category: "데이트", changing: -0.68, color: .brown3)
                     .frame(height: 34)
                     .padding(.leading, 10)
-                
+
                 HStack {
                     Text("지출 합계")
                         .font(.Pretendard(size: 12))
@@ -315,12 +313,12 @@ struct MonthlyCategoryItem: Identifiable {
     let ratio: Float
     let title: String
     let value: Double
-            
+
     let id = UUID()
 }
 struct MonthlyCategoryItemView: View {
     let item: MonthlyCategoryItem
-    
+
     var body: some View {
         HStack {
             RoundedRectangle(cornerRadius: 4)
@@ -335,13 +333,13 @@ struct MonthlyCategoryItemView: View {
                     .foregroundStyle(Color.white)
                 }
                 .frame(width: 46, height: 25)
-            
+
             Text(self.item.title)
                 .font(.Pretendard(size: 16))
                 .foregroundStyle(Color.customGray1)
-            
+
             Spacer()
-            
+
             Text(self.item.value.string(digits: Locale.isKorean ? 0 : 2) ?? "unknown")
         }
     }
@@ -352,7 +350,7 @@ struct MonthlyHotItemView: View {
     let category: String
     let changing: Double
     let color: Color
-    
+
     var body: some View {
         HStack(alignment: .top) {
             Text(self.title)
@@ -363,14 +361,14 @@ struct MonthlyHotItemView: View {
                 .frame(width: 11, height: 11)
                 .padding(.top, 3)
                 .foregroundStyle(self.color)
-            
+
             VStack {
                 Text(self.category)
                     .font(.Pretendard(size: 15))
                 Text("( \(self.changing >= 0 ? "+" : "") \(Int(self.changing * 100))% )")
                     .font(.Pretendard(size: 11))
             }
-            
+
             Spacer()
         }
     }
@@ -380,11 +378,11 @@ struct Header: View {
     let topText: String
     let title: String
     let action: () -> Void
-    
+
     var body: some View {
         VStack {
             Spacer()
-            
+
             HStack {
                 Spacer()
                 VStack {
@@ -411,22 +409,22 @@ struct Header: View {
 struct DateEntity: Identifiable {
     let text: String
     let value: Int
-    
+
     let id = UUID()
 }
 struct ChangingGraph: View {
     static let itemCount = 5
-    
+
     var dateEntities: [DateEntity] = [
         .init(text: "10", value: 614050),
         .init(text: "11", value: 410050),
         .init(text: "12", value: 1234050),
         .init(text: "1", value: 0),
-        .init(text: "2", value: 0),
+        .init(text: "2", value: 0)
 //        .init(text: "1", value: 535050),
 //        .init(text: "2", value: 635050),
     ]
-    
+
     var body: some View {
         VStack {
             EqualSizeHStack {
@@ -440,33 +438,33 @@ struct ChangingGraph: View {
                 }
             }
             .foregroundStyle(Color.dynamicWhite.opacity(0.5))
-            
+
             if let maxValue = self.dateEntities.map(\.value).max(),
                let minValue = self.dateEntities.map(\.value).min() {
                 GeometryReader { geometry in
-                    
+
                     let range = maxValue - minValue
                     let w = geometry.size.width / CGFloat(ChangingGraph.itemCount)
-                    
+
                     Path { path in
                         for (offset, entity) in dateEntities.enumerated() {
                             let x = (CGFloat(offset) + 0.5) * w
                             let y = (geometry.size.height - 20) * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
-                            
+
                             if entity.value == maxValue {
                                 path.addEllipse(in: CGRect(x: x - 5, y: y - 5, width: 10, height: 10))
                             } else {
                                 path.addEllipse(in: CGRect(x: x - 3, y: y - 3, width: 6, height: 6))
                             }
                         }
-                        
+
                     }
-                    
+
                     Path { path in
                         for (offset, entity) in dateEntities.enumerated() {
                             let x = (CGFloat(offset) + 0.5) * w
                             let y = (geometry.size.height - 20) * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
-                            
+
                             if offset == 0 {
                                 path.move(to: CGPoint(x: x, y: y))
                             } else {
@@ -501,7 +499,7 @@ struct CategoryPieChart: View {
     }
 }
 
-fileprivate let percentageFomatter: NumberFormatter = {
+private let percentageFomatter: NumberFormatter = {
     let fomatter = NumberFormatter()
     fomatter.numberStyle = .percent
     return fomatter
@@ -509,7 +507,7 @@ fileprivate let percentageFomatter: NumberFormatter = {
 struct StatisticsMonthlyChart: View {
     fileprivate var items: [ChartData]
     private var sum: Double { self.items.reduce(0, { $0 + $1.value }) }
-    
+
     var body: some View {
         Chart {
             ForEach(self.items) { item in
@@ -590,23 +588,21 @@ struct ChartView_Previews: PreviewProvider {
     }
 }
 
-
 struct EqualSizeHStack: Layout {
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         let height = subviews.map({ $0.sizeThatFits(.unspecified).height }).max() ?? 0
         let width = proposal.replacingUnspecifiedDimensions().width
-        
+
         return CGSize(width: width, height: height)
     }
-    
+
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
         let subViewWidth = bounds.width / CGFloat(subviews.count)
         let y = bounds.height / 2
-        
+
         for (offset, subView) in subviews.enumerated() {
             subView.place(at: CGPoint(x: (CGFloat(offset) * subViewWidth) + (subViewWidth / 2), y: bounds.minY + y), anchor: .center, proposal: .unspecified)
         }
     }
-    
-    
+
 }
