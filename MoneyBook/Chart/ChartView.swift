@@ -62,7 +62,7 @@ struct ChartView: View {
                         .navigationDestination(
                             for: MonthlyCategoryItem.self,
                             destination: { item in
-                                Text(item.title)
+                                CategoryStatisticsView(year: self.year, month: self.month, category: item.title)
                             })
                     }
                 }
@@ -221,27 +221,55 @@ struct MonthlyHotItemView: View {
 }
 
 struct Header: View {
+
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     let topText: String
     let title: String
+    let isHiddenBackButton: Bool
     let action: () -> Void
 
+    internal init(topText: String, title: String, isHiddenBackButton: Bool = true, action: @escaping () -> Void) {
+        self.topText = topText
+        self.title = title
+        self.isHiddenBackButton = isHiddenBackButton
+        self.action = action
+    }
+
     var body: some View {
-        HStack {
-            Spacer()
-            VStack {
-                Text(self.topText)
-                    .font(.Pretendard(size: 12))
-                Button(
-                    action: self.action,
-                    label: {
-                        HStack {
-                            Text(self.title)
-                                .font(.Pretendard(size: 23))
-                            Image(systemName: "chevron.down")
-                        }
-                    })
+        ZStack {
+            HStack {
+                Spacer()
+                VStack {
+                    Text(self.topText)
+                        .font(.Pretendard(size: 12))
+                    Button(
+                        action: self.action,
+                        label: {
+                            HStack {
+                                Text(self.title)
+                                    .font(.Pretendard(size: 23))
+                                Image(systemName: "chevron.down")
+                            }
+                        })
+                }
+                Spacer()
             }
-            Spacer()
+
+            if !self.isHiddenBackButton {
+                HStack {
+                    Button(
+                        action: {
+                            self.presentationMode.wrappedValue.dismiss()
+                        },
+                        label: {
+                            Text("Back")
+                                .padding(.leading, 16)
+                        })
+
+                    Spacer()
+                }
+            }
         }
         .padding(.bottom, 11)
         .padding(.top, 20)

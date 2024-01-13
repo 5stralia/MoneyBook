@@ -35,6 +35,7 @@
 		05B6500C2B52673000389A32 /* Double+format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500B2B52673000389A32 /* Double+format.swift */; };
 		05B6500E2B5267FF00389A32 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500D2B5267FF00389A32 /* Locale.swift */; };
 		05B650112B52B07F00389A32 /* CategoryStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B650102B52B07F00389A32 /* CategoryStatisticsView.swift */; };
+		05B650132B52DFD900389A32 /* UINavigationController+swipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B650122B52DFD900389A32 /* UINavigationController+swipe.swift */; };
 		05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B76D482B25D3DE0048C757 /* MultiSelectView.swift */; };
 		05BA7BDF2B29DDEE00D159FB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */; };
 		05BA7BE72B2B38D800D159FB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BA7BE62B2B38D800D159FB /* WidgetKit.framework */; };
@@ -127,6 +128,7 @@
 		05B6500B2B52673000389A32 /* Double+format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+format.swift"; sourceTree = "<group>"; };
 		05B6500D2B5267FF00389A32 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		05B650102B52B07F00389A32 /* CategoryStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryStatisticsView.swift; sourceTree = "<group>"; };
+		05B650122B52DFD900389A32 /* UINavigationController+swipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+swipe.swift"; sourceTree = "<group>"; };
 		05B76D482B25D3DE0048C757 /* MultiSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectView.swift; sourceTree = "<group>"; };
 		05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		05BA7BE42B2B38D800D159FB /* MoneyBookWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoneyBookWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +203,7 @@
 				05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */,
 				05B6500B2B52673000389A32 /* Double+format.swift */,
 				05B6500D2B5267FF00389A32 /* Locale.swift */,
+				05B650122B52DFD900389A32 /* UINavigationController+swipe.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				0584B35E2A408B2C004758AE /* TimelineSummaryValueView.swift in Sources */,
 				05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */,
 				0584B3802A76647D004758AE /* ItemEntity.swift in Sources */,
+				05B650132B52DFD900389A32 /* UINavigationController+swipe.swift in Sources */,
 				0584B37A2A766442004758AE /* ItemCoreEntity+CoreDataProperties.swift in Sources */,
 				05A719A82A8521AE00260837 /* ChartView.swift in Sources */,
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,

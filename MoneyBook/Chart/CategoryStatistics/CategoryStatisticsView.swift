@@ -42,7 +42,7 @@ struct CategoryStatisticsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Header(topText: "12월 지출 상제", title: "패션미용", action: {})
+            Header(topText: "12월 지출 상제", title: "패션미용", isHiddenBackButton: false, action: {})
 
             ScrollView {
                 VStack(spacing: 0) {
@@ -80,6 +80,7 @@ struct CategoryStatisticsView: View {
                 }
             }
         }
+        .toolbar(.hidden)
     }
 
 }
