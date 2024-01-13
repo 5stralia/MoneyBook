@@ -52,24 +52,24 @@ struct ChartView: View {
         .init(ratio: 0.7, title: "택시비", value: 89300),
         .init(ratio: 0.7, title: "경조사", value: 59590),
         .init(ratio: 0.7, title: "편의점", value: 39040),
-        .init(ratio: 0.7, title: "데이트", value: 19080)
+        .init(ratio: 0.7, title: "데이트", value: 19080),
     ]
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                Header(topText: "월별 지출", title: "\(self.year).\(self.month)", action: { })
+                Header(topText: "월별 지출", title: "\(self.year).\(self.month)", action: {})
 
                 ScrollView {
                     VStack(spacing: 0) {
                         ChangingGraph()
                             .padding([.top, .bottom], 20)
                             .frame(height: 160)
-                            .background(Color(red: 244/255, green: 169/255, blue: 72/255))
+                            .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
                         MonthlySummaryView()
                             .frame(height: 240)
                             .padding([.leading, .trailing], 20)
-                            .background(Color(red: 244/255, green: 169/255, blue: 72/255))
+                            .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
 
                         ForEach(self.monthlyCategoryItems) { item in
                             MonthlyCategoryItemView(item: item)
@@ -184,7 +184,8 @@ struct ChartView: View {
     }
 
     private func incomeData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int)
-        -> [ChartData] {
+        -> [ChartData]
+    {
         var result: [ChartData] = []
 
         let items = items.filter { item in
@@ -221,7 +222,8 @@ struct ChartView: View {
     }
 
     private func expendData(_ items: [ItemCoreEntity], year: Int, month: Int, length: Int)
-        -> [ChartData] {
+        -> [ChartData]
+    {
         var result: [ChartData] = []
 
         let items = items.filter { item in
@@ -262,12 +264,16 @@ struct MonthlyItem {
     let color: Color
 }
 struct MonthlySummaryView: View {
-    @State var items: [Double] = [614050, 410050, 1234050, 535050, 635050]
+    @State var items: [Double] = [614050, 410050, 1_234_050, 535050, 635050]
 
     var body: some View {
         HStack {
             Chart {
-                ForEach(self.items.sorted(using: KeyPathComparator(\.self, order: .reverse)).enumerated().map({ MonthlyItem(value: $1, color: Color.brownColors[$0])}), id: \.color) { item in
+                ForEach(
+                    self.items.sorted(using: KeyPathComparator(\.self, order: .reverse)).enumerated().map({
+                        MonthlyItem(value: $1, color: Color.brownColors[$0])
+                    }), id: \.color
+                ) { item in
                     SectorMark(
                         angle: .value("value", item.value),
                         innerRadius: .ratio(0),
@@ -300,7 +306,7 @@ struct MonthlySummaryView: View {
                     Text("지출 합계")
                         .font(.Pretendard(size: 12))
                     Spacer()
-                    Text(1235050.formatted())
+                    Text(1_235_050.formatted())
                         .font(.Pretendard(size: 19))
                 }
             }
@@ -388,20 +394,22 @@ struct Header: View {
                 VStack {
                     Text(self.topText)
                         .font(.Pretendard(size: 12))
-                    Button(action: self.action, label: {
-                        HStack {
-                            Text(self.title)
-                                .font(.Pretendard(size: 23))
-                            Image(systemName: "chevron.down")
-                        }
-                    })
+                    Button(
+                        action: self.action,
+                        label: {
+                            HStack {
+                                Text(self.title)
+                                    .font(.Pretendard(size: 23))
+                                Image(systemName: "chevron.down")
+                            }
+                        })
                 }
                 Spacer()
             }
         }
         .padding(.bottom, 11)
         .frame(height: 116)
-        .background(Color(red: 255/255, green: 195/255, blue: 117/255))
+        .background(Color(red: 255 / 255, green: 195 / 255, blue: 117 / 255))
         .foregroundStyle(Color.dynamicWhite)
     }
 }
@@ -418,11 +426,11 @@ struct ChangingGraph: View {
     var dateEntities: [DateEntity] = [
         .init(text: "10", value: 614050),
         .init(text: "11", value: 410050),
-        .init(text: "12", value: 1234050),
+        .init(text: "12", value: 1_234_050),
         .init(text: "1", value: 0),
-        .init(text: "2", value: 0)
-//        .init(text: "1", value: 535050),
-//        .init(text: "2", value: 635050),
+        .init(text: "2", value: 0),
+        //        .init(text: "1", value: 535050),
+        //        .init(text: "2", value: 635050),
     ]
 
     var body: some View {
@@ -440,7 +448,8 @@ struct ChangingGraph: View {
             .foregroundStyle(Color.dynamicWhite.opacity(0.5))
 
             if let maxValue = self.dateEntities.map(\.value).max(),
-               let minValue = self.dateEntities.map(\.value).min() {
+                let minValue = self.dateEntities.map(\.value).min()
+            {
                 GeometryReader { geometry in
 
                     let range = maxValue - minValue
@@ -449,7 +458,9 @@ struct ChangingGraph: View {
                     Path { path in
                         for (offset, entity) in dateEntities.enumerated() {
                             let x = (CGFloat(offset) + 0.5) * w
-                            let y = (geometry.size.height - 20) * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
+                            let y =
+                                (geometry.size.height - 20)
+                                * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
 
                             if entity.value == maxValue {
                                 path.addEllipse(in: CGRect(x: x - 5, y: y - 5, width: 10, height: 10))
@@ -463,7 +474,9 @@ struct ChangingGraph: View {
                     Path { path in
                         for (offset, entity) in dateEntities.enumerated() {
                             let x = (CGFloat(offset) + 0.5) * w
-                            let y = (geometry.size.height - 20) * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
+                            let y =
+                                (geometry.size.height - 20)
+                                * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
 
                             if offset == 0 {
                                 path.move(to: CGPoint(x: x, y: y))
@@ -601,7 +614,9 @@ struct EqualSizeHStack: Layout {
         let y = bounds.height / 2
 
         for (offset, subView) in subviews.enumerated() {
-            subView.place(at: CGPoint(x: (CGFloat(offset) * subViewWidth) + (subViewWidth / 2), y: bounds.minY + y), anchor: .center, proposal: .unspecified)
+            subView.place(
+                at: CGPoint(x: (CGFloat(offset) * subViewWidth) + (subViewWidth / 2), y: bounds.minY + y),
+                anchor: .center, proposal: .unspecified)
         }
     }
 
