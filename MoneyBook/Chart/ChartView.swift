@@ -44,20 +44,39 @@ struct ChartView: View {
     @State private var selection2: [String] = []
 
     @State private var pickerSelection: Recording = .expense
+    
+    @State var monthlyCategoryItems: [MonthlyCategoryItem] = [
+        .init(ratio: 0.66, title: "식비", value: 759090),
+        .init(ratio: 0.13, title: "패션미용", value: 159080),
+        .init(ratio: 0.7, title: "반려동물", value: 109345),
+        .init(ratio: 0.7, title: "택시비", value: 89300),
+        .init(ratio: 0.7, title: "경조사", value: 59590),
+        .init(ratio: 0.7, title: "편의점", value: 39040),
+        .init(ratio: 0.7, title: "데이트", value: 19080),
+    ]
 
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 Header(topText: "월별 지출", title: "\(self.year).\(self.month)", action: { })
+                
                 ScrollView {
-                    ChangingGraph()
-                        .padding([.top, .bottom], 20)
-                        .frame(height: 240)
-                        .background(Color(red: 244/255, green: 169/255, blue: 72/255))
-                    MonthlySummaryView()
-                        .frame(height: 240)
-                        .padding([.leading, .trailing], 20)
-                        .background(Color(red: 244/255, green: 169/255, blue: 72/255))
+                    VStack(spacing: 0) {
+                        ChangingGraph()
+                            .padding([.top, .bottom], 20)
+                            .frame(height: 160)
+                            .background(Color(red: 244/255, green: 169/255, blue: 72/255))
+                        MonthlySummaryView()
+                            .frame(height: 240)
+                            .padding([.leading, .trailing], 20)
+                            .background(Color(red: 244/255, green: 169/255, blue: 72/255))
+                        
+                        ForEach(self.monthlyCategoryItems) { item in
+                            MonthlyCategoryItemView(item: item)
+                                .frame(height: 46)
+                                .padding([.leading, .trailing], 20)
+                        }
+                    }
                 }
             }
         }
@@ -265,7 +284,6 @@ struct MonthlySummaryView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Image("star")
-                        .foregroundStyle(Color.white)
                         .frame(width: 89, height: 37)
                     Spacer()
                 }
@@ -288,7 +306,43 @@ struct MonthlySummaryView: View {
                         .font(.Pretendard(size: 19))
                 }
             }
-            .foregroundStyle(Color.white)
+            .foregroundStyle(Color.dynamicWhite)
+        }
+    }
+}
+
+struct MonthlyCategoryItem: Identifiable {
+    let ratio: Float
+    let title: String
+    let value: Double
+            
+    let id = UUID()
+}
+struct MonthlyCategoryItemView: View {
+    let item: MonthlyCategoryItem
+    
+    var body: some View {
+        HStack {
+            RoundedRectangle(cornerRadius: 4)
+                .foregroundStyle(Color.brownColors[0])
+                .overlay {
+                    HStack(spacing: 1) {
+                        Text("66")
+                            .font(.Pretendard(size: 14))
+                        Text("%")
+                            .font(.Pretendard(size: 10))
+                    }
+                    .foregroundStyle(Color.white)
+                }
+                .frame(width: 46, height: 25)
+            
+            Text(self.item.title)
+                .font(.Pretendard(size: 16))
+                .foregroundStyle(Color.customGray1)
+            
+            Spacer()
+            
+            Text(self.item.value.string(digits: Locale.isKorean ? 0 : 2) ?? "unknown")
         }
     }
 }
@@ -336,14 +390,12 @@ struct Header: View {
                 VStack {
                     Text(self.topText)
                         .font(.Pretendard(size: 12))
-                        .foregroundStyle(Color.white)
                     Button(action: self.action, label: {
                         HStack {
                             Text(self.title)
                                 .font(.Pretendard(size: 23))
                             Image(systemName: "chevron.down")
                         }
-                        .foregroundStyle(Color.white)
                     })
                 }
                 Spacer()
@@ -352,6 +404,7 @@ struct Header: View {
         .padding(.bottom, 11)
         .frame(height: 116)
         .background(Color(red: 255/255, green: 195/255, blue: 117/255))
+        .foregroundStyle(Color.dynamicWhite)
     }
 }
 
@@ -381,13 +434,12 @@ struct ChangingGraph: View {
                     VStack {
                         Text(entity.text)
                             .font(.Pretendard(size: 10))
-                            .foregroundStyle(Color(red: 1, green: 1, blue: 1, opacity: 0.5))
                         Text(entity.value.formatted())
                             .font(.Pretendard(size: 12))
-                            .foregroundStyle(Color(red: 1, green: 1, blue: 1, opacity: 0.5))
                     }
                 }
             }
+            .foregroundStyle(Color.dynamicWhite.opacity(0.5))
             
             if let maxValue = self.dateEntities.map(\.value).max(),
                let minValue = self.dateEntities.map(\.value).min() {
@@ -409,7 +461,6 @@ struct ChangingGraph: View {
                         }
                         
                     }
-                    .foregroundStyle(Color.white)
                     
                     Path { path in
                         for (offset, entity) in dateEntities.enumerated() {
@@ -424,8 +475,8 @@ struct ChangingGraph: View {
                         }
                     }
                     .stroke(style: StrokeStyle(lineWidth: 2, dash: [1.5]))
-                    .foregroundStyle(Color.white)
                 }
+                .foregroundStyle(Color.dynamicWhite)
             }
         }
     }

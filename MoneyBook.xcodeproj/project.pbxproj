@@ -31,6 +31,9 @@
 		05A76A2E2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */; };
 		05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3C2A355D4B00B231CB /* TimelineView.swift */; };
 		05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3F2A355DE100B231CB /* TimelineItemView.swift */; };
+		05B6500A2B52624800389A32 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05B650092B52624800389A32 /* Colors.xcassets */; };
+		05B6500C2B52673000389A32 /* Double+format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500B2B52673000389A32 /* Double+format.swift */; };
+		05B6500E2B5267FF00389A32 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500D2B5267FF00389A32 /* Locale.swift */; };
 		05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B76D482B25D3DE0048C757 /* MultiSelectView.swift */; };
 		05BA7BDF2B29DDEE00D159FB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */; };
 		05BA7BE72B2B38D800D159FB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BA7BE62B2B38D800D159FB /* WidgetKit.framework */; };
@@ -119,6 +122,9 @@
 		05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		05A76A3C2A355D4B00B231CB /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		05A76A3F2A355DE100B231CB /* TimelineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineItemView.swift; sourceTree = "<group>"; };
+		05B650092B52624800389A32 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		05B6500B2B52673000389A32 /* Double+format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+format.swift"; sourceTree = "<group>"; };
+		05B6500D2B5267FF00389A32 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		05B76D482B25D3DE0048C757 /* MultiSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectView.swift; sourceTree = "<group>"; };
 		05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		05BA7BE42B2B38D800D159FB /* MoneyBookWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoneyBookWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +197,8 @@
 				0584B35B2A40682C004758AE /* Date.swift */,
 				05D7E5542B4D851C00554496 /* Font+custom.swift */,
 				05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */,
+				05B6500B2B52673000389A32 /* Double+format.swift */,
+				05B6500D2B5267FF00389A32 /* Locale.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -349,6 +357,7 @@
 				05A76A0F2A34115E00B231CB /* Assets.xcassets */,
 				05A76A162A34115E00B231CB /* MoneyBook.xcdatamodeld */,
 				05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */,
+				05B650092B52624800389A32 /* Colors.xcassets */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -531,6 +540,7 @@
 				05D7E54A2B4D844000554496 /* Pretendard-Black.otf in Resources */,
 				05BA7BDF2B29DDEE00D159FB /* Localizable.xcstrings in Resources */,
 				05D7E54F2B4D844000554496 /* Pretendard-Medium.otf in Resources */,
+				05B6500A2B52624800389A32 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,6 +595,8 @@
 				0584B3792A766442004758AE /* ItemCoreEntity+CoreDataClass.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
 				0584B3832A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift in Sources */,
+				05B6500C2B52673000389A32 /* Double+format.swift in Sources */,
+				05B6500E2B5267FF00389A32 /* Locale.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

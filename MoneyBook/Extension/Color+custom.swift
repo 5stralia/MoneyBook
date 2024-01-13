@@ -29,16 +29,18 @@ extension Color {
         return Color(red: red, green: green, blue: blue)
     }
     
-        static let brown1: Color = Color(red: 95/255, green: 63/255, blue: 22/255)
-        static let brown2: Color = Color(red: 118/255, green: 86/255, blue: 45/255)
-        static let brown3: Color = Color(red: 141/255, green: 109/255, blue: 69/255)
-        static let brown4: Color = Color(red: 164/255, green: 132/255, blue: 92/255)
-        static let brown5: Color = Color(red: 186/255, green: 155/255, blue: 115/255)
-        static let brown6: Color = Color(red: 209/255, green: 178/255, blue: 138/255)
-        static let brown7: Color = Color(red: 232/255, green: 201/255, blue: 162/255)
-        static let brownColors: [Color] = [Color.brown1, Color.brown2, Color.brown3, Color.brown4, Color.brown5, Color.brown6, Color.brown7]
+    static let brown1: Color = Color(red: 95/255, green: 63/255, blue: 22/255)
+    static let brown2: Color = Color(red: 118/255, green: 86/255, blue: 45/255)
+    static let brown3: Color = Color(red: 141/255, green: 109/255, blue: 69/255)
+    static let brown4: Color = Color(red: 164/255, green: 132/255, blue: 92/255)
+    static let brown5: Color = Color(red: 186/255, green: 155/255, blue: 115/255)
+    static let brown6: Color = Color(red: 209/255, green: 178/255, blue: 138/255)
+    static let brown7: Color = Color(red: 232/255, green: 201/255, blue: 162/255)
+    static let brownColors: [Color] = [Color.brown1, Color.brown2, Color.brown3, Color.brown4, Color.brown5, Color.brown6, Color.brown7]
     
-    
+    static let customGray1: Color = Color("customGray1")
+    static let dynamicWhite: Color = Color("dynamicWhite")
+    static let dynamicBlack: Color = Color("dynamicBlack")
     
 //    static let brown1: Color = color(hex: "#5f3f16")
 //    static let brown2: Color = color(hex: "#68481f")
