@@ -1,13 +1,26 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "( %@ %lld%% )" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "( %1$@ %2$lld%% )"
+          }
+        }
+      }
+    },
+    "%" : {
+
+    },
+    "66" : {
+
+    },
     "Add Category" : {
 
     },
     "Add Item" : {
-
-    },
-    "amount" : {
 
     },
     "Amount" : {
@@ -48,9 +61,6 @@
     "Done" : {
 
     },
-    "Empty Data" : {
-
-    },
     "expense" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -85,9 +95,6 @@
         }
       }
     },
-    "month" : {
-
-    },
     "Month" : {
 
     },
@@ -95,9 +102,6 @@
 
     },
     "Open Settings" : {
-
-    },
-    "plus" : {
 
     },
     "This is Settings" : {
@@ -117,7 +121,7 @@
         }
       }
     },
-    "type" : {
+    "value" : {
 
     },
     "Year" : {
@@ -127,6 +131,9 @@
 
     },
     "지출" : {
+
+    },
+    "지출 합계" : {
 
     },
     "합계" : {
