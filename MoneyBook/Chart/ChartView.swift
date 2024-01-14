@@ -288,7 +288,7 @@ struct Header: View {
 
 struct DateEntity: Identifiable {
     let text: String
-    let value: Int
+    let value: Double?
     let color: Color
 
     let id = UUID()
@@ -300,8 +300,10 @@ struct ChangingGraph: View {
         .init(text: "10", value: 614050, color: Color.dynamicWhite.opacity(0.5)),
         .init(text: "11", value: 410050, color: Color.dynamicWhite.opacity(0.5)),
         .init(text: "12", value: 1_234_050, color: Color.dynamicWhite),
-        .init(text: "1", value: 0, color: Color.dynamicWhite.opacity(0.5)),
-        .init(text: "2", value: 0, color: Color.dynamicWhite.opacity(0.5)),
+        .init(text: "1", value: nil, color: Color.dynamicWhite.opacity(0.5)),
+        .init(text: "2", value: nil, color: Color.dynamicWhite.opacity(0.5)),
+//        .init(text: "1", value: 0, color: Color.dynamicWhite.opacity(0.5)),
+//        .init(text: "2", value: 0, color: Color.dynamicWhite.opacity(0.5)),
         //        .init(text: "1", value: 535050),
         //        .init(text: "2", value: 635050),
     ]
@@ -313,7 +315,7 @@ struct ChangingGraph: View {
                     VStack {
                         Text(entity.text)
                             .font(.Pretendard(size: 10))
-                        Text(entity.value.formatted())
+                        Text(entity.value?.formatted() ?? "-")
                             .font(.Pretendard(size: 12))
                     }
                     .foregroundStyle(entity.color)
@@ -321,8 +323,8 @@ struct ChangingGraph: View {
             }
             .foregroundStyle(Color.dynamicWhite.opacity(0.5))
 
-            if let maxValue = self.dateEntities.map(\.value).max(),
-                let minValue = self.dateEntities.map(\.value).min()
+            if let maxValue = self.dateEntities.compactMap(\.value).max(),
+                let minValue = self.dateEntities.compactMap(\.value).min()
             {
                 GeometryReader { geometry in
 
@@ -331,12 +333,14 @@ struct ChangingGraph: View {
 
                     Path { path in
                         for (offset, entity) in dateEntities.enumerated() {
+                            guard let value = entity.value else { return }
+                            
                             let x = (CGFloat(offset) + 0.5) * w
                             let y =
                                 (geometry.size.height - 20)
-                                * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
+                                * (1 - ((CGFloat(value) - CGFloat(minValue)) / CGFloat(range))) + 10
 
-                            if entity.value == maxValue {
+                            if value == maxValue {
                                 path.addEllipse(in: CGRect(x: x - 5, y: y - 5, width: 10, height: 10))
                             } else {
                                 path.addEllipse(in: CGRect(x: x - 3, y: y - 3, width: 6, height: 6))
@@ -347,10 +351,12 @@ struct ChangingGraph: View {
 
                     Path { path in
                         for (offset, entity) in dateEntities.enumerated() {
+                            guard let value = entity.value else { return }
+                            
                             let x = (CGFloat(offset) + 0.5) * w
                             let y =
                                 (geometry.size.height - 20)
-                                * (1 - ((CGFloat(entity.value) - CGFloat(minValue)) / CGFloat(range))) + 10
+                                * (1 - ((CGFloat(value) - CGFloat(minValue)) / CGFloat(range))) + 10
 
                             if offset == 0 {
                                 path.move(to: CGPoint(x: x, y: y))
