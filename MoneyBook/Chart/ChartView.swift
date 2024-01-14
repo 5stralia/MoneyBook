@@ -230,7 +230,6 @@ struct MonthlyHotItemView: View {
 }
 
 struct Header: View {
-
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     let topText: String
@@ -286,10 +285,16 @@ struct Header: View {
                 }
             }
         }
+        .zIndex(.infinity)
         .padding(.bottom, 11)
         .padding(.top, 20)
-        .background(Color(red: 255 / 255, green: 195 / 255, blue: 117 / 255))
         .foregroundStyle(Color.dynamicWhite)
+        .background {
+            Rectangle()
+                .ignoresSafeArea()
+                .foregroundStyle(Color(red: 255 / 255, green: 195 / 255, blue: 117 / 255))
+                .shadow(color: Color.black.opacity(0.16), radius: 6, x: 0, y: 3)
+        }
     }
 }
 
