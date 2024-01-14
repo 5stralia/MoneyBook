@@ -24,34 +24,31 @@ struct ChartView: View {
 
     @State private var year = 2023
     @State private var month = 1
-
-    @State var monthlyCategoryItems: [MonthlyCategoryItem] = [
-        .init(ratio: 0.66, title: "식비", value: 759090),
-        .init(ratio: 0.13, title: "패션미용", value: 159080),
-        .init(ratio: 0.7, title: "반려동물", value: 109345),
-        .init(ratio: 0.7, title: "택시비", value: 89300),
-        .init(ratio: 0.7, title: "경조사", value: 59590),
-        .init(ratio: 0.7, title: "편의점", value: 39040),
-        .init(ratio: 0.7, title: "데이트", value: 19080),
-    ]
+    @State private var isExpense = true
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                Header(topText: "월별 지출", title: "\(self.year).\(self.month)", action: {})
+                Header(topText: "월별 \(self.isExpense ? "지출" : "소득")", title: "\(self.year).\(self.month)", action: {})
 
                 ScrollView {
                     VStack(spacing: 0) {
-                        ChangingGraph(items: [])
-                            .padding([.top, .bottom], 20)
-                            .frame(height: 160)
-                            .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
-                        MonthlySummaryView()
-                            .frame(height: 240)
-                            .padding([.leading, .trailing], 20)
-                            .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
+                        ChangingGraph(
+                            items: Array(self.items).statisticsByMonth(targetYear: self.year, targetMonth: self.month)
+                        )
+                        .padding([.top, .bottom], 20)
+                        .frame(height: 160)
+                        .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
+                        MonthlySummaryView(
+                            monthlyCategoryItems: self.groupedByCategory(
+                                items: self.items.map({ $0 }), isExpense: self.isExpense)
+                        )
+                        .frame(height: 240)
+                        .padding([.leading, .trailing], 20)
+                        .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
 
-                        ForEach(self.monthlyCategoryItems) { item in
+                        ForEach(self.groupedByCategory(items: self.items.map({ $0 }), isExpense: self.isExpense)) {
+                            item in
                             NavigationLink(value: item) {
                                 MonthlyCategoryItemView(item: item)
                                     .frame(height: 46)
@@ -75,34 +72,45 @@ struct ChartView: View {
         })
     }
 
-    //    private func getAllCategories(isIncome: Bool) -> [String] {
-    //        let filtered = self.items.filter { item in
-    //            if isIncome {
-    //                return item.amount >= 0
-    //            } else {
-    //                return item.amount < 0
-    //            }
-    //        }
+    private func groupedByCategory(items: [ItemCoreEntity], isExpense: Bool) -> [MonthlyCategoryItem] {
+        let items = items.filter { isExpense ? ($0.amount >= 0) : ($0.amount <= 0) }
+        let sum = items.map(\.amount).reduce(0, +)
+
+        let dict = Dictionary(grouping: items, by: { $0.category })
+        return dict.enumerated().map { (offset, dict) in
+            let (category, items) = dict
+            let categorySum = items.map(\.amount).reduce(0, +)
+            let random = { stride(from: 0.0, to: 1.0, by: 0.01).map({ $0 }).randomElement() ?? 0 }
+            let color =
+                if offset < 7 {
+                    Color.brownColors[offset]
+                } else {
+                    Color(red: random(), green: random(), blue: random())
+                }
+
+            return MonthlyCategoryItem(
+                ratio: Float(categorySum / sum), title: category, value: categorySum, color: color)
+        }
+    }
+
+    //    private func getTopExpenseCategory(items: [ItemCoreEntity], year: Int, month: Int) -> MonthlySummaryItem {
+    //        let targetItems = items.filter { $0.timestamp.getYear() == year && $0.timestamp.getMonth() == month }
     //
-    //        return Dictionary(grouping: filtered, by: { $0.category }).map { $0.key }
     //    }
 }
-
-struct MonthlyItem {
-    let value: Double
+struct MonthlySummaryItem {
+    let category: String
+    let changing: Float
     let color: Color
 }
+
 struct MonthlySummaryView: View {
-    @State var items: [Double] = [614050, 410050, 1_234_050, 535050, 635050]
+    let monthlyCategoryItems: [MonthlyCategoryItem]
 
     var body: some View {
         HStack {
             Chart {
-                ForEach(
-                    self.items.sorted(using: KeyPathComparator(\.self, order: .reverse)).enumerated().map({
-                        MonthlyItem(value: $1, color: Color.brownColors[$0])
-                    }), id: \.color
-                ) { item in
+                ForEach(self.monthlyCategoryItems.sorted(using: KeyPathComparator(\.value, order: .reverse))) { item in
                     SectorMark(
                         angle: .value("value", item.value),
                         innerRadius: .ratio(0),
@@ -147,6 +155,7 @@ struct MonthlyCategoryItem: Identifiable {
     let ratio: Float
     let title: String
     let value: Double
+    let color: Color
 
     let id = UUID()
 }
@@ -161,10 +170,10 @@ struct MonthlyCategoryItemView: View {
     var body: some View {
         HStack {
             RoundedRectangle(cornerRadius: 4)
-                .foregroundStyle(Color.brownColors[0])
+                .foregroundStyle(self.item.color)
                 .overlay {
                     HStack(spacing: 1) {
-                        Text("66")
+                        Text("\(Int(self.item.ratio * 100))")
                             .font(.Pretendard(size: 14))
                         Text("%")
                             .font(.Pretendard(size: 10))
@@ -322,7 +331,8 @@ struct ChangingGraph: View {
             }
             .foregroundStyle(Color.dynamicWhite.opacity(0.5))
 
-            if let maxValue = self.items.compactMap(\.value).max(),
+            if self.items.contains(where: { $0.value != nil }),
+                let maxValue = self.items.compactMap(\.value).max(),
                 let minValue = self.items.compactMap(\.value).min()
             {
                 GeometryReader { geometry in
@@ -393,6 +403,8 @@ struct ChangingGraph: View {
                     .stroke(style: StrokeStyle(lineWidth: 2, dash: [1.5]))
                 }
                 .foregroundStyle(Color.dynamicWhite)
+            } else {
+                Spacer()
             }
         }
     }

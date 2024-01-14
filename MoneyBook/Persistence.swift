@@ -13,26 +13,32 @@ struct PersistenceController {
     var viewContext: NSManagedObjectContext { self.container.viewContext }
 
     static var preview: PersistenceController = {
+        func createItems(category: String, viewContext: NSManagedObjectContext, numberOfItemsInDay: Int) {
+            let now = Date()
+            let group_id = UUID()
+            for k in 0..<12 {  // in year
+                for i in 0..<10 {  // in month
+                    for j in 1...numberOfItemsInDay {  // in day
+                        let newItem = ItemCoreEntity(context: viewContext)
+                        newItem.title = "Title \(i)_\(j)"
+                        newItem.note = "Note \(i)_\(j)"
+                        newItem.timestamp = Date(
+                            timeInterval: TimeInterval(-(60 * 60 * 24 * 30) * k)
+                                + TimeInterval(-(60 * 60 * 24) * i - j), since: now)
+                        newItem.category = category
+                        newItem.amount = 1000 * Double(j)
+                        newItem.group_id = group_id
+                    }
+                }
+            }
+
+        }
+
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
 
-        let now = Date()
-        let group_id = UUID()
-        for k in 0..<12 {
-            for i in 0..<10 {
-                for j in 1..<4 {
-                    let newItem = ItemCoreEntity(context: viewContext)
-                    newItem.title = "Title \(i)_\(j)"
-                    newItem.note = "Note \(i)_\(j)"
-                    newItem.timestamp = Date(
-                        timeInterval: TimeInterval(-(60 * 60 * 24 * 30) * k)
-                            + TimeInterval(-(60 * 60 * 24) * i - j), since: now)
-                    newItem.category = j % 2 == 0 ? "용돈" : "식비"
-                    newItem.amount = 1000 * Double(j) * (j % 2 == 0 ? -1 : 1)
-                    newItem.group_id = group_id
-                }
-            }
-        }
+        createItems(category: "식비", viewContext: viewContext, numberOfItemsInDay: 5)
+        createItems(category: "쇼핑", viewContext: viewContext, numberOfItemsInDay: 3)
 
         do {
             try ["식비", "생활비", "교통비", "통신비", "기타"].forEach { category in
