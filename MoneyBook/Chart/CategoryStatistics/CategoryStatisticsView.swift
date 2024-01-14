@@ -42,7 +42,7 @@ struct CategoryStatisticsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Header(topText: "12월 지출 상제", title: "패션미용", isHiddenBackButton: false, action: {})
+            Header(topText: "12월 지출 상제", title: self.category, isHiddenBackButton: false, isEnabledAction: false, action: {})
 
             ScrollView {
                 VStack(spacing: 0) {
@@ -68,6 +68,7 @@ struct CategoryStatisticsView: View {
                     TimelineDateView(date: group.date, totalValue: group.totalValue)
                         .padding(.trailing, 20)
                         .padding(.bottom, 5)
+                        .padding(.top, 10)
 
                     ForEach(group.items) { item in
                         TimelineItemView(

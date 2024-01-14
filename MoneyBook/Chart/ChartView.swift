@@ -226,13 +226,15 @@ struct Header: View {
 
     let topText: String
     let title: String
-    let isHiddenBackButton: Bool
+    var isHiddenBackButton: Bool
+    var isEnableAction: Bool
     let action: () -> Void
 
-    internal init(topText: String, title: String, isHiddenBackButton: Bool = true, action: @escaping () -> Void) {
+    internal init(topText: String, title: String, isHiddenBackButton: Bool = true, isEnabledAction: Bool = true, action: @escaping () -> Void) {
         self.topText = topText
         self.title = title
         self.isHiddenBackButton = isHiddenBackButton
+        self.isEnableAction = isEnabledAction
         self.action = action
     }
 
@@ -243,15 +245,21 @@ struct Header: View {
                 VStack {
                     Text(self.topText)
                         .font(.Pretendard(size: 12))
-                    Button(
-                        action: self.action,
-                        label: {
-                            HStack {
-                                Text(self.title)
-                                    .font(.Pretendard(size: 23))
-                                Image(systemName: "chevron.down")
-                            }
-                        })
+                    
+                    if self.isEnableAction {
+                        Button(
+                            action: self.action,
+                            label: {
+                                HStack {
+                                    Text(self.title)
+                                        .font(.Pretendard(size: 23))
+                                    Image(systemName: "chevron.down")
+                                }
+                            })
+                    } else {
+                        Text(self.title)
+                            .font(.Pretendard(size: 23))
+                    }
                 }
                 Spacer()
             }
