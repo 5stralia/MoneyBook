@@ -42,7 +42,7 @@ struct ChartView: View {
 
                 ScrollView {
                     VStack(spacing: 0) {
-                        ChangingGraph()
+                        ChangingGraph(items: [])
                             .padding([.top, .bottom], 20)
                             .frame(height: 160)
                             .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
@@ -227,14 +227,12 @@ struct Header: View {
     let topText: String
     let title: String
     var isHiddenBackButton: Bool
-    var isEnableAction: Bool
-    let action: () -> Void
+    let action: (() -> Void)?
 
-    internal init(topText: String, title: String, isHiddenBackButton: Bool = true, isEnabledAction: Bool = true, action: @escaping () -> Void) {
+    internal init(topText: String, title: String, isHiddenBackButton: Bool = true, action: (() -> Void)? = nil) {
         self.topText = topText
         self.title = title
         self.isHiddenBackButton = isHiddenBackButton
-        self.isEnableAction = isEnabledAction
         self.action = action
     }
 
@@ -245,10 +243,10 @@ struct Header: View {
                 VStack {
                     Text(self.topText)
                         .font(.Pretendard(size: 12))
-                    
-                    if self.isEnableAction {
+
+                    if let action {
                         Button(
-                            action: self.action,
+                            action: action,
                             label: {
                                 HStack {
                                     Text(self.title)
@@ -296,22 +294,23 @@ struct DateEntity: Identifiable {
 struct ChangingGraph: View {
     static let itemCount = 5
 
-    var dateEntities: [DateEntity] = [
-        .init(text: "10", value: 614050, color: Color.dynamicWhite.opacity(0.5)),
-        .init(text: "11", value: 410050, color: Color.dynamicWhite.opacity(0.5)),
-        .init(text: "12", value: 1_234_050, color: Color.dynamicWhite),
-        .init(text: "1", value: nil, color: Color.dynamicWhite.opacity(0.5)),
-        .init(text: "2", value: nil, color: Color.dynamicWhite.opacity(0.5)),
-//        .init(text: "1", value: 0, color: Color.dynamicWhite.opacity(0.5)),
-//        .init(text: "2", value: 0, color: Color.dynamicWhite.opacity(0.5)),
-        //        .init(text: "1", value: 535050),
-        //        .init(text: "2", value: 635050),
-    ]
+    let items: [DateEntity]
+
+    init(items: [DateEntity]) {
+        if items.count > ChangingGraph.itemCount {
+            MyLogger.logger.warning(
+                "ChangingGraph.items는 최대 \(ChangingGraph.itemCount)개까지 설정 가능. items.count: \(items.count)"
+            )
+            self.items = Array(items.prefix(5))
+        } else {
+            self.items = items
+        }
+    }
 
     var body: some View {
         VStack {
             EqualSizeHStack {
-                ForEach(self.dateEntities) { entity in
+                ForEach(self.items) { entity in
                     VStack {
                         Text(entity.text)
                             .font(.Pretendard(size: 10))
@@ -323,8 +322,8 @@ struct ChangingGraph: View {
             }
             .foregroundStyle(Color.dynamicWhite.opacity(0.5))
 
-            if let maxValue = self.dateEntities.compactMap(\.value).max(),
-                let minValue = self.dateEntities.compactMap(\.value).min()
+            if let maxValue = self.items.compactMap(\.value).max(),
+                let minValue = self.items.compactMap(\.value).min()
             {
                 GeometryReader { geometry in
 
@@ -332,15 +331,28 @@ struct ChangingGraph: View {
                     let w = geometry.size.width / CGFloat(ChangingGraph.itemCount)
 
                     Path { path in
-                        for (offset, entity) in dateEntities.enumerated() {
+                        for (offset, entity) in items.enumerated() {
                             guard let value = entity.value else { return }
-                            
+
+                            if minValue == maxValue {
+                                let x = (CGFloat(offset) + 0.5) * w
+                                let y = (geometry.size.height - 20) * 0.5
+
+                                if offset == 2 {
+                                    path.addEllipse(in: CGRect(x: x - 5, y: y - 5, width: 10, height: 10))
+                                } else {
+                                    path.addEllipse(in: CGRect(x: x - 3, y: y - 3, width: 6, height: 6))
+                                }
+
+                                continue
+                            }
+
                             let x = (CGFloat(offset) + 0.5) * w
                             let y =
                                 (geometry.size.height - 20)
                                 * (1 - ((CGFloat(value) - CGFloat(minValue)) / CGFloat(range))) + 10
 
-                            if value == maxValue {
+                            if offset == 2 {
                                 path.addEllipse(in: CGRect(x: x - 5, y: y - 5, width: 10, height: 10))
                             } else {
                                 path.addEllipse(in: CGRect(x: x - 3, y: y - 3, width: 6, height: 6))
@@ -350,9 +362,22 @@ struct ChangingGraph: View {
                     }
 
                     Path { path in
-                        for (offset, entity) in dateEntities.enumerated() {
+                        for (offset, entity) in items.enumerated() {
                             guard let value = entity.value else { return }
-                            
+
+                            if minValue == maxValue {
+                                let x = (CGFloat(offset) + 0.5) * w
+                                let y = (geometry.size.height - 20) * 0.5
+
+                                if offset == 0 {
+                                    path.move(to: CGPoint(x: x, y: y))
+                                } else {
+                                    path.addLine(to: CGPoint(x: x, y: y))
+                                }
+
+                                continue
+                            }
+
                             let x = (CGFloat(offset) + 0.5) * w
                             let y =
                                 (geometry.size.height - 20)

@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-private let dateFormatter: DateFormatter = {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy.MM.dd"
-    return dateFormatter
+private let monthDayFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "M.d E"
+    return formatter
 }()
 
 struct TimelineDateView: View {
@@ -24,7 +24,7 @@ struct TimelineDateView: View {
 
     var body: some View {
         ZStack {
-            Text(dateFormatter.string(from: date))
+            Text(monthDayFormatter.string(from: date))
                 .font(.Pretendard(size: 15))
 
             if let totalValue,

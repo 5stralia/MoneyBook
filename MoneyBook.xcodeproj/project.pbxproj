@@ -36,6 +36,7 @@
 		05B6500E2B5267FF00389A32 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500D2B5267FF00389A32 /* Locale.swift */; };
 		05B650112B52B07F00389A32 /* CategoryStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B650102B52B07F00389A32 /* CategoryStatisticsView.swift */; };
 		05B650132B52DFD900389A32 /* UINavigationController+swipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B650122B52DFD900389A32 /* UINavigationController+swipe.swift */; };
+		05B650162B53A6D000389A32 /* MyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B650152B53A6D000389A32 /* MyLogger.swift */; };
 		05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B76D482B25D3DE0048C757 /* MultiSelectView.swift */; };
 		05BA7BDF2B29DDEE00D159FB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */; };
 		05BA7BE72B2B38D800D159FB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BA7BE62B2B38D800D159FB /* WidgetKit.framework */; };
@@ -129,6 +130,7 @@
 		05B6500D2B5267FF00389A32 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		05B650102B52B07F00389A32 /* CategoryStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryStatisticsView.swift; sourceTree = "<group>"; };
 		05B650122B52DFD900389A32 /* UINavigationController+swipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+swipe.swift"; sourceTree = "<group>"; };
+		05B650152B53A6D000389A32 /* MyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLogger.swift; sourceTree = "<group>"; };
 		05B76D482B25D3DE0048C757 /* MultiSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectView.swift; sourceTree = "<group>"; };
 		05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		05BA7BE42B2B38D800D159FB /* MoneyBookWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoneyBookWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -297,6 +299,7 @@
 		05A76A0A2A34115D00B231CB /* MoneyBook */ = {
 			isa = PBXGroup;
 			children = (
+				05B650142B53A6BB00389A32 /* Helper */,
 				05BA7BDD2B29DDCE00D159FB /* Resource */,
 				05A719A62A85219D00260837 /* Chart */,
 				0584B35F2A4A4666004758AE /* AppendingItem */,
@@ -362,6 +365,14 @@
 				05B650102B52B07F00389A32 /* CategoryStatisticsView.swift */,
 			);
 			path = CategoryStatistics;
+			sourceTree = "<group>";
+		};
+		05B650142B53A6BB00389A32 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				05B650152B53A6D000389A32 /* MyLogger.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		05BA7BDD2B29DDCE00D159FB /* Resource */ = {
@@ -611,6 +622,7 @@
 				0584B3792A766442004758AE /* ItemCoreEntity+CoreDataClass.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
 				0584B3832A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift in Sources */,
+				05B650162B53A6D000389A32 /* MyLogger.swift in Sources */,
 				05B6500C2B52673000389A32 /* Double+format.swift in Sources */,
 				05B6500E2B5267FF00389A32 /* Locale.swift in Sources */,
 			);
