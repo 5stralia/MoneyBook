@@ -31,6 +31,12 @@
 		05A76A2E2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */; };
 		05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3C2A355D4B00B231CB /* TimelineView.swift */; };
 		05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A3F2A355DE100B231CB /* TimelineItemView.swift */; };
+		05B42AAC2B5FF8240071A2E3 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AAB2B5FF8240071A2E3 /* Header.swift */; };
+		05B42AAE2B5FF8460071A2E3 /* ChangingGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AAD2B5FF8460071A2E3 /* ChangingGraph.swift */; };
+		05B42AB02B5FFB4D0071A2E3 /* MonthlySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AAF2B5FFB4D0071A2E3 /* MonthlySummaryView.swift */; };
+		05B42AB22B5FFBE90071A2E3 /* MonthlyHotItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AB12B5FFBE90071A2E3 /* MonthlyHotItemView.swift */; };
+		05B42AB42B5FFC2B0071A2E3 /* EqualSizeHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AB32B5FFC2B0071A2E3 /* EqualSizeHStack.swift */; };
+		05B42AB62B5FFC410071A2E3 /* MonthlyCategoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AB52B5FFC410071A2E3 /* MonthlyCategoryItemView.swift */; };
 		05B6500A2B52624800389A32 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05B650092B52624800389A32 /* Colors.xcassets */; };
 		05B6500C2B52673000389A32 /* Double+format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500B2B52673000389A32 /* Double+format.swift */; };
 		05B6500E2B5267FF00389A32 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500D2B5267FF00389A32 /* Locale.swift */; };
@@ -125,6 +131,12 @@
 		05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		05A76A3C2A355D4B00B231CB /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		05A76A3F2A355DE100B231CB /* TimelineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineItemView.swift; sourceTree = "<group>"; };
+		05B42AAB2B5FF8240071A2E3 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
+		05B42AAD2B5FF8460071A2E3 /* ChangingGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangingGraph.swift; sourceTree = "<group>"; };
+		05B42AAF2B5FFB4D0071A2E3 /* MonthlySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySummaryView.swift; sourceTree = "<group>"; };
+		05B42AB12B5FFBE90071A2E3 /* MonthlyHotItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyHotItemView.swift; sourceTree = "<group>"; };
+		05B42AB32B5FFC2B0071A2E3 /* EqualSizeHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualSizeHStack.swift; sourceTree = "<group>"; };
+		05B42AB52B5FFC410071A2E3 /* MonthlyCategoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCategoryItemView.swift; sourceTree = "<group>"; };
 		05B650092B52624800389A32 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		05B6500B2B52673000389A32 /* Double+format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+format.swift"; sourceTree = "<group>"; };
 		05B6500D2B5267FF00389A32 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
@@ -266,6 +278,7 @@
 		05A719A62A85219D00260837 /* Chart */ = {
 			isa = PBXGroup;
 			children = (
+				05B42AAA2B5FF8130071A2E3 /* SubView */,
 				05B6500F2B52AFF900389A32 /* CategoryStatistics */,
 				05A719A72A8521AE00260837 /* ChartView.swift */,
 				05B76D482B25D3DE0048C757 /* MultiSelectView.swift */,
@@ -357,6 +370,19 @@
 				0584B3582A40574F004758AE /* TimelineDateView.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		05B42AAA2B5FF8130071A2E3 /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				05B42AAB2B5FF8240071A2E3 /* Header.swift */,
+				05B42AAD2B5FF8460071A2E3 /* ChangingGraph.swift */,
+				05B42AAF2B5FFB4D0071A2E3 /* MonthlySummaryView.swift */,
+				05B42AB12B5FFBE90071A2E3 /* MonthlyHotItemView.swift */,
+				05B42AB32B5FFC2B0071A2E3 /* EqualSizeHStack.swift */,
+				05B42AB52B5FFC410071A2E3 /* MonthlyCategoryItemView.swift */,
+			);
+			path = SubView;
 			sourceTree = "<group>";
 		};
 		05B6500F2B52AFF900389A32 /* CategoryStatistics */ = {
@@ -599,6 +625,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05A76A152A34115E00B231CB /* Persistence.swift in Sources */,
+				05B42AB42B5FFC2B0071A2E3 /* EqualSizeHStack.swift in Sources */,
 				0584B3612A4A468F004758AE /* AppendingItemView.swift in Sources */,
 				05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */,
 				0584B37B2A766442004758AE /* GroupCoreEntity+CoreDataClass.swift in Sources */,
@@ -613,6 +640,8 @@
 				05A719A82A8521AE00260837 /* ChartView.swift in Sources */,
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
 				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
+				05B42AB22B5FFBE90071A2E3 /* MonthlyHotItemView.swift in Sources */,
+				05B42AB02B5FFB4D0071A2E3 /* MonthlySummaryView.swift in Sources */,
 				0584B37C2A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift in Sources */,
 				05B650112B52B07F00389A32 /* CategoryStatisticsView.swift in Sources */,
 				05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */,
@@ -622,9 +651,12 @@
 				0584B3792A766442004758AE /* ItemCoreEntity+CoreDataClass.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
 				0584B3832A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift in Sources */,
+				05B42AAC2B5FF8240071A2E3 /* Header.swift in Sources */,
 				05B650162B53A6D000389A32 /* MyLogger.swift in Sources */,
 				05B6500C2B52673000389A32 /* Double+format.swift in Sources */,
 				05B6500E2B5267FF00389A32 /* Locale.swift in Sources */,
+				05B42AAE2B5FF8460071A2E3 /* ChangingGraph.swift in Sources */,
+				05B42AB62B5FFC410071A2E3 /* MonthlyCategoryItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,13 +19,13 @@ struct TimelineItemView: View {
             VStack(alignment: .leading) {
                 Spacer()
                 Text(self.title)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.Pretendard(size: 16, weight: .bold))
                 HStack {
                     Text(self.categoryName)
-                        .font(.system(size: 12, weight: .medium))
+                        .font(.Pretendard(size: 12, weight: .medium))
                     Spacer()
                     Text(amountFormatter.string(for: self.amount) ?? "")
-                        .font(.system(size: 16, weight: .bold))
+                        .font(.Pretendard(size: 16, weight: .bold))
                 }
                 Spacer()
             }
@@ -40,8 +40,8 @@ struct TimelineItemView: View {
 public let amountFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
-    formatter.positivePrefix = "+"
-    formatter.negativePrefix = "-"
+    formatter.positivePrefix = "+ "
+    formatter.negativePrefix = "- "
     return formatter
 }()
 

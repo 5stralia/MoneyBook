@@ -25,7 +25,7 @@ struct TimelineDateView: View {
     var body: some View {
         ZStack {
             Text(monthDayFormatter.string(from: date))
-                .font(.Pretendard(size: 15))
+                .font(.Pretendard(size: 15, weight: .medium))
 
             if let totalValue,
                 let text = abs(totalValue).string(digits: Locale.isKorean ? 0 : 2)
@@ -33,7 +33,7 @@ struct TimelineDateView: View {
                 HStack {
                     Spacer()
                     Text("\(totalValue > 0 ? "+" : "-") \(text)")
-                        .font(.Pretendard(size: 15))
+                        .font(.Pretendard(size: 15, weight: .medium))
                 }
             }
         }
