@@ -74,7 +74,7 @@ struct ChartView: View {
     }
 
     private func groupedByCategory(items: [ItemCoreEntity], isExpense: Bool) -> [MonthlyCategoryItem] {
-        let items = items.filter { isExpense ? ($0.amount >= 0) : ($0.amount <= 0) }
+        let items = items.filter { isExpense ? ($0.amount < 0) : ($0.amount >= 0) }
         let sum = items.map(\.amount).reduce(0, +)
 
         let dict = Dictionary(grouping: items, by: { $0.category })
