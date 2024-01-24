@@ -56,7 +56,7 @@ struct ChangingGraph: View {
 
                     Path { path in
                         for (offset, entity) in items.enumerated() {
-                            guard let value = entity.value else { return }
+                            guard let value = entity.value else { continue }
 
                             if minValue == maxValue {
                                 let x = (CGFloat(offset) + 0.5) * w
@@ -86,8 +86,10 @@ struct ChangingGraph: View {
                     }
 
                     Path { path in
+                        var isStarted = false
+
                         for (offset, entity) in items.enumerated() {
-                            guard let value = entity.value else { return }
+                            guard let value = entity.value else { continue }
 
                             if minValue == maxValue {
                                 let x = (CGFloat(offset) + 0.5) * w
@@ -107,8 +109,9 @@ struct ChangingGraph: View {
                                 (geometry.size.height - 20)
                                 * (1 - ((CGFloat(value) - CGFloat(minValue)) / CGFloat(range))) + 10
 
-                            if offset == 0 {
+                            if !isStarted {
                                 path.move(to: CGPoint(x: x, y: y))
+                                isStarted = true
                             } else {
                                 path.addLine(to: CGPoint(x: x, y: y))
                             }
@@ -141,6 +144,28 @@ struct ChangingGraph: View {
             DateEntity(text: "2012.11", value: 5, color: Color.white.opacity(0.5)),
             DateEntity(text: "2012.12", value: 2, color: Color.white.opacity(0.5)),
             DateEntity(text: "2013.01", value: 3, color: .white),
+            DateEntity(text: "2013.02", value: nil, color: Color.white.opacity(0.5)),
+            DateEntity(text: "2013.03", value: nil, color: Color.white.opacity(0.5)),
+        ])
+        .padding([.top, .bottom], 20)
+        .frame(height: 160)
+        .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
+
+        ChangingGraph(items: [
+            DateEntity(text: "2012.11", value: nil, color: Color.white.opacity(0.5)),
+            DateEntity(text: "2012.12", value: nil, color: Color.white.opacity(0.5)),
+            DateEntity(text: "2013.01", value: 3, color: .white),
+            DateEntity(text: "2013.02", value: nil, color: Color.white.opacity(0.5)),
+            DateEntity(text: "2013.03", value: nil, color: Color.white.opacity(0.5)),
+        ])
+        .padding([.top, .bottom], 20)
+        .frame(height: 160)
+        .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
+
+        ChangingGraph(items: [
+            DateEntity(text: "2012.11", value: 30, color: Color.white.opacity(0.5)),
+            DateEntity(text: "2012.12", value: nil, color: Color.white.opacity(0.5)),
+            DateEntity(text: "2013.01", value: 50, color: .white),
             DateEntity(text: "2013.02", value: nil, color: Color.white.opacity(0.5)),
             DateEntity(text: "2013.03", value: nil, color: Color.white.opacity(0.5)),
         ])

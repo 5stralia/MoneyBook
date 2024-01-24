@@ -26,7 +26,7 @@ struct PersistenceController {
                             timeInterval: TimeInterval(-(60 * 60 * 24 * 30) * k)
                                 + TimeInterval(-(60 * 60 * 24) * i - j), since: now)
                         newItem.category = category
-                        newItem.amount = 1000 * Double(j)
+                        newItem.amount = 1000 * Double(j) + (Double(k) * 5000)
                         newItem.group_id = group_id
                     }
                 }

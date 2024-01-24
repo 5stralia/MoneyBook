@@ -22,8 +22,8 @@ struct ChartView: View {
         animation: .default)
     private var items: FetchedResults<ItemCoreEntity>
 
-    @State private var year = 2023
-    @State private var month = 1
+    @State private var year = Date().getYear()
+    @State private var month = Date().getMonth()
     @State private var isExpense = true
 
     var body: some View {
@@ -63,6 +63,7 @@ struct ChartView: View {
                             })
                     }
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
         }
         .onAppear(perform: {
