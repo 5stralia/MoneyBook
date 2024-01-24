@@ -31,7 +31,7 @@ struct TimelineItemView: View {
             }
         }
         .padding([.leading, .trailing], 12)
-        .background(self.amount > 0 ? Color.orange : Color.indigo)
+        .background(self.amount > 0 ? Color.indigo : Color.orange)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .foregroundColor(.dynamicWhite)
     }

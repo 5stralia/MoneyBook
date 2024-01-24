@@ -17,16 +17,6 @@ struct AppendingItemTypeView: View {
             .overlay {
                 HStack(spacing: 0) {
                     Capsule()
-                        .fill(isPaid ? .clear : .indigo)
-                        .overlay {
-                            Button {
-                                self.isPaid = false
-                            } label: {
-                                Text("수입")
-                                    .foregroundColor(isPaid ? .gray : .white)
-                            }
-                        }
-                    Capsule()
                         .fill(isPaid ? .orange : .clear)
                         .overlay {
                             Button {
@@ -34,6 +24,16 @@ struct AppendingItemTypeView: View {
                             } label: {
                                 Text("지출")
                                     .foregroundColor(isPaid ? .white : .gray)
+                            }
+                        }
+                    Capsule()
+                        .fill(isPaid ? .clear : .indigo)
+                        .overlay {
+                            Button {
+                                self.isPaid = false
+                            } label: {
+                                Text("수입")
+                                    .foregroundColor(isPaid ? .gray : .white)
                             }
                         }
                 }
@@ -187,7 +187,7 @@ struct AppendingItemView: View {
             self._title = State(initialValue: "")
             self._amount = State(initialValue: nil)
             self._date = State(initialValue: Date())
-            self._isPaid = State(initialValue: false)
+            self._isPaid = State(initialValue: true)
             self._selection = State(initialValue: "기타")
         }
     }

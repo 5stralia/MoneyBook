@@ -72,7 +72,7 @@ struct TimelineView: View {
                                     Button {
                                         path.append(item)
                                     } label: {
-                                        if item.amount > 0 {
+                                        if item.amount < 0 {
                                             HStack {
                                                 Spacer(minLength: 80)
                                                 TimelineItemView(
