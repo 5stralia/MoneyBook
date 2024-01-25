@@ -124,7 +124,6 @@ struct AppendingItemCategoryInputView: View {
                 Label(selection, systemImage: "chevron.down")
                     .labelStyle(RightImageLabelStyle())
                     .padding(.all, 8)
-                    .foregroundColor(.blue)
             }
             .menuStyle(.button)
             .alert("Add Category", isPresented: $isAlertPresented) {
@@ -226,6 +225,8 @@ struct AppendingItemView: View {
 
         }
         .background(Color(uiColor: .secondarySystemBackground))
+        .foregroundStyle(self.isPaid ? .orange : .indigo)
+        .tint(self.isPaid ? .orange : .indigo)
     }
 
     private func submit() {
