@@ -9,6 +9,8 @@ import CoreData
 import SwiftUI
 
 struct TimelineView: View {
+    @Namespace var bottomID
+    
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
@@ -60,52 +62,59 @@ struct TimelineView: View {
             ZStack(alignment: .bottom) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .bottom) {
-                        List {
-                            ForEach(self.groupItems(Array(self.items), year: year, month: month), id: \.date) {
-                                group in
-                                HStack {
-                                    Spacer()
-                                    TimelineDateView(date: group.date)
-                                    Spacer()
-                                }
-                                ForEach(group.items, id: \.id) { item in
-                                    Button {
-                                        path.append(item)
-                                    } label: {
-                                        if item.amount < 0 {
-                                            HStack {
-                                                Spacer(minLength: 80)
-                                                TimelineItemView(
-                                                    title: item.title, imageName: "carrot", categoryName: item.category,
-                                                    amount: item.amount)
-                                            }
-                                        } else {
-                                            HStack {
-                                                TimelineItemView(
-                                                    title: item.title, imageName: "carrot", categoryName: item.category,
-                                                    amount: item.amount)
-                                                Spacer(minLength: 80)
+                        ScrollViewReader { proxy in
+                            let groups = self.groupItems(Array(self.items), year: year, month: month)
+                            List {
+                                ForEach(groups, id: \.date) {
+                                    group in
+                                    HStack {
+                                        Spacer()
+                                        TimelineDateView(date: group.date)
+                                        Spacer()
+                                    }
+                                    ForEach(group.items, id: \.id) { item in
+                                        Button {
+                                            path.append(item)
+                                        } label: {
+                                            if item.amount < 0 {
+                                                HStack {
+                                                    Spacer(minLength: 80)
+                                                    TimelineItemView(
+                                                        title: item.title, imageName: "carrot", categoryName: item.category,
+                                                        amount: item.amount)
+                                                }
+                                            } else {
+                                                HStack {
+                                                    TimelineItemView(
+                                                        title: item.title, imageName: "carrot", categoryName: item.category,
+                                                        amount: item.amount)
+                                                    Spacer(minLength: 80)
+                                                }
                                             }
                                         }
+                                        .navigationDestination(
+                                            for: ItemCoreEntity.self,
+                                            destination: { item in
+                                                AppendingItemView(item: item)
+                                            })
                                     }
-                                    .navigationDestination(
-                                        for: ItemCoreEntity.self,
-                                        destination: { item in
-                                            AppendingItemView(item: item)
-                                        })
+                                    .onDelete(perform: { indexSet in
+                                        let deletedItems = indexSet.map { group.items[$0] }
+                                        self.deleteItems(items: deletedItems)
+                                    })
                                 }
-                                .onDelete(perform: { indexSet in
-                                    let deletedItems = indexSet.map { group.items[$0] }
-                                    self.deleteItems(items: deletedItems)
-                                })
-                            }
-                            .listRowSeparator(.hidden)
-
-                            Color.clear
-                                .frame(height: 37)
                                 .listRowSeparator(.hidden)
+                                
+                                Color.clear
+                                    .frame(height: 37)
+                                    .listRowSeparator(.hidden)
+                                    .id(bottomID)
+                            }
+                            .onReceive(self.items.publisher, perform: { _ in
+                                proxy.scrollTo(bottomID)
+                            })
+                            .listStyle(.plain)
                         }
-                        .listStyle(.plain)
 
                         TimelineSummaryValueView(paid: paid, earning: earning)
                             .frame(height: 37)
