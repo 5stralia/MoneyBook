@@ -12,6 +12,9 @@ struct MoneyBookApp: App {
     let persistenceController = PersistenceController.shared
     //    let persistenceController = PersistenceController.preview
 
+    private let homeQuickActionManager = HomeQuickActionManager.shared
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -29,6 +32,7 @@ struct MoneyBookApp: App {
                     }
                 })
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(self.homeQuickActionManager)
         }
     }
 }

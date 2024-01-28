@@ -10,8 +10,10 @@ import SwiftUI
 
 struct TimelineView: View {
     @Namespace var bottomID
-    
+
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var homeQuickActionManager: HomeQuickActionManager
+    @Environment(\.scenePhase) var scenePhase
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \ItemCoreEntity.timestamp, ascending: true)],
@@ -56,6 +58,7 @@ struct TimelineView: View {
     @State var isHiddenPicker: Bool = true
 
     @State private var path = NavigationPath()
+    @State private var isPresentedAppending: Bool = false
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -80,13 +83,15 @@ struct TimelineView: View {
                                                 HStack {
                                                     Spacer(minLength: 80)
                                                     TimelineItemView(
-                                                        title: item.title, imageName: "carrot", categoryName: item.category,
+                                                        title: item.title, imageName: "carrot",
+                                                        categoryName: item.category,
                                                         amount: item.amount)
                                                 }
                                             } else {
                                                 HStack {
                                                     TimelineItemView(
-                                                        title: item.title, imageName: "carrot", categoryName: item.category,
+                                                        title: item.title, imageName: "carrot",
+                                                        categoryName: item.category,
                                                         amount: item.amount)
                                                     Spacer(minLength: 80)
                                                 }
@@ -104,15 +109,18 @@ struct TimelineView: View {
                                     })
                                 }
                                 .listRowSeparator(.hidden)
-                                
+
                                 Color.clear
                                     .frame(height: 37)
                                     .listRowSeparator(.hidden)
                                     .id(bottomID)
                             }
-                            .onReceive(self.items.publisher, perform: { _ in
-                                proxy.scrollTo(bottomID)
-                            })
+                            .onReceive(
+                                self.items.publisher,
+                                perform: { _ in
+                                    proxy.scrollTo(bottomID)
+                                }
+                            )
                             .listStyle(.plain)
                         }
 
@@ -188,8 +196,36 @@ struct TimelineView: View {
                 }
             }
             .toolbar(.visible, for: .navigationBar)
+            .navigationDestination(
+                isPresented: $isPresentedAppending,
+                destination: {
+                    AppendingItemView(item: nil)
+                }
+            )
             .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: scenePhase) { _, new in
+                switch new {
+                case .active:
+                    self.quickAction()
+                case .background,
+                    .inactive:
+                    break
+                @unknown default:
+                    fatalError()
+                }
+            }
         }
+    }
+
+    private func quickAction() {
+        guard let action = homeQuickActionManager.action else { return }
+
+        switch action {
+        case .add:
+            self.isPresentedAppending = true
+        }
+
+        homeQuickActionManager.action = nil
     }
 
     private func changeDate() {

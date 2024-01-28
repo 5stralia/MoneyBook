@@ -37,6 +37,9 @@
 		05B42AB22B5FFBE90071A2E3 /* MonthlyHotItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AB12B5FFBE90071A2E3 /* MonthlyHotItemView.swift */; };
 		05B42AB42B5FFC2B0071A2E3 /* EqualSizeHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AB32B5FFC2B0071A2E3 /* EqualSizeHStack.swift */; };
 		05B42AB62B5FFC410071A2E3 /* MonthlyCategoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AB52B5FFC410071A2E3 /* MonthlyCategoryItemView.swift */; };
+		05B42ABB2B6680DA0071A2E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42ABA2B6680DA0071A2E3 /* AppDelegate.swift */; };
+		05B42ABD2B6680E20071A2E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42ABC2B6680E20071A2E3 /* SceneDelegate.swift */; };
+		05B42ABF2B66810B0071A2E3 /* HomeQuickAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42ABE2B66810B0071A2E3 /* HomeQuickAction.swift */; };
 		05B6500A2B52624800389A32 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05B650092B52624800389A32 /* Colors.xcassets */; };
 		05B6500C2B52673000389A32 /* Double+format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500B2B52673000389A32 /* Double+format.swift */; };
 		05B6500E2B5267FF00389A32 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500D2B5267FF00389A32 /* Locale.swift */; };
@@ -138,6 +141,9 @@
 		05B42AB32B5FFC2B0071A2E3 /* EqualSizeHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualSizeHStack.swift; sourceTree = "<group>"; };
 		05B42AB52B5FFC410071A2E3 /* MonthlyCategoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCategoryItemView.swift; sourceTree = "<group>"; };
 		05B42AB92B6298940071A2E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		05B42ABA2B6680DA0071A2E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		05B42ABC2B6680E20071A2E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		05B42ABE2B66810B0071A2E3 /* HomeQuickAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQuickAction.swift; sourceTree = "<group>"; };
 		05B650092B52624800389A32 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		05B6500B2B52673000389A32 /* Double+format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+format.swift"; sourceTree = "<group>"; };
 		05B6500D2B5267FF00389A32 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
@@ -322,6 +328,9 @@
 				05189A092A38966100430226 /* Model */,
 				05A76A3A2A355D2E00B231CB /* Timeline */,
 				05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */,
+				05B42ABA2B6680DA0071A2E3 /* AppDelegate.swift */,
+				05B42ABE2B66810B0071A2E3 /* HomeQuickAction.swift */,
+				05B42ABC2B6680E20071A2E3 /* SceneDelegate.swift */,
 				05A76A0D2A34115D00B231CB /* ContentView.swift */,
 				05A76A142A34115E00B231CB /* Persistence.swift */,
 				05A76A112A34115E00B231CB /* Preview Content */,
@@ -634,6 +643,7 @@
 				0584B3842A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift in Sources */,
 				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
 				0584B3592A40574F004758AE /* TimelineDateView.swift in Sources */,
+				05B42ABF2B66810B0071A2E3 /* HomeQuickAction.swift in Sources */,
 				0584B35E2A408B2C004758AE /* TimelineSummaryValueView.swift in Sources */,
 				05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */,
 				0584B3802A76647D004758AE /* ItemEntity.swift in Sources */,
@@ -641,6 +651,7 @@
 				0584B37A2A766442004758AE /* ItemCoreEntity+CoreDataProperties.swift in Sources */,
 				05A719A82A8521AE00260837 /* ChartView.swift in Sources */,
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
+				05B42ABD2B6680E20071A2E3 /* SceneDelegate.swift in Sources */,
 				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
 				05B42AB22B5FFBE90071A2E3 /* MonthlyHotItemView.swift in Sources */,
 				05B42AB02B5FFB4D0071A2E3 /* MonthlySummaryView.swift in Sources */,
@@ -658,6 +669,7 @@
 				05B6500C2B52673000389A32 /* Double+format.swift in Sources */,
 				05B6500E2B5267FF00389A32 /* Locale.swift in Sources */,
 				05B42AAE2B5FF8460071A2E3 /* ChangingGraph.swift in Sources */,
+				05B42ABB2B6680DA0071A2E3 /* AppDelegate.swift in Sources */,
 				05B42AB62B5FFC410071A2E3 /* MonthlyCategoryItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

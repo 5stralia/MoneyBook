@@ -71,9 +71,9 @@ struct MonthlySummaryView: View {
         .frame(height: 240)
         .padding([.leading, .trailing], 20)
         .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
-        
+
         MonthlySummaryView(monthlyCategoryItems: [
-            .init(ratio: 0.6, title: "식비", value: 6_000_000, color: .brown1),
+            .init(ratio: 0.6, title: "식비", value: 6_000_000, color: .brown1)
         ])
         .frame(height: 240)
         .padding([.leading, .trailing], 20)
