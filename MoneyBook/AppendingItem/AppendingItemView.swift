@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SwiftData
 import SwiftUI
 
 struct AppendingItemTypeView: View {
@@ -63,7 +64,7 @@ struct AppendingItemNumberInputView: View {
 
 extension View {
     @ViewBuilder
-    func formatAndValidate<T: Numeric, F: ParseableFormatStyle>(
+    fileprivate func formatAndValidate<T: Numeric, F: ParseableFormatStyle>(
         _ numberStore: NumberStore<T, F>, errorCondition: @escaping (T) -> Bool
     ) -> some View {
         onChange(of: numberStore.text) { text in
@@ -277,14 +278,13 @@ struct AppendingItemDateInputView: View {
 }
 
 struct AppendingItemCategoryInputView: View {
+    @Environment(\.modelContext) var modelContext
+
     @State var isAlertPresented = false
     @State var addingCategory = ""
-    @Binding var selection: String
+    @Binding var selection: CategoryCoreEntity
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \CategoryCoreEntity.title, ascending: true)],
-        animation: .default)
-    private var categories: FetchedResults<CategoryCoreEntity>
+    @Query var categories: [CategoryCoreEntity]
 
     var body: some View {
         HStack {
@@ -293,7 +293,7 @@ struct AppendingItemCategoryInputView: View {
             Spacer()
             Menu {
                 ForEach(self.categories) { category in
-                    Button(category.title, action: { self.setCategory(category.title) })
+                    Button(category.title, action: { self.setCategory(category) })
                 }
                 Section {
                     Button("Add Category") {
@@ -301,7 +301,7 @@ struct AppendingItemCategoryInputView: View {
                     }
                 }
             } label: {
-                Label(selection, systemImage: "chevron.down")
+                Label(selection.title, systemImage: "chevron.down")
                     .labelStyle(RightImageLabelStyle())
                     .padding(.all, 8)
             }
@@ -319,16 +319,12 @@ struct AppendingItemCategoryInputView: View {
         }
     }
 
-    private func setCategory(_ category: String) {
+    private func setCategory(_ category: CategoryCoreEntity) {
         self.selection = category
     }
 
     private func addCategory(_ category: String) {
-        do {
-            try PersistenceController.shared.addCategory(category)
-        } catch {
-            print("에러닷!!!")
-        }
+        self.modelContext.insert(CategoryCoreEntity(title: category, iconName: "carrot", isExpense: true))
     }
 }
 
@@ -342,7 +338,7 @@ struct RightImageLabelStyle: LabelStyle {
 }
 
 struct AppendingItemView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) private var dismiss
 
     @State private var title: String
@@ -350,48 +346,48 @@ struct AppendingItemView: View {
     @StateObject var doubleStore: NumberStore<Double, FloatingPointFormatStyle<Double>>
     @State private var date: Date
     @State private var isPaid: Bool
-    @State private var selection: String
+    @State private var selection: CategoryCoreEntity
 
     private let item: ItemCoreEntity?
 
-    init(item: ItemCoreEntity?) {
+    init(item: ItemCoreEntity) {
         self.item = item
 
-        if let item {
-            self._title = State(initialValue: item.title)
-            self._amount = State(initialValue: abs(item.amount))
-            self._doubleStore = StateObject(
-                wrappedValue: NumberStore(
-                    text: abs(item.amount).formatted(),
-                    type: .double,
-                    maxLength: 12,
-                    allowNegative: false,
-                    formatter: FloatingPointFormatStyle<Double>()
-                        .precision(.fractionLength(0...2))
-                        .rounded(rule: .towardZero)
-                )
+        self._title = State(initialValue: item.title)
+        self._doubleStore = StateObject(
+            wrappedValue: NumberStore(
+                text: abs(item.amount).formatted(),
+                type: .double,
+                maxLength: 12,
+                allowNegative: false,
+                formatter: FloatingPointFormatStyle<Double>()
+                    .precision(.fractionLength(0...2))
+                    .rounded(rule: .towardZero)
             )
-            self._date = State(initialValue: item.timestamp)
-            self._isPaid = State(initialValue: item.amount < 0)
-            self._selection = State(initialValue: item.category)
-        } else {
-            self._title = State(initialValue: "")
-            self._amount = State(initialValue: nil)
-            self._doubleStore = StateObject(
-                wrappedValue: NumberStore(
-                    text: "",
-                    type: .double,
-                    maxLength: 12,
-                    allowNegative: false,
-                    formatter: FloatingPointFormatStyle<Double>()
-                        .precision(.fractionLength(0...2))
-                        .rounded(rule: .towardZero)
-                )
+        )
+        self._date = State(initialValue: item.timestamp)
+        self._isPaid = State(initialValue: item.amount < 0)
+        self._selection = State(initialValue: item.category)
+    }
+
+    init(initialCategory: CategoryCoreEntity) {
+        self.item = nil
+
+        self._title = State(initialValue: "")
+        self._doubleStore = StateObject(
+            wrappedValue: NumberStore(
+                text: "",
+                type: .double,
+                maxLength: 12,
+                allowNegative: false,
+                formatter: FloatingPointFormatStyle<Double>()
+                    .precision(.fractionLength(0...2))
+                    .rounded(rule: .towardZero)
             )
-            self._date = State(initialValue: Date())
-            self._isPaid = State(initialValue: true)
-            self._selection = State(initialValue: "기타")
-        }
+        )
+        self._date = State(initialValue: Date())
+        self._isPaid = State(initialValue: true)
+        self._selection = State(initialValue: initialCategory)
     }
 
     var body: some View {
@@ -433,46 +429,27 @@ struct AppendingItemView: View {
     }
 
     private func submit() {
-        let amount = (self.isPaid ? -1 : 1) * (self.amount ?? 0)
-        let item = ItemEntity(
-            amount: amount,
-            category: self.selection,
-            group_id: UUID(),
-            note: "",
-            timestamp: self.date,
-            title: self.title
-        )
+        let amount = (self.isPaid ? -1 : 1) * (self.doubleStore.getValue() ?? 0)
 
         defer {
             dismiss()
         }
 
         if let coreItem = self.item {
-            self.updateItem(item, coreItem: coreItem)
+            coreItem.amount = amount
+            coreItem.category = self.selection
+            coreItem.timestamp = self.date
+            coreItem.title = self.title
         } else {
-            self.addItem(item)
+            let item = ItemCoreEntity(amount: amount, category: self.selection, timestamp: self.date, title: self.title)
+            self.modelContext.insert(item)
         }
     }
 
-    private func addItem(_ item: ItemEntity) {
-        do {
-            try PersistenceController.shared.addItem(item)
-        } catch {
-            print("에러닷")
-        }
-    }
-
-    private func updateItem(_ item: ItemEntity, coreItem: ItemCoreEntity) {
-        do {
-            try PersistenceController.shared.updateItem(item, coreItem: coreItem)
-        } catch {
-            print("에러닷")
-        }
-    }
 }
 
 struct AppendingItemView_Previews: PreviewProvider {
     static var previews: some View {
-        AppendingItemView(item: nil)
+        AppendingItemView(initialCategory: CategoryCoreEntity(title: "test", iconName: "carrot", isExpense: true))
     }
 }

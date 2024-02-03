@@ -5,12 +5,12 @@
 //  Created by Hoju Choi on 2023/06/10.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
 struct MoneyBookApp: App {
-    let persistenceController = PersistenceController.shared
-    //    let persistenceController = PersistenceController.preview
+    let modelContainer = PersistenceController.shared.container
 
     private let homeQuickActionManager = HomeQuickActionManager.shared
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -19,19 +19,31 @@ struct MoneyBookApp: App {
         WindowGroup {
             ContentView()
                 .onAppear(perform: {
+                    let descriptor = FetchDescriptor<CategoryCoreEntity>(
+                        predicate: #Predicate { $0.isExpense },
+                        sortBy: [SortDescriptor<CategoryCoreEntity>(\.title)]
+                    )
+
                     do {
-                        let categories = try persistenceController.viewContext.fetch(
-                            CategoryCoreEntity.fetchRequest())
+                        let categories = try self.modelContainer.mainContext.fetch(descriptor)
                         if categories.isEmpty {
-                            try ["식비", "생활비", "교통비", "통신비", "기타"].forEach { category in
-                                try persistenceController.addCategory(category)
-                            }
+                            ["식비", "생활비", "교통비", "통신비", "기타"]
+                                .forEach { category in
+                                    self.modelContainer.mainContext.insert(
+                                        CategoryCoreEntity(title: category, iconName: "carrot", isExpense: true))
+                                }
+                            ["월급", "기타"]
+                                .forEach { category in
+                                    self.modelContainer.mainContext.insert(
+                                        CategoryCoreEntity(title: category, iconName: "fish", isExpense: false))
+                                }
+
                         }
-                    } catch {
-                        print("에러다다다!!!")
+                    } catch let error {
+                        MyLogger.logger.error("fetch categories error : \(error)")
                     }
                 })
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .modelContainer(self.modelContainer)
                 .environmentObject(self.homeQuickActionManager)
         }
     }

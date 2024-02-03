@@ -5,20 +5,18 @@
 //  Created by Hoju Choi on 2023/06/11.
 //
 
-import CoreData
+import SwiftData
 import SwiftUI
 
 struct TimelineView: View {
     @Namespace var bottomID
 
-    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.modelContext) var modelContext
     @EnvironmentObject var homeQuickActionManager: HomeQuickActionManager
     @Environment(\.scenePhase) var scenePhase
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ItemCoreEntity.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<ItemCoreEntity>
+    @Query var items: [ItemCoreEntity]
+    @Query var categories: [CategoryCoreEntity]
 
     struct GroupedItem {
         let date: Date
@@ -46,10 +44,18 @@ struct TimelineView: View {
         return result
     }
     private var earning: Double {
-        self.items.filter { $0.amount > 0 }.map { $0.amount }.reduce(0, +)
+        self.items.filter {
+            $0.amount > 0 && $0.timestamp.getYear() == self.year && $0.timestamp.getMonth() == self.month
+        }
+        .map { $0.amount }
+        .reduce(0, +)
     }
     private var paid: Double {
-        self.items.filter { $0.amount < 0 }.map { $0.amount }.reduce(0, +)
+        self.items.filter {
+            $0.amount < 0 && $0.timestamp.getYear() == self.year && $0.timestamp.getMonth() == self.month
+        }
+        .map { $0.amount }
+        .reduce(0, +)
     }
 
     @State var year: Int = Calendar.current.component(.year, from: Date())
@@ -83,25 +89,22 @@ struct TimelineView: View {
                                                 HStack {
                                                     Spacer(minLength: 80)
                                                     TimelineItemView(
-                                                        title: item.title, imageName: "carrot",
-                                                        categoryName: item.category,
+                                                        title: item.title,
+                                                        imageName: item.category.iconName,
+                                                        categoryName: item.category.title,
                                                         amount: item.amount)
                                                 }
                                             } else {
                                                 HStack {
                                                     TimelineItemView(
-                                                        title: item.title, imageName: "carrot",
-                                                        categoryName: item.category,
+                                                        title: item.title,
+                                                        imageName: item.category.iconName,
+                                                        categoryName: item.category.title,
                                                         amount: item.amount)
                                                     Spacer(minLength: 80)
                                                 }
                                             }
                                         }
-                                        .navigationDestination(
-                                            for: ItemCoreEntity.self,
-                                            destination: { item in
-                                                AppendingItemView(item: item)
-                                            })
                                     }
                                     .onDelete(perform: { indexSet in
                                         let deletedItems = indexSet.map { group.items[$0] }
@@ -169,7 +172,9 @@ struct TimelineView: View {
                 }
                 ToolbarItem {
                     NavigationLink {
-                        AppendingItemView(item: nil)
+                        if let category = self.categories.first {
+                            AppendingItemView(initialCategory: category)
+                        }
                     } label: {
                         Label("Add Item", systemImage: "plus")
                     }
@@ -199,7 +204,15 @@ struct TimelineView: View {
             .navigationDestination(
                 isPresented: $isPresentedAppending,
                 destination: {
-                    AppendingItemView(item: nil)
+                    if let category = self.categories.first {
+                        AppendingItemView(initialCategory: category)
+                    }
+                }
+            )
+            .navigationDestination(
+                for: ItemCoreEntity.self,
+                destination: { item in
+                    AppendingItemView(item: item)
                 }
             )
             .navigationBarTitleDisplayMode(.inline)
@@ -236,15 +249,8 @@ struct TimelineView: View {
 
     private func deleteItems(items: [ItemCoreEntity]) {
         withAnimation {
-            items.forEach { viewContext.delete($0) }
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            items.forEach { item in
+                self.modelContext.delete(item)
             }
         }
     }
@@ -260,7 +266,7 @@ private let itemFormatter: DateFormatter = {
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
         TimelineView()
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            .modelContainer(PersistenceController.preview.container)
     }
 }
 

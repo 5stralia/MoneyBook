@@ -5,34 +5,32 @@
 //  Created by Hoju Choi on 1/13/24.
 //
 
-import CoreData
+import SwiftData
 import SwiftUI
 
 struct CategoryStatisticsView: View {
-    @FetchRequest private var items: FetchedResults<ItemCoreEntity>
+    @Environment(\.modelContext) var modelContext
+
+    @State private var items: [ItemCoreEntity] = []
 
     let year: Int
     let month: Int
     let category: String
 
     internal init(year: Int, month: Int, category: String) {
-        let request = NSFetchRequest<ItemCoreEntity>(entityName: "ItemCoreEntity")
-        request.sortDescriptors = [
-            NSSortDescriptor(
-                keyPath: \ItemCoreEntity.timestamp,
-                ascending: true)
-        ]
-        request.fetchLimit = 1000
-
-        let currentDateComponents = DateComponents(year: year, month: month)
-        let current = Calendar.current.date(from: currentDateComponents)!
-        let startDate = Calendar.current.date(byAdding: .month, value: -2, to: current)!
-        let endDate = Calendar.current.date(byAdding: .month, value: 2, to: current)!
-
-        request.predicate = NSPredicate(
-            format: "category == %@ AND timestamp >= %@ AND timestamp < %@", category, startDate as NSDate,
-            endDate as NSDate)
-        self._items = FetchRequest(fetchRequest: request)
+        //        let request = NSFetchRequest<ItemCoreEntity>(entityName: "ItemCoreEntity")
+        //        request.sortDescriptors = [
+        //            NSSortDescriptor(
+        //                keyPath: \ItemCoreEntity.timestamp,
+        //                ascending: true)
+        //        ]
+        //        request.fetchLimit = 1000
+        //
+        //
+        //        request.predicate = NSPredicate(
+        //            format: "category == %@ AND timestamp >= %@ AND timestamp < %@", category, startDate as NSDate,
+        //            endDate as NSDate)
+        //        self._items = FetchRequest(fetchRequest: request)
 
         self.year = year
         self.month = month
@@ -75,7 +73,8 @@ struct CategoryStatisticsView: View {
 
                     ForEach(group.items) { item in
                         TimelineItemView(
-                            title: item.title, imageName: "carrot", categoryName: item.category, amount: item.amount
+                            title: item.title, imageName: item.category.iconName, categoryName: item.category.title,
+                            amount: item.amount
                         )
                         .padding(.leading, 100)
                         .padding(.trailing, 20)
@@ -85,6 +84,26 @@ struct CategoryStatisticsView: View {
             }
         }
         .toolbar(.hidden)
+        .onAppear {
+            let currentDateComponents = DateComponents(year: year, month: month)
+            let current = Calendar.current.date(from: currentDateComponents)!
+            let startDate = Calendar.current.date(byAdding: .month, value: -2, to: current)!
+            let endDate = Calendar.current.date(byAdding: .month, value: 2, to: current)!
+
+            let descriptor = FetchDescriptor<ItemCoreEntity>(
+                predicate: #Predicate {
+                    $0.category.title == category && $0.timestamp >= startDate && $0.timestamp < endDate
+                },
+                sortBy: [SortDescriptor<ItemCoreEntity>(\.timestamp)]
+            )
+
+            do {
+                let request = try modelContext.fetch(descriptor)
+                self.items = request
+            } catch let error {
+                MyLogger.logger.error("\(error)")
+            }
+        }
     }
 
 }
@@ -157,5 +176,5 @@ extension Array where Element == ItemCoreEntity {
 
 #Preview {
     CategoryStatisticsView(year: 2024, month: 1, category: "식비")
-        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        .modelContainer(PersistenceController.preview.container)
 }

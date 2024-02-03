@@ -12,13 +12,7 @@
 		0584B35C2A40682C004758AE /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B35B2A40682C004758AE /* Date.swift */; };
 		0584B35E2A408B2C004758AE /* TimelineSummaryValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */; };
 		0584B3612A4A468F004758AE /* AppendingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3602A4A468F004758AE /* AppendingItemView.swift */; };
-		0584B3792A766442004758AE /* ItemCoreEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3752A766442004758AE /* ItemCoreEntity+CoreDataClass.swift */; };
-		0584B37A2A766442004758AE /* ItemCoreEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3762A766442004758AE /* ItemCoreEntity+CoreDataProperties.swift */; };
-		0584B37B2A766442004758AE /* GroupCoreEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3772A766442004758AE /* GroupCoreEntity+CoreDataClass.swift */; };
-		0584B37C2A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3782A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift */; };
 		0584B3802A76647D004758AE /* ItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B37F2A76647D004758AE /* ItemEntity.swift */; };
-		0584B3832A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3812A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift */; };
-		0584B3842A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3822A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift */; };
 		05A719A82A8521AE00260837 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A719A72A8521AE00260837 /* ChartView.swift */; };
 		05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */; };
 		05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0D2A34115D00B231CB /* ContentView.swift */; };
@@ -40,6 +34,9 @@
 		05B42ABB2B6680DA0071A2E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42ABA2B6680DA0071A2E3 /* AppDelegate.swift */; };
 		05B42ABD2B6680E20071A2E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42ABC2B6680E20071A2E3 /* SceneDelegate.swift */; };
 		05B42ABF2B66810B0071A2E3 /* HomeQuickAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42ABE2B66810B0071A2E3 /* HomeQuickAction.swift */; };
+		05B42AC32B6BD76B0071A2E3 /* ItemCoreEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AC02B6BD76B0071A2E3 /* ItemCoreEntity.swift */; };
+		05B42AC42B6BD76B0071A2E3 /* GroupCoreEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AC12B6BD76B0071A2E3 /* GroupCoreEntity.swift */; };
+		05B42AC52B6BD76B0071A2E3 /* CategoryCoreEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AC22B6BD76B0071A2E3 /* CategoryCoreEntity.swift */; };
 		05B6500A2B52624800389A32 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05B650092B52624800389A32 /* Colors.xcassets */; };
 		05B6500C2B52673000389A32 /* Double+format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500B2B52673000389A32 /* Double+format.swift */; };
 		05B6500E2B5267FF00389A32 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B6500D2B5267FF00389A32 /* Locale.swift */; };
@@ -112,13 +109,7 @@
 		0584B35B2A40682C004758AE /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryValueView.swift; sourceTree = "<group>"; };
 		0584B3602A4A468F004758AE /* AppendingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemView.swift; sourceTree = "<group>"; };
-		0584B3752A766442004758AE /* ItemCoreEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemCoreEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0584B3762A766442004758AE /* ItemCoreEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemCoreEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0584B3772A766442004758AE /* GroupCoreEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupCoreEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0584B3782A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupCoreEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0584B37F2A76647D004758AE /* ItemEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEntity.swift; sourceTree = "<group>"; };
-		0584B3812A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryCoreEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0584B3822A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryCoreEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		05A719A72A8521AE00260837 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		05A76A082A34115D00B231CB /* MoneyBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookApp.swift; sourceTree = "<group>"; };
@@ -144,6 +135,9 @@
 		05B42ABA2B6680DA0071A2E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05B42ABC2B6680E20071A2E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		05B42ABE2B66810B0071A2E3 /* HomeQuickAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQuickAction.swift; sourceTree = "<group>"; };
+		05B42AC02B6BD76B0071A2E3 /* ItemCoreEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCoreEntity.swift; sourceTree = "<group>"; };
+		05B42AC12B6BD76B0071A2E3 /* GroupCoreEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCoreEntity.swift; sourceTree = "<group>"; };
+		05B42AC22B6BD76B0071A2E3 /* CategoryCoreEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCoreEntity.swift; sourceTree = "<group>"; };
 		05B650092B52624800389A32 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		05B6500B2B52673000389A32 /* Double+format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+format.swift"; sourceTree = "<group>"; };
 		05B6500D2B5267FF00389A32 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
@@ -210,8 +204,11 @@
 		05189A092A38966100430226 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				05A76A162A34115E00B231CB /* MoneyBook.xcdatamodeld */,
+				05B42AC02B6BD76B0071A2E3 /* ItemCoreEntity.swift */,
+				05B42AC12B6BD76B0071A2E3 /* GroupCoreEntity.swift */,
+				05B42AC22B6BD76B0071A2E3 /* CategoryCoreEntity.swift */,
 				0584B37E2A766474004758AE /* Entity */,
-				0584B37D2A766466004758AE /* CoreEntity */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -237,49 +234,12 @@
 			path = AppendingItem;
 			sourceTree = "<group>";
 		};
-		0584B37D2A766466004758AE /* CoreEntity */ = {
-			isa = PBXGroup;
-			children = (
-				0584B3872A77F49C004758AE /* Category */,
-				0584B3862A77F495004758AE /* Group */,
-				0584B3852A77F48F004758AE /* Item */,
-			);
-			path = CoreEntity;
-			sourceTree = "<group>";
-		};
 		0584B37E2A766474004758AE /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				0584B37F2A76647D004758AE /* ItemEntity.swift */,
 			);
 			path = Entity;
-			sourceTree = "<group>";
-		};
-		0584B3852A77F48F004758AE /* Item */ = {
-			isa = PBXGroup;
-			children = (
-				0584B3752A766442004758AE /* ItemCoreEntity+CoreDataClass.swift */,
-				0584B3762A766442004758AE /* ItemCoreEntity+CoreDataProperties.swift */,
-			);
-			path = Item;
-			sourceTree = "<group>";
-		};
-		0584B3862A77F495004758AE /* Group */ = {
-			isa = PBXGroup;
-			children = (
-				0584B3772A766442004758AE /* GroupCoreEntity+CoreDataClass.swift */,
-				0584B3782A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift */,
-			);
-			path = Group;
-			sourceTree = "<group>";
-		};
-		0584B3872A77F49C004758AE /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				0584B3812A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift */,
-				0584B3822A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift */,
-			);
-			path = Category;
 			sourceTree = "<group>";
 		};
 		05A719A62A85219D00260837 /* Chart */ = {
@@ -417,7 +377,6 @@
 			children = (
 				05D7E5402B4D842700554496 /* Fonts */,
 				05A76A0F2A34115E00B231CB /* Assets.xcassets */,
-				05A76A162A34115E00B231CB /* MoneyBook.xcdatamodeld */,
 				05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */,
 				05B650092B52624800389A32 /* Colors.xcassets */,
 			);
@@ -639,8 +598,7 @@
 				05B42AB42B5FFC2B0071A2E3 /* EqualSizeHStack.swift in Sources */,
 				0584B3612A4A468F004758AE /* AppendingItemView.swift in Sources */,
 				05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */,
-				0584B37B2A766442004758AE /* GroupCoreEntity+CoreDataClass.swift in Sources */,
-				0584B3842A77F486004758AE /* CategoryCoreEntity+CoreDataProperties.swift in Sources */,
+				05B42AC52B6BD76B0071A2E3 /* CategoryCoreEntity.swift in Sources */,
 				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
 				0584B3592A40574F004758AE /* TimelineDateView.swift in Sources */,
 				05B42ABF2B66810B0071A2E3 /* HomeQuickAction.swift in Sources */,
@@ -648,27 +606,25 @@
 				05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */,
 				0584B3802A76647D004758AE /* ItemEntity.swift in Sources */,
 				05B650132B52DFD900389A32 /* UINavigationController+swipe.swift in Sources */,
-				0584B37A2A766442004758AE /* ItemCoreEntity+CoreDataProperties.swift in Sources */,
 				05A719A82A8521AE00260837 /* ChartView.swift in Sources */,
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
 				05B42ABD2B6680E20071A2E3 /* SceneDelegate.swift in Sources */,
 				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
 				05B42AB22B5FFBE90071A2E3 /* MonthlyHotItemView.swift in Sources */,
 				05B42AB02B5FFB4D0071A2E3 /* MonthlySummaryView.swift in Sources */,
-				0584B37C2A766442004758AE /* GroupCoreEntity+CoreDataProperties.swift in Sources */,
 				05B650112B52B07F00389A32 /* CategoryStatisticsView.swift in Sources */,
 				05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */,
+				05B42AC42B6BD76B0071A2E3 /* GroupCoreEntity.swift in Sources */,
 				05D7E5552B4D851C00554496 /* Font+custom.swift in Sources */,
 				0584B35C2A40682C004758AE /* Date.swift in Sources */,
 				05DA4E1B2B518B7E00ED1C49 /* Color+custom.swift in Sources */,
-				0584B3792A766442004758AE /* ItemCoreEntity+CoreDataClass.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
-				0584B3832A77F486004758AE /* CategoryCoreEntity+CoreDataClass.swift in Sources */,
 				05B42AAC2B5FF8240071A2E3 /* Header.swift in Sources */,
 				05B650162B53A6D000389A32 /* MyLogger.swift in Sources */,
 				05B6500C2B52673000389A32 /* Double+format.swift in Sources */,
 				05B6500E2B5267FF00389A32 /* Locale.swift in Sources */,
 				05B42AAE2B5FF8460071A2E3 /* ChangingGraph.swift in Sources */,
+				05B42AC32B6BD76B0071A2E3 /* ItemCoreEntity.swift in Sources */,
 				05B42ABB2B6680DA0071A2E3 /* AppDelegate.swift in Sources */,
 				05B42AB62B5FFC410071A2E3 /* MonthlyCategoryItemView.swift in Sources */,
 			);

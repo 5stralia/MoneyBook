@@ -7,6 +7,7 @@
 
 import Charts
 import Foundation
+import SwiftData
 import SwiftUI
 
 enum Recording {
@@ -17,10 +18,7 @@ enum Recording {
 struct ChartView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ItemCoreEntity.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<ItemCoreEntity>
+    @Query var items: [ItemCoreEntity]
 
     @State private var year = Date().getYear()
     @State private var month = Date().getMonth()
@@ -90,7 +88,7 @@ struct ChartView: View {
                 }
 
             return MonthlyCategoryItem(
-                ratio: Float(categorySum / sum), title: category, value: categorySum, color: color)
+                ratio: Float(categorySum / sum), title: category.title, value: categorySum, color: color)
         }
     }
 
@@ -122,5 +120,5 @@ private let formatter: NumberFormatter = {
 
 #Preview {
     ChartView()
-        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        .modelContainer(PersistenceController.preview.container)
 }
