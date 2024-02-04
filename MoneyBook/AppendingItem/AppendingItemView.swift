@@ -282,9 +282,13 @@ struct AppendingItemCategoryInputView: View {
 
     @State var isAlertPresented = false
     @State var addingCategory = ""
+    @State var isExpense: Bool
     @Binding var selection: CategoryCoreEntity
 
     @Query var categories: [CategoryCoreEntity]
+    private var showingCategories: [CategoryCoreEntity] {
+        self.categories.filter { $0.isExpense == self.isExpense }
+    }
 
     var body: some View {
         HStack {
@@ -292,7 +296,7 @@ struct AppendingItemCategoryInputView: View {
                 .padding(.leading, 16)
             Spacer()
             Menu {
-                ForEach(self.categories) { category in
+                ForEach(self.showingCategories) { category in
                     Button(category.title, action: { self.setCategory(category) })
                 }
                 Section {
@@ -307,7 +311,13 @@ struct AppendingItemCategoryInputView: View {
             }
             .menuStyle(.button)
             .alert("Add Category", isPresented: $isAlertPresented) {
-                TextField("category", text: $addingCategory)
+                VStack {
+                    TextField("category", text: $addingCategory)
+                    Picker("isExpense", selection: self.$isExpense) {
+                        Text("지출").tag(true)
+                        Text("소득").tag(false)
+                    }
+                }
                 Button("OK") {
                     self.addCategory(self.addingCategory)
                     isAlertPresented.toggle()
@@ -404,7 +414,7 @@ struct AppendingItemView: View {
                 AppendingItemNumberInputView(
                     image: Image(systemName: "dollarsign"), title: "Amount", doubleStore: self.doubleStore)
                 AppendingItemDateInputView(date: $date)
-                AppendingItemCategoryInputView(selection: $selection)
+                AppendingItemCategoryInputView(isExpense: self.isPaid, selection: $selection)
                     .background(.background)
                     .cornerRadius(8)
 
