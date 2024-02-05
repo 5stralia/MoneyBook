@@ -39,7 +39,9 @@ struct ChartView: View {
                         .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
                         MonthlySummaryView(
                             monthlyCategoryItems: self.groupedByCategory(
-                                items: self.items.map({ $0 }), isExpense: self.isExpense)
+                                items: self.items.map({ $0 }), isExpense: self.isExpense
+                            )
+                            .map({ MonthlySummaryViewChartItem(title: $0.title, value: $0.value, color: $0.color) })
                         )
                         .frame(height: 240)
                         .padding([.leading, .trailing], 20)
@@ -72,7 +74,7 @@ struct ChartView: View {
     }
 
     private func groupedByCategory(items: [ItemCoreEntity], isExpense: Bool) -> [MonthlyCategoryItem] {
-        let items = items.filter { isExpense ? ($0.amount < 0) : ($0.amount >= 0) }
+        let items = items.filter { $0.category.isExpense == isExpense }
         let sum = items.map(\.amount).reduce(0, +)
 
         let dict = Dictionary(grouping: items, by: { $0.category })

@@ -12,6 +12,7 @@ struct TimelineItemView: View {
     let imageName: String
     let categoryName: String
     let amount: Double
+    let isExpense: Bool
 
     var body: some View {
         HStack {
@@ -24,14 +25,18 @@ struct TimelineItemView: View {
                     Text(self.categoryName)
                         .font(.Pretendard(size: 12, weight: .medium))
                     Spacer()
-                    Text(amountFormatter.string(for: self.amount) ?? "")
-                        .font(.Pretendard(size: 16, weight: .bold))
+                    HStack {
+                        Text(self.isExpense ? "- " : "+ ")
+                            .font(.Pretendard(size: 16, weight: .bold))
+                        Text(self.amount.formatted())
+                            .font(.Pretendard(size: 16, weight: .bold))
+                    }
                 }
                 Spacer()
             }
         }
         .padding([.leading, .trailing], 12)
-        .background(self.amount > 0 ? Color.indigo : Color.orange)
+        .background(self.isExpense ? Color.orange : Color.indigo)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .foregroundColor(.dynamicWhite)
     }
@@ -48,12 +53,12 @@ public let amountFormatter: NumberFormatter = {
 struct TimelineItemView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TimelineItemView(title: "신미방 마라탕", imageName: "carrot", categoryName: "식비", amount: 32000)
+            TimelineItemView(title: "신미방 마라탕", imageName: "carrot", categoryName: "식비", amount: 32000, isExpense: true)
                 .previewLayout(
                     .fixed(
                         width: /*@START_MENU_TOKEN@*/ 250.0 /*@END_MENU_TOKEN@*/,
                         height: /*@START_MENU_TOKEN@*/ 80.0 /*@END_MENU_TOKEN@*/))
-            TimelineItemView(title: "신미방 마라탕", imageName: "carrot", categoryName: "식비", amount: -32000)
+            TimelineItemView(title: "돈 주움", imageName: "carrot", categoryName: "식비", amount: 32000, isExpense: false)
                 .previewLayout(
                     .fixed(
                         width: /*@START_MENU_TOKEN@*/ 250.0 /*@END_MENU_TOKEN@*/,

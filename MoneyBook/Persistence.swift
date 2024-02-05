@@ -18,7 +18,7 @@ struct PersistenceController {
 
         let expenseCategoryCoreEntity1 = CategoryCoreEntity(title: "식비", iconName: "carrot", isExpense: true)
         result.container.mainContext.insert(expenseCategoryCoreEntity1)
-        [-10000, -7200, -12300, -50000, -67300, -273000, -2300, -4500]
+        [10000, 7200, 12300, 50000, 67300, 273000, 2300, 4500]
             .enumerated()
             .forEach { offset, amount in
                 result.container.mainContext.insert(
@@ -29,7 +29,7 @@ struct PersistenceController {
 
         let expenseCategoryCoreEntity2 = CategoryCoreEntity(title: "쇼핑", iconName: "atom", isExpense: true)
         result.container.mainContext.insert(expenseCategoryCoreEntity2)
-        [-10010, -7210, -12310, -50010, -67310, -273010, -2310, -4510]
+        [10010, 7210, 12310, 50010, 67310, 273010, 2310, 4510]
             .enumerated()
             .forEach { offset, amount in
                 result.container.mainContext.insert(
@@ -38,7 +38,7 @@ struct PersistenceController {
                         title: "쇼핑 TEST \(offset)"))
             }
 
-        let incomeCategoryCoreEntity = CategoryCoreEntity(title: "용돈", iconName: "fish", isExpense: true)
+        let incomeCategoryCoreEntity = CategoryCoreEntity(title: "용돈", iconName: "fish", isExpense: false)
         [700000, 200000]
             .enumerated()
             .forEach { offset, amount in

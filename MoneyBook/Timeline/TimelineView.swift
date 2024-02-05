@@ -85,14 +85,16 @@ struct TimelineView: View {
                                         Button {
                                             path.append(item)
                                         } label: {
-                                            if item.amount < 0 {
+                                            if item.category.isExpense {
                                                 HStack {
                                                     Spacer(minLength: 80)
                                                     TimelineItemView(
                                                         title: item.title,
                                                         imageName: item.category.iconName,
                                                         categoryName: item.category.title,
-                                                        amount: item.amount)
+                                                        amount: item.amount,
+                                                        isExpense: item.category.isExpense
+                                                    )
                                                 }
                                             } else {
                                                 HStack {
@@ -100,7 +102,9 @@ struct TimelineView: View {
                                                         title: item.title,
                                                         imageName: item.category.iconName,
                                                         categoryName: item.category.title,
-                                                        amount: item.amount)
+                                                        amount: item.amount,
+                                                        isExpense: item.category.isExpense
+                                                    )
                                                     Spacer(minLength: 80)
                                                 }
                                             }

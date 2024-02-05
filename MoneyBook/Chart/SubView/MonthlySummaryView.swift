@@ -14,8 +14,21 @@ struct MonthlySummaryItem {
     let color: Color
 }
 
+struct MonthlySummaryViewChartItem: Identifiable {
+    let title: String
+    let value: Double
+    let color: Color
+
+    let id = UUID()
+}
+extension MonthlySummaryViewChartItem: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self)
+    }
+}
+
 struct MonthlySummaryView: View {
-    let monthlyCategoryItems: [MonthlyCategoryItem]
+    let monthlyCategoryItems: [MonthlySummaryViewChartItem]
 
     var body: some View {
         HStack {
@@ -64,16 +77,20 @@ struct MonthlySummaryView: View {
 #Preview {
     Group {
         MonthlySummaryView(monthlyCategoryItems: [
-            .init(ratio: 0.6, title: "식비", value: 6_000_000, color: .brown1),
-            .init(ratio: 0.25, title: "교통비", value: 2_500_000, color: .brown2),
-            .init(ratio: 0.15, title: "기타", value: 1_500_000, color: .brown3),
+            .init(title: "식비", value: 6_000_000, color: .brown1),
+            .init(title: "교통비", value: 2_500_000, color: .brown2),
+            .init(title: "기타", value: 1_500_000, color: .brown3),
+            .init(title: "1", value: 500_000, color: .brown3),
+            .init(title: "2", value: 500_000, color: .brown3),
+            .init(title: "3", value: 500_000, color: .brown3),
+            .init(title: "4", value: 500_000, color: .brown3),
         ])
         .frame(height: 240)
         .padding([.leading, .trailing], 20)
         .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
 
         MonthlySummaryView(monthlyCategoryItems: [
-            .init(ratio: 0.6, title: "식비", value: 6_000_000, color: .brown1)
+            .init(title: "식비", value: 6_000_000, color: .brown1)
         ])
         .frame(height: 240)
         .padding([.leading, .trailing], 20)

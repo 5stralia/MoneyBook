@@ -74,7 +74,7 @@ struct CategoryStatisticsView: View {
                     ForEach(group.items) { item in
                         TimelineItemView(
                             title: item.title, imageName: item.category.iconName, categoryName: item.category.title,
-                            amount: item.amount
+                            amount: item.amount, isExpense: item.category.isExpense
                         )
                         .padding(.leading, 100)
                         .padding(.trailing, 20)

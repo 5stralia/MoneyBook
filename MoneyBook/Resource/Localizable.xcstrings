@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "- " : {
+
+    },
     "( %@ %lld%% )" : {
       "localizations" : {
         "en" : {
@@ -25,6 +28,9 @@
       }
     },
     "%lld" : {
+
+    },
+    "+ " : {
 
     },
     "Add Category" : {

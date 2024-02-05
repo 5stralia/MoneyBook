@@ -451,7 +451,12 @@ struct AppendingItemView: View {
             coreItem.timestamp = self.date
             coreItem.title = self.title
         } else {
-            let item = ItemCoreEntity(amount: amount, category: self.selection, timestamp: self.date, title: self.title)
+            let item = ItemCoreEntity(
+                amount: amount,
+                category: self.selection,
+                timestamp: self.date,
+                title: self.title
+            )
             self.modelContext.insert(item)
         }
     }
