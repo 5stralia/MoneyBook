@@ -373,7 +373,7 @@ struct AppendingItemView: View {
             )
         )
         self._date = State(initialValue: item.timestamp)
-        self._isPaid = State(initialValue: item.amount < 0)
+        self._isPaid = State(initialValue: item.category.isExpense)
         self._selection = State(initialValue: item.category)
     }
 
@@ -436,7 +436,7 @@ struct AppendingItemView: View {
     }
 
     private func submit() {
-        let amount = (self.isPaid ? -1 : 1) * (self.doubleStore.getValue() ?? 0)
+        let amount = (self.doubleStore.getValue() ?? 0)
 
         defer {
             dismiss()
