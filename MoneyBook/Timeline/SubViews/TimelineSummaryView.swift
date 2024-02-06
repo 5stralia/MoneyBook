@@ -14,7 +14,7 @@ struct TimelineSummaryView: View {
     var earningMultiplier: Double {
         guard earning > 0 else { return 0 }
 
-        return earning / (-paid + earning)
+        return earning / (paid + earning)
     }
 
     var body: some View {
@@ -33,7 +33,7 @@ struct TimelineSummaryView: View {
                     .font(.system(size: 12, weight: .medium))
                     .padding(.leading, 16)
                 Spacer()
-                Text(amountFormatter.string(for: earning + paid) ?? "0")
+                Text(amountFormatter.string(for: earning - paid) ?? "0")
                     .font(.system(size: 16, weight: .bold))
                     .padding(.trailing, 16)
             }
@@ -46,7 +46,7 @@ struct TimelineSummaryView: View {
 
 struct TimelineSummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        TimelineSummaryView(paid: -600000, earning: 800000)
+        TimelineSummaryView(paid: 600000, earning: 800000)
             .previewLayout(.sizeThatFits)
     }
 }

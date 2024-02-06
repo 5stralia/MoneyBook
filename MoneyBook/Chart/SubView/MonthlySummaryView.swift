@@ -30,6 +30,10 @@ extension MonthlySummaryViewChartItem: Hashable {
 struct MonthlySummaryView: View {
     let monthlyCategoryItems: [MonthlySummaryViewChartItem]
 
+    private var total: Double {
+        self.monthlyCategoryItems.map(\.value).reduce(0, +)
+    }
+
     var body: some View {
         HStack {
             Chart {
@@ -65,7 +69,7 @@ struct MonthlySummaryView: View {
                     Text("지출 합계")
                         .font(.Pretendard(size: 12))
                     Spacer()
-                    Text(1_235_050.formatted())
+                    Text(self.total.formatted())
                         .font(.Pretendard(size: 19))
                 }
             }
