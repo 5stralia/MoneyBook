@@ -33,7 +33,7 @@ struct MonthlySummaryView: View {
     var body: some View {
         HStack {
             Chart {
-                ForEach(self.monthlyCategoryItems.sorted(using: KeyPathComparator(\.value, order: .reverse))) { item in
+                ForEach(self.monthlyCategoryItems) { item in
                     SectorMark(
                         angle: .value("value", item.value),
                         innerRadius: .ratio(0),

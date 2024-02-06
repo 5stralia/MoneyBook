@@ -24,6 +24,17 @@ struct ChartView: View {
     @State private var month = Date().getMonth()
     @State private var isExpense = true
 
+    private var monthlyCategoryItems: [MonthlyCategoryItem] {
+        let filteredItems = self.items
+            .filter { item in
+                return item.category.isExpense == self.isExpense && item.timestamp.getYear() == self.year
+                    && item.timestamp.getMonth() == self.month
+            }
+
+        return self.groupedByCategory(items: filteredItems)
+            .sorted(using: KeyPathComparator(\.value, order: .reverse))
+    }
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -38,17 +49,15 @@ struct ChartView: View {
                         .frame(height: 160)
                         .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
                         MonthlySummaryView(
-                            monthlyCategoryItems: self.groupedByCategory(
-                                items: self.items.map({ $0 }), isExpense: self.isExpense
-                            )
-                            .map({ MonthlySummaryViewChartItem(title: $0.title, value: $0.value, color: $0.color) })
+                            monthlyCategoryItems:
+                                monthlyCategoryItems
+                                .map({ MonthlySummaryViewChartItem(title: $0.title, value: $0.value, color: $0.color) })
                         )
                         .frame(height: 240)
                         .padding([.leading, .trailing], 20)
                         .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
 
-                        ForEach(self.groupedByCategory(items: self.items.map({ $0 }), isExpense: self.isExpense)) {
-                            item in
+                        ForEach(monthlyCategoryItems) { item in
                             NavigationLink(value: item) {
                                 MonthlyCategoryItemView(item: item)
                                     .frame(height: 46)
@@ -73,7 +82,7 @@ struct ChartView: View {
         })
     }
 
-    private func groupedByCategory(items: [ItemCoreEntity], isExpense: Bool) -> [MonthlyCategoryItem] {
+    private func groupedByCategory(items: [ItemCoreEntity]) -> [MonthlyCategoryItem] {
         let items = items.filter { $0.category.isExpense == isExpense }
         let sum = items.map(\.amount).reduce(0, +)
 

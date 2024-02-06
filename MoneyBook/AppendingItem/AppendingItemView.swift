@@ -282,12 +282,13 @@ struct AppendingItemCategoryInputView: View {
 
     @State var isAlertPresented = false
     @State var addingCategory = ""
-    @State var isExpense: Bool
+    let isExpense: Bool
     @Binding var selection: CategoryCoreEntity
 
     @Query var categories: [CategoryCoreEntity]
-    private var showingCategories: [CategoryCoreEntity] {
-        self.categories.filter { $0.isExpense == self.isExpense }
+
+    private func showingCategories(isExpense: Bool) -> [CategoryCoreEntity] {
+        self.categories.filter { $0.isExpense == isExpense }
     }
 
     var body: some View {
@@ -296,7 +297,7 @@ struct AppendingItemCategoryInputView: View {
                 .padding(.leading, 16)
             Spacer()
             Menu {
-                ForEach(self.showingCategories) { category in
+                ForEach(self.showingCategories(isExpense: self.isExpense)) { category in
                     Button(category.title, action: { self.setCategory(category) })
                 }
                 Section {
@@ -313,10 +314,6 @@ struct AppendingItemCategoryInputView: View {
             .alert("Add Category", isPresented: $isAlertPresented) {
                 VStack {
                     TextField("category", text: $addingCategory)
-                    Picker("isExpense", selection: self.$isExpense) {
-                        Text("지출").tag(true)
-                        Text("소득").tag(false)
-                    }
                 }
                 Button("OK") {
                     self.addCategory(self.addingCategory)
