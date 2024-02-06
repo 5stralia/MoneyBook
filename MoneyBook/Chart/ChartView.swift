@@ -49,6 +49,7 @@ struct ChartView: View {
                         .frame(height: 160)
                         .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
                         MonthlySummaryView(
+                            prevMonthlyCategorySummary: [:],
                             monthlyCategoryItems:
                                 monthlyCategoryItems
                                 .map({ MonthlySummaryViewChartItem(title: $0.title, value: $0.value, color: $0.color) })
