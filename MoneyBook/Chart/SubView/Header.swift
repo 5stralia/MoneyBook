@@ -74,6 +74,13 @@ struct Header: View {
                 .shadow(color: Color.black.opacity(0.16), radius: 6, x: 0, y: 3)
         }
     }
+
+    func trailingContent(_ content: () -> some View) -> some View {
+        self.overlay(
+            alignment: .bottomTrailing,
+            content: { content().padding(.trailing, 16).padding(.bottom, 11) }
+        )
+    }
 }
 
 #Preview {
@@ -82,5 +89,14 @@ struct Header: View {
         Header(topText: "부가설명", title: "제목", isHiddenBackButton: false, action: nil)
         Header(topText: "부가설명", title: "제목", isHiddenBackButton: true, action: {})
         Header(topText: "부가설명", title: "제목", isHiddenBackButton: false, action: {})
+
+        Header(topText: "부가설명", title: "제목", isHiddenBackButton: true, action: {})
+            .trailingContent({
+                Button(
+                    action: {},
+                    label: {
+                        Text("Button")
+                    })
+            })
     }
 }

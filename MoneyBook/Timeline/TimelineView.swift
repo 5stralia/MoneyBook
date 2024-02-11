@@ -41,6 +41,8 @@ struct TimelineView: View {
             }
         }
 
+        result.sort(using: KeyPathComparator(\.date))
+
         return result
     }
     private var earning: Double {

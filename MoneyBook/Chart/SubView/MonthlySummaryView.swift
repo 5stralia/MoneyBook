@@ -32,12 +32,67 @@ struct MonthlySummaryView: View {
     let monthlyCategoryItems: [MonthlySummaryViewChartItem]
 
     private var maxExpense: (category: String, changing: Double) {
-        let maxValue = self.monthlyCategoryItems.map(\.value).max() ?? 0
-        let maxCategory = self.monthlyCategoryItems.first(where: { $0.value == maxValue })!
+        var index = -1
+        var maxValue: Double = 0
 
-        let changing = self.prevMonthlyCategorySummary[maxCategory.title].map({ maxCategory.value / $0 }) ?? 0
+        for (offset, item) in self.monthlyCategoryItems.enumerated() {
+            if item.value > maxValue {
+                index = offset
+                maxValue = item.value
+            }
+        }
 
-        return (category: maxCategory.title, changing: changing)
+        if index >= 0 {
+            let maxCategory = self.monthlyCategoryItems[index]
+            let changing = self.prevMonthlyCategorySummary[maxCategory.title].map({ (maxCategory.value / $0) - 1 }) ?? 0
+            return (category: maxCategory.title, changing: changing)
+        } else {
+            return (category: "-", changing: 0)
+        }
+    }
+
+    private var risingStar: (category: String, changing: Double) {
+        var index = -1
+        var maxChaning: Double = 0
+
+        for (offset, item) in self.monthlyCategoryItems.enumerated() {
+            if let prevValue = self.prevMonthlyCategorySummary[item.title] {
+                let ch = item.value / prevValue
+                if ch > maxChaning {
+                    index = offset
+                    maxChaning = ch
+                }
+            }
+        }
+
+        if index >= 0 {
+            let target = self.monthlyCategoryItems[index]
+            return (category: target.title, changing: maxChaning - 1)
+        } else {
+            return (category: "-", changing: 0)
+        }
+    }
+
+    private var moneyProtector: (category: String, changing: Double) {
+        var index = -1
+        var maxChaning: Double = .infinity
+
+        for (offset, item) in self.monthlyCategoryItems.enumerated() {
+            if let prevValue = self.prevMonthlyCategorySummary[item.title] {
+                let ch = item.value / prevValue
+                if ch < maxChaning {
+                    index = offset
+                    maxChaning = ch
+                }
+            }
+        }
+
+        if index >= 0 {
+            let target = self.monthlyCategoryItems[index]
+            return (category: target.title, changing: maxChaning - 1)
+        } else {
+            return (category: "-", changing: 0)
+        }
     }
 
     private var total: Double {
@@ -74,12 +129,26 @@ struct MonthlySummaryView: View {
                 )
                 .frame(height: 34)
                 .padding(.leading, 10)
-                MonthlyHotItemView(title: "라이징 스타!", category: "패션미용", changing: 1.58, color: .brown2)
-                    .frame(height: 34)
-                    .padding(.leading, 10)
-                MonthlyHotItemView(title: "명예소방관", category: "데이트", changing: -0.68, color: .brown3)
-                    .frame(height: 34)
-                    .padding(.leading, 10)
+
+                let risingStarItem = self.risingStar
+                MonthlyHotItemView(
+                    title: "라이징 스타!",
+                    category: risingStarItem.category,
+                    changing: risingStarItem.changing,
+                    color: .brown2
+                )
+                .frame(height: 34)
+                .padding(.leading, 10)
+
+                let moneyProtectorItem = self.moneyProtector
+                MonthlyHotItemView(
+                    title: "명예소방관",
+                    category: moneyProtectorItem.category,
+                    changing: moneyProtectorItem.changing,
+                    color: .brown3
+                )
+                .frame(height: 34)
+                .padding(.leading, 10)
 
                 HStack {
                     Text("지출 합계")

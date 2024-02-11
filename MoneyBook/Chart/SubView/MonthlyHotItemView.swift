@@ -24,7 +24,7 @@ struct MonthlyHotItemView: View {
                 .padding(.top, 3)
                 .foregroundStyle(self.color)
 
-            VStack {
+            VStack(alignment: .leading) {
                 Text(self.category)
                     .font(.Pretendard(size: 15, weight: .bold))
                 Text("( \(self.changing >= 0 ? "+" : "") \(Int(self.changing * 100))% )")
