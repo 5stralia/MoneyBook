@@ -87,7 +87,7 @@ struct TimelineView: View {
                     }
                 })
 
-                ZStack(alignment: .bottom) {
+                ZStack(alignment: .topLeading) {
                     ScrollViewReader { proxy in
                         let groups = self.groupItems(Array(self.items), year: year, month: month)
                         List {
@@ -146,8 +146,9 @@ struct TimelineView: View {
                         .listStyle(.plain)
                     }
 
-                    TimelineSummaryValueView(paid: paid, earning: earning)
-                        .frame(height: 37)
+                    TimelineSummaryView2(total: "-5,000,000", income: "5,000,000", expense: "-10,000,000")
+                        .padding(.top, 8)
+                        .padding([.leading, .trailing], 20)
                 }
 
                 TimelineSummaryView(paid: paid, earning: earning)
@@ -185,39 +186,6 @@ struct TimelineView: View {
                 .shadow(radius: 8)
             }
         }
-        //            .toolbar {
-        //                ToolbarItem(placement: .navigationBarTrailing) {
-        //                    EditButton()
-        //                }
-        //                ToolbarItem {
-        //                    Button {
-        //                        self.isPresentedAppending = true
-        //                    } label: {
-        //                        Label("Add Item", systemImage: "plus")
-        //                    }
-        //
-        //                }
-        //
-        //                ToolbarItem(placement: .navigationBarLeading) {
-        //                    NavigationLink {
-        //                        Text("This is Settings")
-        //                    } label: {
-        //                        Label("Open Settings", systemImage: "gearshape")
-        //                    }
-        //                }
-        //
-        //                ToolbarItem(placement: .principal) {
-        //                    Button(action: changeDate) {
-        //                        HStack(spacing: 5) {
-        //                            Text(verbatim: "\(year)년 \(month)월")
-        //                            Image(systemName: "chevron.down")
-        //                                .resizable()
-        //                                .aspectRatio(contentMode: .fit)
-        //                                .frame(width: 10)
-        //                        }
-        //                    }
-        //                }
-        //            }
         .sheet(
             isPresented: $isPresentedAppending,
             content: {

@@ -18,29 +18,14 @@ struct TimelineSummaryView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            GeometryReader { metrics in
-                HStack(spacing: 0) {
-                    Color.indigo
-                        .frame(width: metrics.size.width * earningMultiplier)
-                    Color.orange
-                }
+        GeometryReader { metrics in
+            HStack(spacing: 0) {
+                Color.indigo
+                    .frame(width: metrics.size.width * earningMultiplier)
+                Color.orange
             }
-            .frame(height: 5)
-
-            HStack {
-                Text("합계")
-                    .font(.system(size: 12, weight: .medium))
-                    .padding(.leading, 16)
-                Spacer()
-                Text(amountFormatter.string(for: earning - paid) ?? "0")
-                    .font(.system(size: 16, weight: .bold))
-                    .padding(.trailing, 16)
-            }
-            .frame(height: 32)
-            .background(Color(uiColor: .systemGray2))
-            .foregroundColor(.white)
         }
+        .frame(height: 5)
     }
 }
 

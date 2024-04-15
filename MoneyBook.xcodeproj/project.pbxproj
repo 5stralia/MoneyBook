@@ -63,6 +63,7 @@
 		05D7E5552B4D851C00554496 /* Font+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D7E5542B4D851C00554496 /* Font+custom.swift */; };
 		05DA4E192B5180C800ED1C49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05DA4E182B5180C800ED1C49 /* Images.xcassets */; };
 		05DA4E1B2B518B7E00ED1C49 /* Color+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */; };
+		05E024FF2BCD5DA500240601 /* TimelineSummaryView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +166,7 @@
 		05D7E5542B4D851C00554496 /* Font+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+custom.swift"; sourceTree = "<group>"; };
 		05DA4E182B5180C800ED1C49 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+custom.swift"; sourceTree = "<group>"; };
+		05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +341,7 @@
 				051899FF2A3761C500430226 /* TimelineSummaryView.swift */,
 				0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */,
 				0584B3582A40574F004758AE /* TimelineDateView.swift */,
+				05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				05A719A82A8521AE00260837 /* ChartView.swift in Sources */,
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
 				05B42ABD2B6680E20071A2E3 /* SceneDelegate.swift in Sources */,
+				05E024FF2BCD5DA500240601 /* TimelineSummaryView2.swift in Sources */,
 				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
 				05B42AB22B5FFBE90071A2E3 /* MonthlyHotItemView.swift in Sources */,
 				05B42AB02B5FFB4D0071A2E3 /* MonthlySummaryView.swift in Sources */,
