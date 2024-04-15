@@ -56,6 +56,15 @@ struct AppendingItemNumberInputView: View {
                 .formatAndValidate(doubleStore) { $0 > 0 }
                 .keyboardType(.decimalPad)
             Spacer()
+            Button(
+                action: {
+                    self.doubleStore.text = 123_456_789_000.formatted()
+                },
+                label: {
+                    Image(systemName: "equal.square.fill")
+                }
+            )
+            .padding(.all, 8)
         }
         .background()
         .cornerRadius(8)
@@ -331,7 +340,7 @@ struct AppendingItemCategoryInputView: View {
     }
 
     private func addCategory(_ category: String) {
-        self.modelContext.insert(CategoryCoreEntity(title: category, iconName: "carrot", isExpense: true))
+        self.modelContext.insert(CategoryCoreEntity(title: category, isExpense: true))
     }
 }
 
@@ -365,7 +374,7 @@ struct AppendingItemView: View {
             wrappedValue: NumberStore(
                 text: abs(item.amount).formatted(),
                 type: .double,
-                maxLength: 12,
+                maxLength: 18,
                 allowNegative: false,
                 formatter: FloatingPointFormatStyle<Double>()
                     .precision(.fractionLength(0...2))
@@ -385,7 +394,7 @@ struct AppendingItemView: View {
             wrappedValue: NumberStore(
                 text: "",
                 type: .double,
-                maxLength: 12,
+                maxLength: 18,
                 allowNegative: false,
                 formatter: FloatingPointFormatStyle<Double>()
                     .precision(.fractionLength(0...2))
@@ -427,6 +436,7 @@ struct AppendingItemView: View {
 
                 Spacer()
             }
+            .padding(.top, 20)
             .padding([.leading, .trailing], 32)
 
         }
@@ -462,6 +472,6 @@ struct AppendingItemView: View {
 
 struct AppendingItemView_Previews: PreviewProvider {
     static var previews: some View {
-        AppendingItemView(initialCategory: CategoryCoreEntity(title: "test", iconName: "carrot", isExpense: true))
+        AppendingItemView(initialCategory: CategoryCoreEntity(title: "test", isExpense: true))
     }
 }

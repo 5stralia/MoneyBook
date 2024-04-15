@@ -17,6 +17,10 @@ struct CategoryStatisticsView: View {
     let month: Int
     let category: String
 
+    private var isExpense: Bool {
+        return self.items.first?.category.isExpense ?? true
+    }
+
     internal init(year: Int, month: Int, category: String) {
         //        let request = NSFetchRequest<ItemCoreEntity>(entityName: "ItemCoreEntity")
         //        request.sortDescriptors = [
@@ -39,7 +43,12 @@ struct CategoryStatisticsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Header(topText: "\(self.month)월 지출 상세", title: self.category, isHiddenBackButton: false)
+            Header(
+                topText: "\(self.month)월 지출 상세",
+                title: self.category,
+                isHiddenBackButton: false,
+                backgroundColor: .headerColor(isExpense: self.isExpense)
+            )
 
             ScrollView {
                 VStack(spacing: 0) {
@@ -48,7 +57,7 @@ struct CategoryStatisticsView: View {
                     )
                     .padding([.top, .bottom], 20)
                     .frame(height: 160)
-                    .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
+                    .background(Color.backgroundColor(isExpense: self.isExpense))
                     HStack(spacing: 0) {
                         Spacer()
                         Text("지출 합계")
@@ -60,7 +69,7 @@ struct CategoryStatisticsView: View {
                     }
                     .foregroundStyle(Color.dynamicWhite)
                     .padding([.top, .bottom], 30)
-                    .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
+                    .background(Color.backgroundColor(isExpense: self.isExpense))
                 }
 
                 let currentItems = Array(
@@ -73,7 +82,7 @@ struct CategoryStatisticsView: View {
 
                     ForEach(group.items) { item in
                         TimelineItemView(
-                            title: item.title, imageName: item.category.iconName, categoryName: item.category.title,
+                            title: item.title, categoryName: item.category.title,
                             amount: item.amount, isExpense: item.category.isExpense
                         )
                         .padding(.leading, 100)

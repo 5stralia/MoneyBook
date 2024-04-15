@@ -79,7 +79,8 @@ struct ChartView: View {
                         title: "\(self.year).\(self.month)",
                         action: {
                             self.isHiddenPicker.toggle()
-                        }
+                        },
+                        backgroundColor: .headerColor(isExpense: self.isExpense)
                     )
                     .trailingContent({
                         Button(
@@ -101,11 +102,12 @@ struct ChartView: View {
                             )
                             .padding([.top, .bottom], 20)
                             .frame(height: 160)
-                            .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
+                            .background(Color.backgroundColor(isExpense: self.isExpense))
 
                             let prevMonthlyCategorySummary = self.prevMonthlyCategorySummary
                             let monthlyCategoryItems = self.monthlyCategoryItems
                             MonthlySummaryView(
+                                isExpense: self.isExpense,
                                 prevMonthlyCategorySummary: prevMonthlyCategorySummary,
                                 monthlyCategoryItems:
                                     monthlyCategoryItems
@@ -115,7 +117,7 @@ struct ChartView: View {
                             )
                             .frame(height: 240)
                             .padding([.leading, .trailing], 20)
-                            .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
+                            .background(Color.backgroundColor(isExpense: self.isExpense))
 
                             ForEach(monthlyCategoryItems) { item in
                                 NavigationLink(value: item) {

@@ -65,173 +65,182 @@ struct TimelineView: View {
 
     @State var isHiddenPicker: Bool = true
 
-    @State private var path = NavigationPath()
     @State private var isPresentedAppending: Bool = false
+    @State private var edittingItem: ItemCoreEntity?
 
     var body: some View {
-        NavigationStack(path: $path) {
-            ZStack(alignment: .bottom) {
-                VStack(spacing: 0) {
-                    ZStack(alignment: .bottom) {
-                        ScrollViewReader { proxy in
-                            let groups = self.groupItems(Array(self.items), year: year, month: month)
-                            List {
-                                ForEach(groups, id: \.date) {
-                                    group in
-                                    HStack {
-                                        Spacer()
-                                        TimelineDateView(date: group.date)
-                                        Spacer()
-                                    }
-                                    ForEach(group.items, id: \.id) { item in
-                                        Button {
-                                            path.append(item)
-                                        } label: {
-                                            if item.category.isExpense {
-                                                HStack {
-                                                    Spacer(minLength: 80)
-                                                    TimelineItemView(
-                                                        title: item.title,
-                                                        imageName: item.category.iconName,
-                                                        categoryName: item.category.title,
-                                                        amount: item.amount,
-                                                        isExpense: item.category.isExpense
-                                                    )
-                                                }
-                                            } else {
-                                                HStack {
-                                                    TimelineItemView(
-                                                        title: item.title,
-                                                        imageName: item.category.iconName,
-                                                        categoryName: item.category.title,
-                                                        amount: item.amount,
-                                                        isExpense: item.category.isExpense
-                                                    )
-                                                    Spacer(minLength: 80)
-                                                }
+        ZStack(alignment: .bottom) {
+            VStack(spacing: 0) {
+                Header(
+                    topText: "Timeline",
+                    title: "\(self.year).\(self.month)",
+                    action: {
+                        self.isHiddenPicker.toggle()
+                    },
+                    backgroundColor: Color(red: 178 / 255, green: 178 / 255, blue: 178 / 255)
+                )
+                .trailingContent({
+                    Button {
+                        self.isPresentedAppending = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                })
+
+                ZStack(alignment: .bottom) {
+                    ScrollViewReader { proxy in
+                        let groups = self.groupItems(Array(self.items), year: year, month: month)
+                        List {
+                            ForEach(groups, id: \.date) {
+                                group in
+                                HStack {
+                                    Spacer()
+                                    TimelineDateView(date: group.date)
+                                    Spacer()
+                                }
+                                ForEach(group.items, id: \.id) { item in
+                                    Button {
+                                        self.edittingItem = item
+                                    } label: {
+                                        if item.category.isExpense {
+                                            HStack {
+                                                Spacer(minLength: 80)
+                                                TimelineItemView(
+                                                    title: item.title,
+                                                    categoryName: item.category.title,
+                                                    amount: item.amount,
+                                                    isExpense: item.category.isExpense
+                                                )
+                                            }
+                                        } else {
+                                            HStack {
+                                                TimelineItemView(
+                                                    title: item.title,
+                                                    categoryName: item.category.title,
+                                                    amount: item.amount,
+                                                    isExpense: item.category.isExpense
+                                                )
+                                                Spacer(minLength: 80)
                                             }
                                         }
                                     }
-                                    .onDelete(perform: { indexSet in
-                                        let deletedItems = indexSet.map { group.items[$0] }
-                                        self.deleteItems(items: deletedItems)
-                                    })
                                 }
+                                .onDelete(perform: { indexSet in
+                                    let deletedItems = indexSet.map { group.items[$0] }
+                                    self.deleteItems(items: deletedItems)
+                                })
+                            }
+                            .listRowSeparator(.hidden)
+
+                            Color.clear
+                                .frame(height: 37)
                                 .listRowSeparator(.hidden)
-
-                                Color.clear
-                                    .frame(height: 37)
-                                    .listRowSeparator(.hidden)
-                                    .id(bottomID)
-                            }
-                            .onReceive(
-                                self.items.publisher,
-                                perform: { _ in
-                                    proxy.scrollTo(bottomID)
-                                }
-                            )
-                            .listStyle(.plain)
+                                .id(bottomID)
                         }
-
-                        TimelineSummaryValueView(paid: paid, earning: earning)
-                            .frame(height: 37)
+                        .onReceive(
+                            self.items.publisher,
+                            perform: { _ in
+                                proxy.scrollTo(bottomID)
+                            }
+                        )
+                        .listStyle(.plain)
                     }
 
-                    TimelineSummaryView(paid: paid, earning: earning)
+                    TimelineSummaryValueView(paid: paid, earning: earning)
+                        .frame(height: 37)
                 }
 
-                if !isHiddenPicker {
-                    VStack(spacing: 5) {
-                        HStack {
-                            Picker("Year", selection: $year) {
-                                ForEach((2000...2100), id: \.self) { i in
-                                    Text(String(i))
-                                }
-                            }
-                            .pickerStyle(.wheel)
-                            Picker("Month", selection: $month) {
-                                ForEach((1...12), id: \.self) { i in
-                                    Text(String(i))
-                                }
-                            }
-                            .pickerStyle(.wheel)
-                        }
-
-                        Button {
-                            withAnimation {
-                                self.isHiddenPicker.toggle()
-                            }
-                        } label: {
-                            Text("Done")
-                        }
-
-                    }
-                    .padding(.bottom, 32)
-                    .background(.background)
-                    .clipShape(RoundedCorner(radius: 16, corners: [.topLeft, .topRight]))
-                    .shadow(radius: 8)
-                }
+                TimelineSummaryView(paid: paid, earning: earning)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    NavigationLink {
-                        if let category = self.categories.first {
-                            AppendingItemView(initialCategory: category)
+
+            if !isHiddenPicker {
+                VStack(spacing: 5) {
+                    HStack {
+                        Picker("Year", selection: $year) {
+                            ForEach((2000...2100), id: \.self) { i in
+                                Text(String(i))
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                        Picker("Month", selection: $month) {
+                            ForEach((1...12), id: \.self) { i in
+                                Text(String(i))
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                    }
+
+                    Button {
+                        withAnimation {
+                            self.isHiddenPicker.toggle()
                         }
                     } label: {
-                        Label("Add Item", systemImage: "plus")
+                        Text("Done")
                     }
-                }
 
-                ToolbarItem(placement: .navigationBarLeading) {
-                    NavigationLink {
-                        Text("This is Settings")
-                    } label: {
-                        Label("Open Settings", systemImage: "gearshape")
-                    }
                 }
-
-                ToolbarItem(placement: .principal) {
-                    Button(action: changeDate) {
-                        HStack(spacing: 5) {
-                            Text(verbatim: "\(year)년 \(month)월")
-                            Image(systemName: "chevron.down")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 10)
-                        }
-                    }
+                .padding(.bottom, 32)
+                .background(.background)
+                .clipShape(RoundedCorner(radius: 16, corners: [.topLeft, .topRight]))
+                .shadow(radius: 8)
+            }
+        }
+        //            .toolbar {
+        //                ToolbarItem(placement: .navigationBarTrailing) {
+        //                    EditButton()
+        //                }
+        //                ToolbarItem {
+        //                    Button {
+        //                        self.isPresentedAppending = true
+        //                    } label: {
+        //                        Label("Add Item", systemImage: "plus")
+        //                    }
+        //
+        //                }
+        //
+        //                ToolbarItem(placement: .navigationBarLeading) {
+        //                    NavigationLink {
+        //                        Text("This is Settings")
+        //                    } label: {
+        //                        Label("Open Settings", systemImage: "gearshape")
+        //                    }
+        //                }
+        //
+        //                ToolbarItem(placement: .principal) {
+        //                    Button(action: changeDate) {
+        //                        HStack(spacing: 5) {
+        //                            Text(verbatim: "\(year)년 \(month)월")
+        //                            Image(systemName: "chevron.down")
+        //                                .resizable()
+        //                                .aspectRatio(contentMode: .fit)
+        //                                .frame(width: 10)
+        //                        }
+        //                    }
+        //                }
+        //            }
+        .sheet(
+            isPresented: $isPresentedAppending,
+            content: {
+                if let category = self.categories.first {
+                    AppendingItemView(initialCategory: category)
                 }
             }
-            .toolbar(.visible, for: .navigationBar)
-            .navigationDestination(
-                isPresented: $isPresentedAppending,
-                destination: {
-                    if let category = self.categories.first {
-                        AppendingItemView(initialCategory: category)
-                    }
-                }
-            )
-            .navigationDestination(
-                for: ItemCoreEntity.self,
-                destination: { item in
-                    AppendingItemView(item: item)
-                }
-            )
-            .navigationBarTitleDisplayMode(.inline)
-            .onChange(of: scenePhase) { _, new in
-                switch new {
-                case .active:
-                    self.quickAction()
-                case .background,
-                    .inactive:
-                    break
-                @unknown default:
-                    fatalError()
-                }
+        )
+        .sheet(
+            item: $edittingItem,
+            content: { item in
+                AppendingItemView(item: item)
+            }
+        )
+        .onChange(of: scenePhase) { _, new in
+            switch new {
+            case .active:
+                self.quickAction()
+            case .background,
+                .inactive:
+                break
+            @unknown default:
+                fatalError()
             }
         }
     }

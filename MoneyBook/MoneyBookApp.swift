@@ -30,12 +30,12 @@ struct MoneyBookApp: App {
                             ["식비", "생활비", "교통비", "통신비", "기타"]
                                 .forEach { category in
                                     self.modelContainer.mainContext.insert(
-                                        CategoryCoreEntity(title: category, iconName: "carrot", isExpense: true))
+                                        CategoryCoreEntity(title: category, isExpense: true))
                                 }
                             ["월급", "기타"]
                                 .forEach { category in
                                     self.modelContainer.mainContext.insert(
-                                        CategoryCoreEntity(title: category, iconName: "fish", isExpense: false))
+                                        CategoryCoreEntity(title: category, isExpense: false))
                                 }
 
                         }

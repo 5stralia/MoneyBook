@@ -28,6 +28,7 @@ extension MonthlySummaryViewChartItem: Hashable {
 }
 
 struct MonthlySummaryView: View {
+    let isExpense: Bool
     let prevMonthlyCategorySummary: [String: Double]
     let monthlyCategoryItems: [MonthlySummaryViewChartItem]
 
@@ -75,21 +76,21 @@ struct MonthlySummaryView: View {
 
     private var moneyProtector: (category: String, changing: Double) {
         var index = -1
-        var maxChaning: Double = .infinity
+        var minChanging: Double = .infinity
 
         for (offset, item) in self.monthlyCategoryItems.enumerated() {
             if let prevValue = self.prevMonthlyCategorySummary[item.title] {
                 let ch = item.value / prevValue
-                if ch < maxChaning {
+                if ch < minChanging {
                     index = offset
-                    maxChaning = ch
+                    minChanging = ch
                 }
             }
         }
 
         if index >= 0 {
             let target = self.monthlyCategoryItems[index]
-            return (category: target.title, changing: maxChaning - 1)
+            return (category: target.title, changing: minChanging - 1)
         } else {
             return (category: "-", changing: 0)
         }
@@ -122,7 +123,7 @@ struct MonthlySummaryView: View {
 
                 let maxExpenseItem = self.maxExpense
                 MonthlyHotItemView(
-                    title: "소비요정 1등!",
+                    title: "\(self.isExpense ? "지출" : "소득")요정 1등!",
                     category: maxExpenseItem.category,
                     changing: maxExpenseItem.changing,
                     color: .brown1
@@ -166,6 +167,7 @@ struct MonthlySummaryView: View {
 #Preview {
     Group {
         MonthlySummaryView(
+            isExpense: true,
             prevMonthlyCategorySummary: [:],
             monthlyCategoryItems: [
                 .init(title: "식비", value: 6_000_000, color: .brown1),
@@ -182,6 +184,7 @@ struct MonthlySummaryView: View {
         .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
 
         MonthlySummaryView(
+            isExpense: false,
             prevMonthlyCategorySummary: [:],
             monthlyCategoryItems: [
                 .init(title: "식비", value: 6_000_000, color: .brown1),
@@ -193,6 +196,7 @@ struct MonthlySummaryView: View {
         .background(Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255))
 
         MonthlySummaryView(
+            isExpense: true,
             prevMonthlyCategorySummary: ["쇼핑": 1_000_000],
             monthlyCategoryItems: [
                 .init(title: "식비", value: 6_000_000, color: .brown1),

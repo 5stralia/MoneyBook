@@ -44,6 +44,18 @@ extension Color {
     static let dynamicWhite: Color = Color("dynamicWhite")
     static let dynamicBlack: Color = Color("dynamicBlack")
 
+    static let expenseBackgroundColor = Color(red: 244 / 255, green: 169 / 255, blue: 72 / 255)
+    static let incomeBackgroundColor = Color(red: 124 / 255, green: 123 / 255, blue: 234 / 255)
+    static func backgroundColor(isExpense: Bool) -> Color {
+        return isExpense ? expenseBackgroundColor : incomeBackgroundColor
+    }
+
+    static let expenseHeaderColor = Color(red: 255 / 255, green: 195 / 255, blue: 117 / 255)
+    static let incomeHeaderColor = Color(red: 164 / 255, green: 163 / 255, blue: 241 / 255)
+    static func headerColor(isExpense: Bool) -> Color {
+        return isExpense ? expenseHeaderColor : incomeHeaderColor
+    }
+
     //    static let brown1: Color = color(hex: "#5f3f16")
     //    static let brown2: Color = color(hex: "#68481f")
     //    static let brown3: Color = color(hex: "#715129")
