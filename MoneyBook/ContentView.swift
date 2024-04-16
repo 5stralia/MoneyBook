@@ -10,18 +10,21 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            TimelineView()
-                .tabItem {
-                    Label("Timeline", systemImage: "calendar.day.timeline.leading")
-                }
-                .toolbarBackground(.visible, for: .tabBar)
+            Group {
+                TimelineView()
+                    .tabItem {
+                        Label("Timeline", systemImage: "calendar.day.timeline.leading")
+                    }
 
-            ChartView()
-                .tabItem {
-                    Label("Chart", systemImage: "chart.pie")
-                }
-                .toolbarBackground(.visible, for: .tabBar)
+                ChartView()
+                    .tabItem {
+                        Label("Chart", systemImage: "chart.pie")
+                    }
+            }
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color.customBlack2, for: .tabBar)
         }
+        .tint(Color(uiColor: .systemGray3))
     }
 }
 
