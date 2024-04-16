@@ -14,17 +14,14 @@ struct Header: View {
     let title: String
     let isHiddenBackButton: Bool
     let action: (() -> Void)?
-    let backgroundColor: Color
 
     internal init(
-        topText: String, title: String, isHiddenBackButton: Bool = true, action: (() -> Void)? = nil,
-        backgroundColor: Color
+        topText: String, title: String, isHiddenBackButton: Bool = true, action: (() -> Void)? = nil
     ) {
         self.topText = topText
         self.title = title
         self.isHiddenBackButton = isHiddenBackButton
         self.action = action
-        self.backgroundColor = backgroundColor
     }
 
     var body: some View {
@@ -75,8 +72,7 @@ struct Header: View {
         .background {
             Rectangle()
                 .ignoresSafeArea()
-                //                .foregroundStyle(Color(red: 255 / 255, green: 195 / 255, blue: 117 / 255))
-                .foregroundStyle(self.backgroundColor)
+                .foregroundStyle(Color.customBlack2)
                 .shadow(color: Color.black.opacity(0.16), radius: 6, x: 0, y: 3)
         }
     }
@@ -91,29 +87,17 @@ struct Header: View {
 
 #Preview {
     Group {
-        Header(
-            topText: "부가설명", title: "제목", isHiddenBackButton: true, action: nil,
-            backgroundColor: Color.expenseHeaderColor)
-        Header(
-            topText: "부가설명", title: "제목", isHiddenBackButton: false, action: nil,
-            backgroundColor: Color.expenseHeaderColor)
-        Header(
-            topText: "부가설명", title: "제목", isHiddenBackButton: true, action: {},
-            backgroundColor: Color.expenseHeaderColor)
-        Header(
-            topText: "부가설명", title: "제목", isHiddenBackButton: false, action: {},
-            backgroundColor: Color.expenseHeaderColor)
-
-        Header(
-            topText: "부가설명", title: "제목", isHiddenBackButton: true, action: {},
-            backgroundColor: Color.expenseHeaderColor
-        )
-        .trailingContent({
-            Button(
-                action: {},
-                label: {
-                    Text("Button")
-                })
-        })
+        Header(topText: "부가설명", title: "제목", isHiddenBackButton: true, action: nil)
+        Header(topText: "부가설명", title: "제목", isHiddenBackButton: false, action: nil)
+        Header(topText: "부가설명", title: "제목", isHiddenBackButton: true, action: {})
+        Header(topText: "부가설명", title: "제목", isHiddenBackButton: false, action: {})
+        Header(topText: "부가설명", title: "제목", isHiddenBackButton: true, action: {})
+            .trailingContent({
+                Button(
+                    action: {},
+                    label: {
+                        Text("Button")
+                    })
+            })
     }
 }

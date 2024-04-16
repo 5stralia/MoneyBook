@@ -46,8 +46,7 @@ struct CategoryStatisticsView: View {
             Header(
                 topText: "\(self.month)월 지출 상세",
                 title: self.category,
-                isHiddenBackButton: false,
-                backgroundColor: .headerColor(isExpense: self.isExpense)
+                isHiddenBackButton: false
             )
 
             ScrollView {

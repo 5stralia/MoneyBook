@@ -79,8 +79,7 @@ struct ChartView: View {
                         title: "\(self.year).\(self.month)",
                         action: {
                             self.isHiddenPicker.toggle()
-                        },
-                        backgroundColor: .headerColor(isExpense: self.isExpense)
+                        }
                     )
                     .trailingContent({
                         Button(

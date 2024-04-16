@@ -76,8 +76,7 @@ struct TimelineView: View {
                     title: "\(self.year).\(self.month)",
                     action: {
                         self.isHiddenPicker.toggle()
-                    },
-                    backgroundColor: Color(red: 178 / 255, green: 178 / 255, blue: 178 / 255)
+                    }
                 )
                 .trailingContent({
                     Button {
