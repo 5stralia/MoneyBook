@@ -18,7 +18,7 @@ struct AppendingItemTypeView: View {
             .overlay {
                 HStack(spacing: 0) {
                     Capsule()
-                        .fill(isPaid ? .orange : .clear)
+                        .fill(isPaid ? Color.customOrange1 : .clear)
                         .overlay {
                             Button {
                                 self.isPaid = true
@@ -28,7 +28,7 @@ struct AppendingItemTypeView: View {
                             }
                         }
                     Capsule()
-                        .fill(isPaid ? .clear : .indigo)
+                        .fill(isPaid ? .clear : Color.customIndigo1)
                         .overlay {
                             Button {
                                 self.isPaid = false
@@ -441,8 +441,8 @@ struct AppendingItemView: View {
 
         }
         .background(Color(uiColor: .secondarySystemBackground))
-        .foregroundStyle(self.isPaid ? .orange : .indigo)
-        .tint(self.isPaid ? .orange : .indigo)
+        .foregroundStyle(self.isPaid ? Color.customOrange1 : Color.customIndigo1)
+        .tint(self.isPaid ? Color.customOrange1 : Color.customIndigo1)
     }
 
     private func submit() {

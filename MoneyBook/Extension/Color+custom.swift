@@ -41,6 +41,9 @@ extension Color {
     ]
 
     static let customGray1: Color = Color("customGray1")
+    static let customIndigo1: Color = Color("customIndigo1")
+    static let customOrange1: Color = Color("customOrange1")
+    static let customBlack2: Color = Color("customBlack2")
     static let dynamicWhite: Color = Color("dynamicWhite")
     static let dynamicBlack: Color = Color("dynamicBlack")
 

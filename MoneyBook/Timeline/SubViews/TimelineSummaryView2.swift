@@ -34,19 +34,19 @@ struct TimelineSummaryView2: View {
         } label: {
             HStack {
                 TimelineSummaryItemView(title: "합계", value: self.total)
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(Color(uiColor: .systemGray5))
 
                 if self.isExpanded {
                     Spacer()
                     TimelineSummaryItemView(title: "수입", value: self.income)
-                        .foregroundStyle(Color.indigo)
+                        .foregroundStyle(Color.customIndigo1)
                     TimelineSummaryItemView(title: "지출", value: self.expense)
-                        .foregroundStyle(Color.orange)
+                        .foregroundStyle(Color.customOrange1)
                 }
             }
             .padding([.top, .bottom], 10)
             .padding([.leading, .trailing], 18)
-            .background(Color.black)
+            .background(Color.customBlack2)
             .clipShape(RoundedCorner())
         }
     }
@@ -67,5 +67,5 @@ struct TimelineSummaryItemView: View {
 }
 
 #Preview {
-    TimelineSummaryView2(total: "-5,000,000", income: "5,000,000", expense: "-10,000,000")
+    TimelineSummaryView2(total: "-5,000,000", income: "5,000,000", expense: "10,000,000")
 }

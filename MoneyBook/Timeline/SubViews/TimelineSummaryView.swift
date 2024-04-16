@@ -20,9 +20,9 @@ struct TimelineSummaryView: View {
     var body: some View {
         GeometryReader { metrics in
             HStack(spacing: 0) {
-                Color.indigo
+                Color.customIndigo1
                     .frame(width: metrics.size.width * earningMultiplier)
-                Color.orange
+                Color.customOrange1
             }
         }
         .frame(height: 5)

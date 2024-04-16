@@ -147,7 +147,7 @@ struct TimelineView: View {
                     }
 
                     TimelineSummaryView2(
-                        total: (paid + earning).formatted(),
+                        total: (earning - paid).formatted(),
                         income: earning.formatted(),
                         expense: paid.formatted()
                     )

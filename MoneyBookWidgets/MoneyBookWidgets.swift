@@ -63,11 +63,11 @@ struct MoneyBookWidgetsEntryView: View {
             Spacer()
 
             Text("소득 450,000")
-                .foregroundStyle(Color.indigo)
+                .foregroundStyle(Color.customIndigo1)
                 .font(.system(size: 12))
                 .padding([.leading, .trailing], 4)
             Text("지출 200,000")
-                .foregroundStyle(Color.orange)
+                .foregroundStyle(Color.customOrange1)
                 .font(.system(size: 12))
                 .padding([.leading, .trailing], 4)
 
@@ -76,10 +76,10 @@ struct MoneyBookWidgetsEntryView: View {
                 .overlay {
                     GeometryReader { metrix in
                         HStack(spacing: 0) {
-                            Color.indigo
+                            Color.customIndigo1
                                 .frame(
                                     width: metrix.size.width * min(1.0, entry.income / (entry.expense + entry.income)))
-                            Color.orange
+                            Color.customOrange1
                         }
                     }
                 }

@@ -21,12 +21,12 @@ struct TimelineSummaryValueView: View {
             HStack {
                 Text("+ \(self.earning.formatted())")
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(.indigo)
+                    .foregroundColor(.customIndigo1)
                     .padding(.leading, 16)
                 Spacer()
                 Text("- \(self.paid.formatted())")
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(.orange)
+                    .foregroundColor(.customOrange1)
                     .padding(.trailing, 16)
             }
         }

@@ -64,6 +64,7 @@
 		05DA4E192B5180C800ED1C49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05DA4E182B5180C800ED1C49 /* Images.xcassets */; };
 		05DA4E1B2B518B7E00ED1C49 /* Color+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */; };
 		05E024FF2BCD5DA500240601 /* TimelineSummaryView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */; };
+		05E025002BCE706F00240601 /* Color+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -656,6 +657,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05BA7BEC2B2B38D800D159FB /* MoneyBookWidgetsBundle.swift in Sources */,
+				05E025002BCE706F00240601 /* Color+custom.swift in Sources */,
 				05BA7BEE2B2B38D800D159FB /* MoneyBookWidgets.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
