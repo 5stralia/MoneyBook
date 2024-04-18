@@ -34,7 +34,7 @@ struct TimelineSummaryView2: View {
         } label: {
             HStack {
                 TimelineSummaryItemView(title: "합계", value: self.total)
-                    .foregroundStyle(Color(uiColor: .systemGray5))
+                    .foregroundStyle(Color(uiColor: .systemGray))
 
                 if self.isExpanded {
                     Spacer()
@@ -46,7 +46,7 @@ struct TimelineSummaryView2: View {
             }
             .padding([.top, .bottom], 10)
             .padding([.leading, .trailing], 18)
-            .background(Color.customBlack2)
+            .background(Color(uiColor: .systemGray6))
             .clipShape(RoundedCorner())
         }
     }

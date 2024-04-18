@@ -68,11 +68,11 @@ struct Header: View {
         .zIndex(.infinity)
         .padding(.bottom, 11)
         .padding(.top, 20)
-        .foregroundStyle(Color.dynamicWhite)
+        .foregroundStyle(Color.primary)
         .background {
             Rectangle()
                 .ignoresSafeArea()
-                .foregroundStyle(Color.customBlack2)
+                .foregroundStyle(Color(uiColor: .systemGray6))
                 .shadow(color: Color.black.opacity(0.16), radius: 6, x: 0, y: 3)
         }
     }

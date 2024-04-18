@@ -22,9 +22,9 @@ struct ContentView: View {
                     }
             }
             .toolbarBackground(.visible, for: .tabBar)
-            .toolbarBackground(Color.customBlack2, for: .tabBar)
+            .toolbarBackground(Color(uiColor: .systemGray6), for: .tabBar)
         }
-        .tint(Color(uiColor: .systemGray3))
+        .tint(Color.primary)
     }
 }
 
