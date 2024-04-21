@@ -103,6 +103,9 @@
         }
       }
     },
+    "Hello, world!" : {
+
+    },
     "income" : {
       "extractionState" : "manual",
       "localizations" : {

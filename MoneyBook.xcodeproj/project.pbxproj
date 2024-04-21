@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051899FF2A3761C500430226 /* TimelineSummaryView.swift */; };
+		05797F382BD4939A00A5292F /* TimelineAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05797F372BD4939A00A5292F /* TimelineAddButton.swift */; };
 		0584B3592A40574F004758AE /* TimelineDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3582A40574F004758AE /* TimelineDateView.swift */; };
 		0584B35C2A40682C004758AE /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B35B2A40682C004758AE /* Date.swift */; };
 		0584B35E2A408B2C004758AE /* TimelineSummaryValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */; };
@@ -65,6 +66,7 @@
 		05DA4E1B2B518B7E00ED1C49 /* Color+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */; };
 		05E024FF2BCD5DA500240601 /* TimelineSummaryView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */; };
 		05E025002BCE706F00240601 /* Color+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */; };
+		05E025032BCE776F00240601 /* AppendingItemView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E025022BCE776F00240601 /* AppendingItemView2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +109,7 @@
 
 /* Begin PBXFileReference section */
 		051899FF2A3761C500430226 /* TimelineSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView.swift; sourceTree = "<group>"; };
+		05797F372BD4939A00A5292F /* TimelineAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineAddButton.swift; sourceTree = "<group>"; };
 		0584B3582A40574F004758AE /* TimelineDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDateView.swift; sourceTree = "<group>"; };
 		0584B35B2A40682C004758AE /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryValueView.swift; sourceTree = "<group>"; };
@@ -168,6 +171,7 @@
 		05DA4E182B5180C800ED1C49 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+custom.swift"; sourceTree = "<group>"; };
 		05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView2.swift; sourceTree = "<group>"; };
+		05E025022BCE776F00240601 /* AppendingItemView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemView2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +291,7 @@
 				05BA7BDD2B29DDCE00D159FB /* Resource */,
 				05A719A62A85219D00260837 /* Chart */,
 				0584B35F2A4A4666004758AE /* AppendingItem */,
+				05E025012BCE775700240601 /* AppendingItem2 */,
 				0584B35A2A406822004758AE /* Extension */,
 				05189A092A38966100430226 /* Model */,
 				05A76A3A2A355D2E00B231CB /* Timeline */,
@@ -343,6 +348,7 @@
 				0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */,
 				0584B3582A40574F004758AE /* TimelineDateView.swift */,
 				05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */,
+				05797F372BD4939A00A5292F /* TimelineAddButton.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -422,6 +428,14 @@
 				05DA4E182B5180C800ED1C49 /* Images.xcassets */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		05E025012BCE775700240601 /* AppendingItem2 */ = {
+			isa = PBXGroup;
+			children = (
+				05E025022BCE776F00240601 /* AppendingItemView2.swift */,
+			);
+			path = AppendingItem2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -608,6 +622,7 @@
 				05B42ABF2B66810B0071A2E3 /* HomeQuickAction.swift in Sources */,
 				0584B35E2A408B2C004758AE /* TimelineSummaryValueView.swift in Sources */,
 				05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */,
+				05E025032BCE776F00240601 /* AppendingItemView2.swift in Sources */,
 				0584B3802A76647D004758AE /* ItemEntity.swift in Sources */,
 				05B650132B52DFD900389A32 /* UINavigationController+swipe.swift in Sources */,
 				05A719A82A8521AE00260837 /* ChartView.swift in Sources */,
@@ -631,6 +646,7 @@
 				05B42AAE2B5FF8460071A2E3 /* ChangingGraph.swift in Sources */,
 				05B42AC32B6BD76B0071A2E3 /* ItemCoreEntity.swift in Sources */,
 				05B42ABB2B6680DA0071A2E3 /* AppDelegate.swift in Sources */,
+				05797F382BD4939A00A5292F /* TimelineAddButton.swift in Sources */,
 				05B42AB62B5FFC410071A2E3 /* MonthlyCategoryItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

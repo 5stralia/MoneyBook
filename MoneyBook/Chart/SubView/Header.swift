@@ -31,6 +31,7 @@ struct Header: View {
                 VStack {
                     Text(self.topText)
                         .font(.Pretendard(size: 11, weight: .medium))
+                        .foregroundStyle(Color.customOrange1)
 
                     if let action {
                         Button(
@@ -68,11 +69,11 @@ struct Header: View {
         .zIndex(.infinity)
         .padding(.bottom, 11)
         .padding(.top, 20)
-        .foregroundStyle(Color.primary)
+        .foregroundStyle(Color.customBlack2)
         .background {
             Rectangle()
                 .ignoresSafeArea()
-                .foregroundStyle(Color(uiColor: .systemGray6))
+                .foregroundStyle(Color(uiColor: .systemBackground))
                 .shadow(color: Color.black.opacity(0.16), radius: 6, x: 0, y: 3)
         }
     }

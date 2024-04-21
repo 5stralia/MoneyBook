@@ -33,21 +33,22 @@ struct TimelineSummaryView2: View {
             }
         } label: {
             HStack {
-                TimelineSummaryItemView(title: "합계", value: self.total)
-                    .foregroundStyle(Color(uiColor: .systemGray))
+                TimelineSummaryItemView(
+                    title: "합계", value: self.total, titleColor: Color(uiColor: .systemGray2), valueColor: .customBlack2)
 
                 if self.isExpanded {
                     Spacer()
-                    TimelineSummaryItemView(title: "수입", value: self.income)
-                        .foregroundStyle(Color.customIndigo1)
-                    TimelineSummaryItemView(title: "지출", value: self.expense)
-                        .foregroundStyle(Color.customOrange1)
+                    TimelineSummaryItemView(
+                        title: "수입", value: self.income, titleColor: .customIndigo1, valueColor: .customIndigo1)
+                    TimelineSummaryItemView(
+                        title: "지출", value: self.expense, titleColor: .customOrange1, valueColor: .customOrange1)
                 }
             }
             .padding([.top, .bottom], 10)
             .padding([.leading, .trailing], 18)
-            .background(Color(uiColor: .systemGray6))
+            .background(Color(uiColor: .systemBackground))
             .clipShape(RoundedCorner())
+            .shadow(color: .black.opacity(0.16), radius: 6, y: 3)
         }
     }
 }
@@ -55,13 +56,24 @@ struct TimelineSummaryView2: View {
 struct TimelineSummaryItemView: View {
     let title: String
     let value: String
+    let titleColor: Color
+    let valueColor: Color
+
+    init(title: String, value: String, titleColor: Color = .primary, valueColor: Color = .primary) {
+        self.title = title
+        self.value = value
+        self.titleColor = titleColor
+        self.valueColor = valueColor
+    }
 
     var body: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: 6) {
             Text(self.title)
                 .font(.Pretendard(size: 11, weight: .bold))
+                .foregroundStyle(titleColor)
             Text(String(stringLiteral: self.value))
                 .font(.Pretendard(size: 14, weight: .semiBold))
+                .foregroundStyle(valueColor)
         }
     }
 }

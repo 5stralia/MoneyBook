@@ -78,83 +78,85 @@ struct TimelineView: View {
                         self.isHiddenPicker.toggle()
                     }
                 )
-                .trailingContent({
-                    Button {
-                        self.isPresentedAppending = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                })
 
-                ZStack(alignment: .topLeading) {
-                    ScrollViewReader { proxy in
-                        let groups = self.groupItems(Array(self.items), year: year, month: month)
-                        List {
-                            ForEach(groups, id: \.date) {
-                                group in
-                                HStack {
-                                    Spacer()
-                                    TimelineDateView(date: group.date)
-                                    Spacer()
-                                }
-                                ForEach(group.items, id: \.id) { item in
-                                    Button {
-                                        self.edittingItem = item
-                                    } label: {
-                                        if item.category.isExpense {
-                                            HStack {
-                                                Spacer(minLength: 80)
-                                                TimelineItemView(
-                                                    title: item.title,
-                                                    categoryName: item.category.title,
-                                                    amount: item.amount,
-                                                    isExpense: item.category.isExpense
-                                                )
-                                            }
-                                        } else {
-                                            HStack {
-                                                TimelineItemView(
-                                                    title: item.title,
-                                                    categoryName: item.category.title,
-                                                    amount: item.amount,
-                                                    isExpense: item.category.isExpense
-                                                )
-                                                Spacer(minLength: 80)
+                TimelineSummaryView(paid: paid, earning: earning)
+
+                ZStack(alignment: .bottomTrailing) {
+                    ZStack(alignment: .topLeading) {
+                        ScrollViewReader { proxy in
+                            let groups = self.groupItems(Array(self.items), year: year, month: month)
+                            List {
+                                ForEach(groups, id: \.date) {
+                                    group in
+                                    HStack {
+                                        Spacer()
+                                        TimelineDateView(date: group.date)
+                                        Spacer()
+                                    }
+                                    ForEach(group.items, id: \.id) { item in
+                                        Button {
+                                            self.edittingItem = item
+                                        } label: {
+                                            if item.category.isExpense {
+                                                HStack {
+                                                    Spacer(minLength: 80)
+                                                    TimelineItemView(
+                                                        title: item.title,
+                                                        categoryName: item.category.title,
+                                                        amount: item.amount,
+                                                        isExpense: item.category.isExpense
+                                                    )
+                                                }
+                                            } else {
+                                                HStack {
+                                                    TimelineItemView(
+                                                        title: item.title,
+                                                        categoryName: item.category.title,
+                                                        amount: item.amount,
+                                                        isExpense: item.category.isExpense
+                                                    )
+                                                    Spacer(minLength: 80)
+                                                }
                                             }
                                         }
                                     }
+                                    .onDelete(perform: { indexSet in
+                                        let deletedItems = indexSet.map { group.items[$0] }
+                                        self.deleteItems(items: deletedItems)
+                                    })
                                 }
-                                .onDelete(perform: { indexSet in
-                                    let deletedItems = indexSet.map { group.items[$0] }
-                                    self.deleteItems(items: deletedItems)
-                                })
-                            }
-                            .listRowSeparator(.hidden)
-
-                            Color.clear
-                                .frame(height: 37)
                                 .listRowSeparator(.hidden)
-                                .id(bottomID)
-                        }
-                        .onReceive(
-                            self.items.publisher,
-                            perform: { _ in
-                                proxy.scrollTo(bottomID)
+
+                                Color.clear
+                                    .frame(height: 37)
+                                    .listRowSeparator(.hidden)
+                                    .id(bottomID)
                             }
+                            .onReceive(
+                                self.items.publisher,
+                                perform: { _ in
+                                    proxy.scrollTo(bottomID)
+                                }
+                            )
+                            .listStyle(.plain)
+                        }
+
+                        TimelineSummaryView2(
+                            total: (earning - paid).formatted(),
+                            income: earning.formatted(),
+                            expense: paid.formatted()
                         )
-                        .listStyle(.plain)
+                        .padding(.top, 8)
+                        .padding([.leading, .trailing], 20)
                     }
 
-                    TimelineSummaryView2(
-                        total: (earning - paid).formatted(),
-                        income: earning.formatted(),
-                        expense: paid.formatted()
-                    )
-                    .padding(.top, 8)
-                    .padding([.leading, .trailing], 20)
+                    Button {
+                        self.isPresentedAppending = true
+                    } label: {
+                        TimelineAddButton()
+                            .padding([.trailing, .bottom], 25)
+                    }
                 }
-
-                TimelineSummaryView(paid: paid, earning: earning)
             }
 
             if !isHiddenPicker {
