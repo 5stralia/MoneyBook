@@ -49,10 +49,12 @@ struct AppendingItemView2: View {
     }
 }
 
-enum AppendingInputType {
+enum AppendingInputType: Hashable {
     case date
     case category
     case amount
+    case title
+    case note
 }
 
 struct AppendingContentsView: View {
@@ -61,6 +63,7 @@ struct AppendingContentsView: View {
     @State var note: String = ""
 
     @Binding var inputType: AppendingInputType?
+    @FocusState var focused: AppendingInputType?
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -72,77 +75,116 @@ struct AppendingContentsView: View {
                 }
                 .padding(.bottom, 8)
 
-                VStack(spacing: 24) {
-                    HStack {
-                        Text("날짜")
-                            .font(.Pretendard(size: 15, weight: .bold))
-                        Spacer()
-                        Button {
-
-                        } label: {
+                VStack(spacing: 0) {
+                    AppendingItemItemView(
+                        title: "날짜",
+                        backgroundColor: backgroundColor(.date),
+                        action: { select(.date) },
+                        label: {
                             Text("2024.02.19")
                                 .font(.Pretendard(size: 18, weight: .bold))
                             Text("화")
                                 .font(.Pretendard(size: 12, weight: .bold))
                         }
-                        .foregroundStyle(Color.primary)
-                    }
-                    HStack {
-                        Text("분류")
-                            .font(.Pretendard(size: 15, weight: .bold))
-                        Spacer()
-                        Button {
-
-                        } label: {
+                    )
+                    AppendingItemItemView(
+                        title: "분류",
+                        backgroundColor: backgroundColor(.category),
+                        action: { select(.category) },
+                        label: {
                             Text("반려동물")
                                 .font(.Pretendard(size: 15, weight: .bold))
                         }
-                        .foregroundStyle(Color.primary)
-                    }
-                    HStack {
-                        Text("금액")
-                            .font(.Pretendard(size: 15, weight: .bold))
-                        Spacer()
-                        Button {
-                            inputType = .amount
-                        } label: {
+                    )
+                    AppendingItemItemView(
+                        title: "금액",
+                        backgroundColor: backgroundColor(.amount),
+                        action: { select(.amount) },
+                        label: {
                             Text("1,469,800")
                                 .font(.Pretendard(size: 15, weight: .bold))
                         }
-                        .foregroundStyle(Color.primary)
-                    }
-                    HStack {
-                        Text("이름")
-                            .font(.Pretendard(size: 15, weight: .bold))
-                            .foregroundStyle(Color.customOrange1)
-                        Spacer()
-
-                        TextField("", text: $title)
-                            .font(.Pretendard(size: 15, weight: .bold))
-                            .foregroundStyle(Color.customOrange1)
-                            .multilineTextAlignment(.trailing)
-                    }
+                    )
+                    AppendingItemItemView(
+                        title: "이름",
+                        backgroundColor: backgroundColor(.title),
+                        action: { select(.title) },
+                        label: {
+                            TextField("", text: $title)
+                                .font(.Pretendard(size: 15, weight: .bold))
+                                .multilineTextAlignment(.trailing)
+                                .focused($focused, equals: .title)
+                                .onSubmit { select(nil) }
+                        }
+                    )
                 }
-                .padding([.top, .bottom], 13)
-                .padding([.leading, .trailing], 23)
-                .background(Color.customOrange1.opacity(0.3))
                 .clipShape(RoundedCorner(radius: 11))
                 .padding(.bottom, 17)
 
-                HStack(alignment: .top) {
-                    Text("메모")
-                        .font(.Pretendard(size: 15, weight: .bold))
-                    Spacer()
-                    TextField("", text: $note, axis: .vertical)
-                        .font(.Pretendard(size: 15, weight: .regular))
-                        .multilineTextAlignment(.trailing)
-                }
-                .padding([.top, .bottom], 13)
-                .padding([.leading, .trailing], 23)
-                .background(Color(uiColor: .systemGray5).opacity(0.3))
-                .clipShape(RoundedCorner(radius: 11))
+                Button(
+                    action: {
+                        select(.note)
+                    },
+                    label: {
+                        VStack(alignment: .leading) {
+                            Text("메모")
+                                .font(.Pretendard(size: 15, weight: .bold))
+                            TextField("", text: $note, axis: .vertical)
+                                .font(.Pretendard(size: 15, weight: .regular))
+                                .multilineTextAlignment(.leading)
+                                .focused($focused, equals: .note)
+                                .onSubmit { select(nil) }
+                        }
+                        .padding([.top, .bottom], 13)
+                        .padding([.leading, .trailing], 20)
+                        .foregroundStyle(Color.primary)
+                        .background(Color.gray.opacity(inputType == .note ? 0.15 : 0.05))
+                        .clipShape(RoundedCorner(radius: 11))
+                    })
             }
         }
+        .tint(isExpense ? Color.customOrange1 : Color.customIndigo1)
+    }
+
+    func select(_ type: AppendingInputType?) {
+        if inputType == type {
+            inputType = nil
+        } else {
+            inputType = type
+        }
+
+        focused = inputType
+    }
+
+    func backgroundColor(_ type: AppendingInputType?) -> Color {
+        let opacity = inputType == type ? 0.3 : 0.1
+        let color = isExpense ? Color.customOrange1 : Color.customIndigo1
+
+        return color.opacity(opacity)
+    }
+}
+
+struct AppendingItemItemView<T: View>: View {
+    let title: String
+    let backgroundColor: Color
+    let action: () -> Void
+    @ViewBuilder let label: () -> T
+
+    var body: some View {
+        Button(
+            action: action,
+            label: {
+                HStack {
+                    Text(title)
+                        .font(.Pretendard(size: 15, weight: .bold))
+                    Spacer()
+                    label()
+                }
+                .padding([.top, .bottom], 13)
+                .padding([.leading, .trailing], 20)
+                .foregroundStyle(Color.primary)
+                .background(backgroundColor)
+            })
     }
 }
 
@@ -164,7 +206,7 @@ struct AppendingItemTypeView2: View {
                             } label: {
                                 Text("지출")
                                     .font(.Pretendard(size: 15, weight: .bold))
-                                    .foregroundColor(isPaid ? .white : Color(uiColor: .systemGray4))
+                                    .foregroundColor(.white)
                             }
                         }
                     Capsule()
@@ -177,7 +219,7 @@ struct AppendingItemTypeView2: View {
                             } label: {
                                 Text("소득")
                                     .font(.Pretendard(size: 15, weight: .bold))
-                                    .foregroundColor(isPaid ? Color(uiColor: .systemGray4) : .white)
+                                    .foregroundColor(.white)
                             }
                         }
                 }
