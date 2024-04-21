@@ -9,7 +9,10 @@ import SwiftUI
 
 struct AppendingItemView2: View {
     @State var isExpense: Bool = true
+    @State var date: Date = Date()
     @State var amount: Double = 0
+    @State var title: String = ""
+    @State var note: String = ""
 
     @State var inputType: AppendingInputType?
 
@@ -18,9 +21,15 @@ struct AppendingItemView2: View {
             VStack {
                 Header(topText: "", title: "append", isHiddenBackButton: false)
 
-                AppendingContentsView(isExpense: $isExpense, inputType: $inputType)
-                    .padding([.top, .leading, .trailing], 20)
-                    .padding(.bottom, 0)
+                AppendingContentsView(
+                    isExpense: $isExpense,
+                    amount: amount.formatted(),
+                    title: $title,
+                    note: $note,
+                    inputType: $inputType
+                )
+                .padding([.top, .leading, .trailing], 20)
+                .padding(.bottom, 0)
 
                 Spacer()
 
@@ -42,10 +51,11 @@ struct AppendingItemView2: View {
             } else if inputType == .category {
 
             } else if inputType == .amount {
-                AppendingItemAmountInputView(value: $amount)
+                AppendingItemAmountInputView(value: $amount, isExpense: $isExpense)
                     .frame(height: 400)
             }
         }
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
@@ -59,8 +69,9 @@ enum AppendingInputType: Hashable {
 
 struct AppendingContentsView: View {
     @Binding var isExpense: Bool
-    @State var title: String = ""
-    @State var note: String = ""
+    let amount: String
+    @Binding var title: String
+    @Binding var note: String
 
     @Binding var inputType: AppendingInputType?
     @FocusState var focused: AppendingInputType?
@@ -101,7 +112,7 @@ struct AppendingContentsView: View {
                         backgroundColor: backgroundColor(.amount),
                         action: { select(.amount) },
                         label: {
-                            Text("1,469,800")
+                            Text(amount)
                                 .font(.Pretendard(size: 15, weight: .bold))
                         }
                     )
@@ -232,123 +243,222 @@ enum AppendingItemAmountInputOperation {
     case multiplier
     case add
     case subtraction
-    case point
 }
 
 struct AppendingItemAmountInputView: View {
     @Binding var value: Double
     @State private var operation: AppendingItemAmountInputOperation?
-    @State private var prevValue: Double = 0
+    @State private var isFloating: Bool = false
+    @State private var prevValue = Value()
+    @State private var currentValue: Value
+    @Binding var isExpense: Bool
+
+    init(value: Binding<Double>, isExpense: Binding<Bool>) {
+        self._value = value
+        self._isExpense = isExpense
+
+        var value = value.wrappedValue
+        var floatingPoint = 1.0
+
+        while (value - value.rounded(.towardZero)) > 0 {
+            value *= 10
+            floatingPoint *= 10
+        }
+
+        self.currentValue = Value(original: value, floating: floatingPoint)
+    }
 
     var body: some View {
         VStack(alignment: .trailing) {
-            Text(value.formatted())
+            Text(currentValue.formatted)
                 .font(.Pretendard(size: 18, weight: .bold))
                 .foregroundStyle(Color(uiColor: .systemBackground))
                 .padding([.top, .bottom], 22)
+                .padding(.trailing, 10)
 
             GeometryReader { reader in
                 let length = Int((reader.size.width - (3 * 4)) / 5)
                 VStack {
                     HStack(spacing: 3) {
                         AppendingItemAmountInputButton(
-                            action: { value = Double(Int(value / 10)) }, text: "->", isNumber: false, length: length)
+                            action: { calculate(.remove) }, text: "->", isNumber: false, length: length)
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 + 7 }, text: "7", isNumber: true, length: length)
+                            action: { calculate(.number(7)) }, text: "7", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 + 8 }, text: "8", isNumber: true, length: length)
+                            action: { calculate(.number(8)) }, text: "8", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 + 9 }, text: "9", isNumber: true, length: length)
+                            action: { calculate(.number(9)) }, text: "9", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: {
-                                self.calculate()
-
-                                self.prevValue = value
-                                self.operation = .divide
-                                self.value = 0
-                            }, text: "/", isNumber: false, length: length)
+                            action: { calculate(.divide) }, text: "/", isNumber: false, length: length)
                     }
                     HStack(spacing: 3) {
                         AppendingItemAmountInputButton(
-                            action: { value = 0 }, text: "AC", isNumber: false, length: length)
+                            action: { calculate(.clear) }, text: "AC", isNumber: false, length: length)
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 + 4 }, text: "4", isNumber: true, length: length)
+                            action: { calculate(.number(4)) }, text: "4", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 + 5 }, text: "5", isNumber: true, length: length)
+                            action: { calculate(.number(5)) }, text: "5", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 + 6 }, text: "6", isNumber: true, length: length)
+                            action: { calculate(.number(6)) }, text: "6", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: {
-                                self.calculate()
-
-                                self.prevValue = value
-                                self.operation = .multiplier
-                                self.value = 0
-                            }, text: "X", isNumber: false, length: length)
+                            action: { calculate(.multiplier) }, text: "X", isNumber: false, length: length)
                     }
                     HStack(spacing: 3) {
                         Color.clear
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 + 1 }, text: "1", isNumber: true, length: length)
+                            action: { calculate(.number(1)) }, text: "1", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 + 2 }, text: "2", isNumber: true, length: length)
+                            action: { calculate(.number(2)) }, text: "2", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 + 3 }, text: "3", isNumber: true, length: length)
+                            action: { calculate(.number(3)) }, text: "3", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: {
-                                self.calculate()
-
-                                self.prevValue = value
-                                self.operation = .subtraction
-                                self.value = 0
-                            }, text: "-", isNumber: false, length: length)
+                            action: { calculate(.subtraction) }, text: "-", isNumber: false, length: length)
                     }
                     HStack(spacing: 3) {
                         AppendingItemAmountInputButton(
-                            action: { value = value * 10 }, text: "0", isNumber: true, length: length)
+                            action: { calculate(.number(0)) }, text: "0", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: { value = value * 100 }, text: "00", isNumber: true, length: length)
+                            action: { calculate(.doubleZero) }, text: "00", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: {
-                                self.calculate()
-
-                                self.prevValue = value
-                                self.operation = .point
-                                self.value = 0
-                            }, text: ".", isNumber: true, length: length)
+                            action: { calculate(.point) }, text: ".", isNumber: true, length: length)
                         AppendingItemAmountInputButton(
-                            action: {
-                                self.calculate()
-                            }, text: "=", isNumber: false, length: length)
+                            action: { calculate(.result) }, text: "=", isNumber: false, length: length)
                         AppendingItemAmountInputButton(
-                            action: {
-                                self.calculate()
-
-                                self.prevValue = value
-                                self.operation = .add
-                                self.value = 0
-                            }, text: "+", isNumber: false, length: length)
+                            action: { calculate(.add) }, text: "+", isNumber: false, length: length)
                     }
                 }
             }
         }
-        .background(Color.customOrange1)
+        .padding([.leading, .bottom, .trailing], 8)
+        .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
+        .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
+    }
+
+    struct Value {
+        var original: Double
+        var floating: Double
+
+        var value: Double {
+            original / floating
+        }
+
+        var formatted: String {
+            value.formatted(.number.grouping(.never))
+        }
+
+        init() {
+            self.original = 0
+            self.floating = 1
+        }
+
+        init(original: Double, floating: Double) {
+            self.original = original
+            self.floating = floating
+        }
+
+        static func + (lhs: Value, rhs: Value) -> Value {
+            let maxFloating = max(lhs.floating, rhs.floating)
+
+            let lValue = lhs.original * (maxFloating / lhs.floating)
+            let rValue = rhs.original * (maxFloating / rhs.floating)
+
+            return Value(original: lValue + rValue, floating: maxFloating)
+        }
+
+        static func - (lhs: Value, rhs: Value) -> Value {
+            let maxFloating = max(lhs.floating, rhs.floating)
+
+            let lValue = lhs.original * (maxFloating / lhs.floating)
+            let rValue = rhs.original * (maxFloating / rhs.floating)
+
+            return Value(original: lValue - rValue, floating: maxFloating)
+        }
+
+        static func * (lhs: Value, rhs: Value) -> Value {
+            return Value(original: lhs.original * rhs.original, floating: lhs.floating * rhs.floating)
+        }
+
+        static func / (lhs: Value, rhs: Value) -> Value {
+            return Value(original: lhs.original / rhs.original, floating: lhs.floating / rhs.floating)
+        }
+    }
+
+    enum CalculatorInput {
+        case number(Int)
+        case doubleZero
+        case divide
+        case multiplier
+        case add
+        case subtraction
+        case point
+        case clear
+        case remove
+        case result
+    }
+    private func calculate(_ input: CalculatorInput) {
+        switch input {
+        case .number(let int):
+            if isFloating {
+                currentValue.floating *= 10
+            }
+            currentValue.original = currentValue.original * 10 + Double(int)
+        case .doubleZero:
+            currentValue.original = currentValue.original * 100
+        case .divide:
+            calculate()
+            prevValue = currentValue
+            operation = .divide
+            currentValue = Value()
+        case .multiplier:
+            calculate()
+            prevValue = currentValue
+            operation = .multiplier
+            currentValue = Value()
+        case .add:
+            calculate()
+            prevValue = currentValue
+            operation = .add
+            currentValue = Value()
+        case .subtraction:
+            calculate()
+            prevValue = currentValue
+            operation = .subtraction
+            currentValue = Value()
+        case .point:
+            guard !isFloating else { break }
+
+            isFloating = true
+        case .clear:
+            prevValue = Value()
+            operation = nil
+            currentValue = Value()
+            isFloating = false
+        case .remove:
+            if currentValue.floating > 1 {
+                currentValue.original = Double(Int(currentValue.original / 10))
+                currentValue.floating /= 10
+            } else {
+                currentValue.original = Double(Int(currentValue.original / 10))
+            }
+        case .result:
+            calculate()
+            value = currentValue.value
+        }
     }
 
     private func calculate() {
+        isFloating = false
         guard let operation else { return }
 
         switch operation {
         case .divide:
-            self.value = prevValue / value
+            currentValue = prevValue / currentValue
         case .multiplier:
-            self.value = prevValue * value
+            currentValue = prevValue * currentValue
         case .add:
-            self.value = prevValue + value
+            currentValue = prevValue + currentValue
         case .subtraction:
-            self.value = prevValue - value
-        case .point:
-            break
+            currentValue = prevValue - currentValue
         }
 
         self.operation = nil
@@ -370,7 +480,7 @@ struct AppendingItemAmountInputButton: View {
                 .background(
                     isNumber
                         ? Color(uiColor: .systemBackground).opacity(0.24)
-                        : Color(red: 248 / 255, green: 179 / 255, blue: 89 / 255)
+                        : Color.black.opacity(0.1)
                 )
                 .clipShape(Circle())
         }
