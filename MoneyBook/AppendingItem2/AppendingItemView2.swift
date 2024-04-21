@@ -10,6 +10,7 @@ import SwiftUI
 struct AppendingItemView2: View {
     @State var isExpense: Bool = true
     @State var date: Date = Date()
+    @State var category: String = "카테고0"
     @State var amount: Double = 0
     @State var title: String = ""
     @State var note: String = ""
@@ -23,6 +24,7 @@ struct AppendingItemView2: View {
 
                 AppendingContentsView(
                     isExpense: $isExpense,
+                    category: $category,
                     amount: amount.formatted(),
                     title: $title,
                     note: $note,
@@ -49,7 +51,8 @@ struct AppendingItemView2: View {
             if inputType == .date {
 
             } else if inputType == .category {
-
+                AppendingItemCategoryInputView(isExpense: $isExpense, categories: (0...30).map({ "카테고\($0)"}), selected: $category)
+                    .frame(height: 400)
             } else if inputType == .amount {
                 AppendingItemAmountInputView(value: $amount, isExpense: $isExpense)
                     .frame(height: 400)
@@ -69,6 +72,7 @@ enum AppendingInputType: Hashable {
 
 struct AppendingContentsView: View {
     @Binding var isExpense: Bool
+    @Binding var category: String
     let amount: String
     @Binding var title: String
     @Binding var note: String
@@ -103,7 +107,7 @@ struct AppendingContentsView: View {
                         backgroundColor: backgroundColor(.category),
                         action: { select(.category) },
                         label: {
-                            Text("반려동물")
+                            Text(category)
                                 .font(.Pretendard(size: 15, weight: .bold))
                         }
                     )
@@ -491,6 +495,124 @@ struct AppendingItemAmountInputButton: View {
         self.text = text
         self.isNumber = isNumber
         self.length = length
+    }
+}
+
+struct AppendingItemCategoryInputView: View {
+    struct AnimationValues {
+        var angle = Angle.degrees(0)
+        var offset = CGSize(width: 0, height: 0)
+    }
+    
+    @Binding var isExpense: Bool
+    let categories: [String]
+    @Binding var selected: String
+    
+    @State private var isSetting: Bool = false
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Button {
+                    // TODO: 설정. 카테고리 제거 및 수정 UI를 띄운다.
+                    isSetting.toggle()
+                } label: {
+                    ZStack(alignment: .center) {
+                        Color.black.opacity(0.2)
+                            .clipShape(Circle())
+                            .padding(.all, 7)
+                        
+                        Image(systemName: "hammer.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.all, 13)
+                    }
+                    .frame(width: 44, height: 44)
+                }
+                
+                Spacer()
+                
+                Button {
+                    // TODO: 카테고리 추가
+                } label: {
+                    ZStack(alignment: .center) {
+                        Color.black.opacity(0.2)
+                            .clipShape(Circle())
+                            .padding(.all, 7)
+                        
+                        Image(systemName: "plus")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.all, 13)
+                    }
+                    .frame(width: 44, height: 44)
+                }
+            }
+            .padding(.all, 20)
+            
+            
+            GeometryReader { reader in
+                let cols: Double = 5
+                let length = (reader.size.width - (36 * 2) - (6 * (cols - 1))) / cols
+                
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        ForEach(Array(stride(from: 0, to: categories.endIndex, by: 5)), id: \.self) { i in
+                            HStack {
+                                ForEach(Array(stride(from: i, to: min(categories.endIndex, i + 5), by: 1)), id: \.self) { j in
+                                    let category = categories[j]
+                                    let isSelected = category == selected
+                                    
+                                    Button {
+                                        selected = category
+                                    } label: {
+                                        ZStack(alignment: .center) {
+                                            Color(uiColor: .systemBackground).opacity(isSelected ? 1.0 : 0.24)
+                                                .clipShape(Circle())
+                                            
+                                            if isSetting {
+                                                Text(category)
+                                                    .font(.Pretendard(size: 13, weight: .semiBold))
+                                                    .foregroundStyle(isSelected ? Color.primary : Color(uiColor: .systemBackground))
+                                                
+                                            } else {
+                                                Text(categories[j])
+                                                    .font(.Pretendard(size: 13, weight: .semiBold))
+                                                    .foregroundStyle(isSelected ? Color.primary : Color(uiColor: .systemBackground))
+                                            }
+                                        }
+                                        .frame(width: CGFloat(length), height: CGFloat(length))
+                                        .keyframeAnimator(
+                                            initialValue: AnimationValues(),
+                                            repeating: isSetting) { content, value in
+                                                content
+                                                    .rotationEffect(isSetting ? value.angle : .zero, anchor: .center)
+                                                    .offset(isSetting ? value.offset : .zero)
+                                            } keyframes: { _ in
+                                                KeyframeTrack(\.angle) {
+                                                    LinearKeyframe(Angle.degrees(-20), duration: 0.1)
+                                                    LinearKeyframe(Angle.degrees(20), duration: 0.2)
+                                                    LinearKeyframe(Angle.zero, duration: 0.1)
+                                                }
+                                                
+                                                KeyframeTrack(\.offset) {
+                                                    LinearKeyframe(CGSize(width: -3, height: -3), duration: 0.1)
+                                                    LinearKeyframe(CGSize(width: 3, height: 3), duration: 0.2)
+                                                    LinearKeyframe(CGSize.zero, duration: 0.1)
+                                                }
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                        .padding([.leading, .trailing], 36)
+                    }
+                }
+            }
+        }
+        .foregroundStyle(Color.white)
+        .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
+        .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
     }
 }
 

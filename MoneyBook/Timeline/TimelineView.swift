@@ -194,17 +194,18 @@ struct TimelineView: View {
         .sheet(
             isPresented: $isPresentedAppending,
             content: {
-                if let category = self.categories.first {
-                    AppendingItemView(initialCategory: category)
-                }
+                AppendingItemView2()
+                //                if let category = self.categories.first {
+                //                    AppendingItemView(initialCategory: category)
+                //                }
             }
         )
-        .sheet(
-            item: $edittingItem,
-            content: { item in
-                AppendingItemView(item: item)
-            }
-        )
+//        .sheet(
+//            item: $edittingItem,
+//            content: { item in
+//                AppendingItemView(item: item)
+//            }
+//        )
         .onChange(of: scenePhase) { _, new in
             switch new {
             case .active:
