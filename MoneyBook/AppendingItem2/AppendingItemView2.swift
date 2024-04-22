@@ -24,6 +24,7 @@ struct AppendingItemView2: View {
 
                 AppendingContentsView(
                     isExpense: $isExpense,
+                    date: $date,
                     category: $category,
                     amount: amount.formatted(),
                     title: $title,
@@ -49,7 +50,7 @@ struct AppendingItemView2: View {
             }
 
             if inputType == .date {
-
+                AppendingItemDateInputView(isExpense: $isExpense, selected: $date)
             } else if inputType == .category {
                 AppendingItemCategoryInputView(isExpense: $isExpense, categories: (0...30).map({ "카테고\($0)"}), selected: $category)
                     .frame(height: 400)
@@ -72,6 +73,7 @@ enum AppendingInputType: Hashable {
 
 struct AppendingContentsView: View {
     @Binding var isExpense: Bool
+    @Binding var date: Date
     @Binding var category: String
     let amount: String
     @Binding var title: String
@@ -79,6 +81,13 @@ struct AppendingContentsView: View {
 
     @Binding var inputType: AppendingInputType?
     @FocusState var focused: AppendingInputType?
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }()
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -96,7 +105,7 @@ struct AppendingContentsView: View {
                         backgroundColor: backgroundColor(.date),
                         action: { select(.date) },
                         label: {
-                            Text("2024.02.19")
+                            Text(dateFormatter.string(from: date))
                                 .font(.Pretendard(size: 18, weight: .bold))
                             Text("화")
                                 .font(.Pretendard(size: 12, weight: .bold))
@@ -548,7 +557,8 @@ struct AppendingItemCategoryInputView: View {
                     .frame(width: 44, height: 44)
                 }
             }
-            .padding(.all, 20)
+            .padding(.bottom, 10)
+            .padding([.leading, .top, .trailing], 20)
             
             
             GeometryReader { reader in
@@ -564,21 +574,39 @@ struct AppendingItemCategoryInputView: View {
                                     let isSelected = category == selected
                                     
                                     Button {
-                                        selected = category
+                                        if isSetting {
+                                            
+                                        } else {
+                                            selected = category
+                                        }
                                     } label: {
-                                        ZStack(alignment: .center) {
-                                            Color(uiColor: .systemBackground).opacity(isSelected ? 1.0 : 0.24)
-                                                .clipShape(Circle())
+                                        ZStack(alignment: .topLeading) {
+                                            ZStack(alignment: .center) {
+                                                Color(uiColor: .systemBackground).opacity(isSelected ? 1.0 : 0.24)
+                                                    .clipShape(Circle())
+                                                
+                                                if isSetting {
+                                                    Text(category)
+                                                        .font(.Pretendard(size: 13, weight: .semiBold))
+                                                        .foregroundStyle(isSelected ? Color.primary : Color(uiColor: .systemBackground))
+                                                } else {
+                                                    Text(category)
+                                                        .font(.Pretendard(size: 13, weight: .semiBold))
+                                                        .foregroundStyle(isSelected ? Color.primary : Color(uiColor: .systemBackground))
+                                                }
+                                            }
                                             
                                             if isSetting {
-                                                Text(category)
-                                                    .font(.Pretendard(size: 13, weight: .semiBold))
-                                                    .foregroundStyle(isSelected ? Color.primary : Color(uiColor: .systemBackground))
-                                                
-                                            } else {
-                                                Text(categories[j])
-                                                    .font(.Pretendard(size: 13, weight: .semiBold))
-                                                    .foregroundStyle(isSelected ? Color.primary : Color(uiColor: .systemBackground))
+                                                ZStack(alignment: .center) {
+                                                    Color.red
+                                                        .clipShape(Circle())
+                                                    Image(systemName: "ellipsis")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .padding(.all, 4)
+                                                        .foregroundStyle(Color.white)
+                                                }
+                                                .frame(width: length / 3, height: length / 3)
                                             }
                                         }
                                         .frame(width: CGFloat(length), height: CGFloat(length))
@@ -590,15 +618,9 @@ struct AppendingItemCategoryInputView: View {
                                                     .offset(isSetting ? value.offset : .zero)
                                             } keyframes: { _ in
                                                 KeyframeTrack(\.angle) {
-                                                    LinearKeyframe(Angle.degrees(-20), duration: 0.1)
-                                                    LinearKeyframe(Angle.degrees(20), duration: 0.2)
+                                                    LinearKeyframe(Angle.degrees(-10), duration: 0.1)
+                                                    LinearKeyframe(Angle.degrees(10), duration: 0.2)
                                                     LinearKeyframe(Angle.zero, duration: 0.1)
-                                                }
-                                                
-                                                KeyframeTrack(\.offset) {
-                                                    LinearKeyframe(CGSize(width: -3, height: -3), duration: 0.1)
-                                                    LinearKeyframe(CGSize(width: 3, height: 3), duration: 0.2)
-                                                    LinearKeyframe(CGSize.zero, duration: 0.1)
                                                 }
                                             }
                                     }
@@ -607,12 +629,26 @@ struct AppendingItemCategoryInputView: View {
                         }
                         .padding([.leading, .trailing], 36)
                     }
+                    .padding([.top, .bottom], 10)
                 }
             }
         }
         .foregroundStyle(Color.white)
         .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
         .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
+    }
+}
+
+struct AppendingItemDateInputView: View {
+    @Binding var isExpense: Bool
+    @Binding var selected: Date
+    
+    var body: some View {
+        DatePicker("", selection: $selected)
+            .datePickerStyle(.graphical)
+            .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
+            .preferredColorScheme(.dark)
+            .tint(Color.black.opacity(0.7))
     }
 }
 
