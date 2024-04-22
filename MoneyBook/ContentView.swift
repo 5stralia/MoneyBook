@@ -11,10 +11,12 @@ struct ContentView: View {
     var body: some View {
         TabView {
             Group {
-                TimelineView()
-                    .tabItem {
-                        Label("Timeline", systemImage: "calendar.day.timeline.leading")
-                    }
+                NavigationStack {
+                    TimelineView()
+                }
+                .tabItem {
+                    Label("Timeline", systemImage: "calendar.day.timeline.leading")
+                }
 
                 ChartView()
                     .tabItem {

@@ -5,23 +5,69 @@
 //  Created by Hoju Choi on 4/16/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct AppendingItemView2: View {
-    @State var isExpense: Bool = true
-    @State var date: Date = Date()
-    @State var category: String = "카테고0"
-    @State var amount: Double = 0
-    @State var title: String = ""
-    @State var note: String = ""
+    @Environment(\.modelContext) var modelContext
+    @Environment(\.dismiss) private var dismiss
+
+    @Query var expenseCategories: [CategoryCoreEntity]
+    @Query var incomeCategories: [CategoryCoreEntity]
+
+    var item: ItemCoreEntity?
+
+    @State var isExpense: Bool
+    @State var date: Date
+    @State var category: CategoryCoreEntity?
+    @State var amount: Double
+    @State var title: String
+    @State var note: String
 
     @State var inputType: AppendingInputType?
+
+    var isOKEnabled: Bool {
+        return category != nil && amount > 0 && !title.isEmpty
+    }
+
+    init(item: ItemCoreEntity? = nil) {
+        if let item {
+            self.item = item
+
+            isExpense = item.category.isExpense
+            date = item.timestamp
+            category = item.category
+            amount = item.amount
+            title = item.title
+            note = item.note
+        } else {
+            isExpense = true
+            date = Date()
+            category = nil
+            amount = 0
+            title = ""
+            note = ""
+        }
+
+        _expenseCategories = Query(
+            filter: #Predicate<CategoryCoreEntity> { category in
+                category.isExpense
+            },
+            sort: \.title,
+            order: .forward
+        )
+        _incomeCategories = Query(
+            filter: #Predicate<CategoryCoreEntity> { category in
+                !category.isExpense
+            },
+            sort: \.title,
+            order: .forward
+        )
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                Header(topText: "", title: "append", isHiddenBackButton: false)
-
                 AppendingContentsView(
                     isExpense: $isExpense,
                     date: $date,
@@ -36,31 +82,70 @@ struct AppendingItemView2: View {
 
                 Spacer()
 
-                Button {
-                    // TODO: 저장!
-                } label: {
+                if isOKEnabled {
+                    Button {
+                        submit()
+                    } label: {
+                        Text("OK")
+                            .foregroundStyle(Color.white)
+                    }
+                    .frame(height: 80)
+                    .frame(maxWidth: .infinity)
+                    .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
+                    .clipShape(RoundedCorner(radius: 15, corners: [.topLeft, .topRight]))
+                } else {
                     Text("OK")
                         .foregroundStyle(Color.white)
+                        .frame(height: 80)
+                        .frame(maxWidth: .infinity)
+                        .background(.gray)
+                        .clipShape(RoundedCorner(radius: 15, corners: [.topLeft, .topRight]))
                 }
-                .frame(height: 80)
-                .frame(maxWidth: .infinity)
-                .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
-                .clipShape(RoundedCorner(radius: 15, corners: [.topLeft, .topRight]))
 
             }
 
             if inputType == .date {
-                AppendingItemDateInputView(isExpense: $isExpense, selected: $date)
+                AppendingItemDateInputView2(isExpense: $isExpense, selected: $date)
                     .frame(height: 400)
             } else if inputType == .category {
-                AppendingItemCategoryInputView(isExpense: $isExpense, categories: (0...30).map({ "카테고\($0)"}), selected: $category)
-                    .frame(height: 400)
+                AppendingItemCategoryInputView2(
+                    isExpense: $isExpense, categories: isExpense ? expenseCategories : incomeCategories,
+                    selected: $category
+                )
+                .frame(height: 400)
             } else if inputType == .amount {
                 AppendingItemAmountInputView(value: $amount, isExpense: $isExpense)
                     .frame(height: 400)
             }
         }
         .ignoresSafeArea(edges: .bottom)
+        .toolbar(.hidden, for: .tabBar)
+    }
+
+    private func submit() {
+        defer {
+            dismiss()
+        }
+
+        guard let category else { return }
+
+        if let item {
+            item.timestamp = date
+            item.category = category
+            item.amount = amount
+            item.title = title
+            item.note = note
+        } else {
+            self.modelContext.insert(
+                ItemCoreEntity(
+                    amount: amount,
+                    category: category,
+                    note: note,
+                    timestamp: date,
+                    title: title
+                )
+            )
+        }
     }
 }
 
@@ -75,14 +160,14 @@ enum AppendingInputType: Hashable {
 struct AppendingContentsView: View {
     @Binding var isExpense: Bool
     @Binding var date: Date
-    @Binding var category: String
+    @Binding var category: CategoryCoreEntity?
     let amount: String
     @Binding var title: String
     @Binding var note: String
 
     @Binding var inputType: AppendingInputType?
     @FocusState var focused: AppendingInputType?
-    
+
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -117,7 +202,7 @@ struct AppendingContentsView: View {
                         backgroundColor: backgroundColor(.category),
                         action: { select(.category) },
                         label: {
-                            Text(category)
+                            Text(category?.title ?? "")
                                 .font(.Pretendard(size: 15, weight: .bold))
                         }
                     )
@@ -343,7 +428,7 @@ struct AppendingItemAmountInputView: View {
                 }
             }
         }
-        .padding([.leading, .bottom, .trailing], 20)
+        .padding([.leading, .bottom, .trailing], 30)
         .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
         .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
     }
@@ -508,18 +593,18 @@ struct AppendingItemAmountInputButton: View {
     }
 }
 
-struct AppendingItemCategoryInputView: View {
+struct AppendingItemCategoryInputView2: View {
     struct AnimationValues {
         var angle = Angle.degrees(0)
         var offset = CGSize(width: 0, height: 0)
     }
-    
+
     @Binding var isExpense: Bool
-    let categories: [String]
-    @Binding var selected: String
-    
+    let categories: [CategoryCoreEntity]
+    @Binding var selected: CategoryCoreEntity?
+
     @State private var isSetting: Bool = false
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -531,7 +616,7 @@ struct AppendingItemCategoryInputView: View {
                         Color.black.opacity(0.2)
                             .clipShape(Circle())
                             .padding(.all, 7)
-                        
+
                         Image(systemName: "hammer.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -539,9 +624,9 @@ struct AppendingItemCategoryInputView: View {
                     }
                     .frame(width: 44, height: 44)
                 }
-                
+
                 Spacer()
-                
+
                 Button {
                     // TODO: 카테고리 추가
                 } label: {
@@ -549,7 +634,7 @@ struct AppendingItemCategoryInputView: View {
                         Color.black.opacity(0.2)
                             .clipShape(Circle())
                             .padding(.all, 7)
-                        
+
                         Image(systemName: "plus")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -560,23 +645,23 @@ struct AppendingItemCategoryInputView: View {
             }
             .padding(.bottom, 10)
             .padding([.leading, .top, .trailing], 20)
-            
-            
+
             GeometryReader { reader in
                 let cols: Double = 5
                 let length = (reader.size.width - (36 * 2) - (6 * (cols - 1))) / cols
-                
+
                 ScrollView {
                     VStack(alignment: .leading) {
                         ForEach(Array(stride(from: 0, to: categories.endIndex, by: 5)), id: \.self) { i in
                             HStack {
-                                ForEach(Array(stride(from: i, to: min(categories.endIndex, i + 5), by: 1)), id: \.self) { j in
+                                ForEach(Array(stride(from: i, to: min(categories.endIndex, i + 5), by: 1)), id: \.self)
+                                { j in
                                     let category = categories[j]
                                     let isSelected = category == selected
-                                    
+
                                     Button {
                                         if isSetting {
-                                            
+
                                         } else {
                                             selected = category
                                         }
@@ -585,18 +670,22 @@ struct AppendingItemCategoryInputView: View {
                                             ZStack(alignment: .center) {
                                                 Color(uiColor: .systemBackground).opacity(isSelected ? 1.0 : 0.24)
                                                     .clipShape(Circle())
-                                                
+
                                                 if isSetting {
-                                                    Text(category)
+                                                    Text(category.title)
                                                         .font(.Pretendard(size: 13, weight: .semiBold))
-                                                        .foregroundStyle(isSelected ? Color.primary : Color(uiColor: .systemBackground))
+                                                        .foregroundStyle(
+                                                            isSelected
+                                                                ? Color.primary : Color(uiColor: .systemBackground))
                                                 } else {
-                                                    Text(category)
+                                                    Text(category.title)
                                                         .font(.Pretendard(size: 13, weight: .semiBold))
-                                                        .foregroundStyle(isSelected ? Color.primary : Color(uiColor: .systemBackground))
+                                                        .foregroundStyle(
+                                                            isSelected
+                                                                ? Color.primary : Color(uiColor: .systemBackground))
                                                 }
                                             }
-                                            
+
                                             if isSetting {
                                                 ZStack(alignment: .center) {
                                                     Color.red
@@ -613,17 +702,18 @@ struct AppendingItemCategoryInputView: View {
                                         .frame(width: CGFloat(length), height: CGFloat(length))
                                         .keyframeAnimator(
                                             initialValue: AnimationValues(),
-                                            repeating: isSetting) { content, value in
-                                                content
-                                                    .rotationEffect(isSetting ? value.angle : .zero, anchor: .center)
-                                                    .offset(isSetting ? value.offset : .zero)
-                                            } keyframes: { _ in
-                                                KeyframeTrack(\.angle) {
-                                                    LinearKeyframe(Angle.degrees(-10), duration: 0.1)
-                                                    LinearKeyframe(Angle.degrees(10), duration: 0.2)
-                                                    LinearKeyframe(Angle.zero, duration: 0.1)
-                                                }
+                                            repeating: isSetting
+                                        ) { content, value in
+                                            content
+                                                .rotationEffect(isSetting ? value.angle : .zero, anchor: .center)
+                                                .offset(isSetting ? value.offset : .zero)
+                                        } keyframes: { _ in
+                                            KeyframeTrack(\.angle) {
+                                                LinearKeyframe(Angle.degrees(-10), duration: 0.1)
+                                                LinearKeyframe(Angle.degrees(10), duration: 0.2)
+                                                LinearKeyframe(Angle.zero, duration: 0.1)
                                             }
+                                        }
                                     }
                                 }
                             }
@@ -640,28 +730,29 @@ struct AppendingItemCategoryInputView: View {
     }
 }
 
-struct AppendingItemDateInputView: View {
+struct AppendingItemDateInputView2: View {
     @Binding var isExpense: Bool
     @Binding var selected: Date
-    
+
     var body: some View {
         ZStack(alignment: .center) {
             (isExpense ? Color.customOrange1 : Color.customIndigo1)
                 .frame(maxWidth: .infinity)
                 .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
-            
-                DatePicker("", selection: $selected, displayedComponents: [.date, .hourAndMinute])
-                    .datePickerStyle(.wheel)
-                    .background((isExpense ? Color.customOrange1 : Color.customIndigo1).colorInvert())
-                    .tint(Color.black)
-                    .colorMultiply(Color.white)
-                    .colorInvert()
-                    .padding([.leading, .trailing], 20)
-            
+
+            DatePicker("", selection: $selected, displayedComponents: [.date, .hourAndMinute])
+                .datePickerStyle(.wheel)
+                .background((isExpense ? Color.customOrange1 : Color.customIndigo1).colorInvert())
+                .tint(Color.black)
+                .colorMultiply(Color.white)
+                .colorInvert()
+                .padding([.leading, .trailing], 20)
+
         }
     }
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    AppendingItemView2(isExpense: true)
+    AppendingItemView2()
+        .modelContainer(PersistenceController.preview.container)
 }

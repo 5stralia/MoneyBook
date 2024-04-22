@@ -18,6 +18,8 @@ struct TimelineView: View {
     @Query var items: [ItemCoreEntity]
     @Query var categories: [CategoryCoreEntity]
 
+    @State var editing: ItemCoreEntity?
+
     struct GroupedItem {
         let date: Date
         var items: [ItemCoreEntity]
@@ -95,7 +97,7 @@ struct TimelineView: View {
                                     }
                                     ForEach(group.items, id: \.id) { item in
                                         Button {
-                                            self.edittingItem = item
+                                            editing = item
                                         } label: {
                                             if item.category.isExpense {
                                                 HStack {
@@ -150,8 +152,8 @@ struct TimelineView: View {
                         .padding([.leading, .trailing], 20)
                     }
 
-                    Button {
-                        self.isPresentedAppending = true
+                    NavigationLink {
+                        AppendingItemView2()
                     } label: {
                         TimelineAddButton()
                             .padding([.trailing, .bottom], 25)
@@ -191,21 +193,12 @@ struct TimelineView: View {
                 .shadow(radius: 8)
             }
         }
-        .sheet(
-            isPresented: $isPresentedAppending,
-            content: {
-                AppendingItemView2()
-                //                if let category = self.categories.first {
-                //                    AppendingItemView(initialCategory: category)
-                //                }
+        .navigationDestination(
+            item: $editing,
+            destination: { item in
+                AppendingItemView2(item: item)
             }
         )
-//        .sheet(
-//            item: $edittingItem,
-//            content: { item in
-//                AppendingItemView(item: item)
-//            }
-//        )
         .onChange(of: scenePhase) { _, new in
             switch new {
             case .active:
@@ -217,6 +210,7 @@ struct TimelineView: View {
                 fatalError()
             }
         }
+        .toolbar(.visible, for: .tabBar)
     }
 
     private func quickAction() {
