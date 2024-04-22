@@ -51,6 +51,7 @@ struct AppendingItemView2: View {
 
             if inputType == .date {
                 AppendingItemDateInputView(isExpense: $isExpense, selected: $date)
+                    .frame(height: 400)
             } else if inputType == .category {
                 AppendingItemCategoryInputView(isExpense: $isExpense, categories: (0...30).map({ "카테고\($0)"}), selected: $category)
                     .frame(height: 400)
@@ -342,7 +343,7 @@ struct AppendingItemAmountInputView: View {
                 }
             }
         }
-        .padding([.leading, .bottom, .trailing], 8)
+        .padding([.leading, .bottom, .trailing], 20)
         .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
         .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
     }
@@ -644,11 +645,20 @@ struct AppendingItemDateInputView: View {
     @Binding var selected: Date
     
     var body: some View {
-        DatePicker("", selection: $selected)
-            .datePickerStyle(.graphical)
-            .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
-            .preferredColorScheme(.dark)
-            .tint(Color.black.opacity(0.7))
+        ZStack(alignment: .center) {
+            (isExpense ? Color.customOrange1 : Color.customIndigo1)
+                .frame(maxWidth: .infinity)
+                .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
+            
+                DatePicker("", selection: $selected, displayedComponents: [.date, .hourAndMinute])
+                    .datePickerStyle(.wheel)
+                    .background((isExpense ? Color.customOrange1 : Color.customIndigo1).colorInvert())
+                    .tint(Color.black)
+                    .colorMultiply(Color.white)
+                    .colorInvert()
+                    .padding([.leading, .trailing], 20)
+            
+        }
     }
 }
 
