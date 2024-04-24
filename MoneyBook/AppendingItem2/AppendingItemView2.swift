@@ -34,19 +34,19 @@ struct AppendingItemView2: View {
         if let item {
             self.item = item
 
-            isExpense = item.category.isExpense
-            date = item.timestamp
-            category = item.category
-            amount = item.amount
-            title = item.title
-            note = item.note
+            _isExpense = State<Bool>(initialValue: item.category.isExpense)
+            _date = State<Date>(initialValue: item.timestamp)
+            _category = State<CategoryCoreEntity?>(initialValue: item.category)
+            _amount = State<Double>(initialValue: item.amount)
+            _title = State<String>(initialValue: item.title)
+            _note = State<String>(initialValue: item.note)
         } else {
-            isExpense = true
-            date = Date()
-            category = nil
-            amount = 0
-            title = ""
-            note = ""
+            _isExpense = State<Bool>(initialValue: true)
+            _date = State<Date>(initialValue: Date())
+            _category = State<CategoryCoreEntity?>(initialValue: nil)
+            _amount = State<Double>(initialValue: 0)
+            _title = State<String>(initialValue: "")
+            _note = State<String>(initialValue: "")
         }
 
         _expenseCategories = Query(
