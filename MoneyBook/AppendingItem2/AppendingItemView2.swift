@@ -608,7 +608,11 @@ struct AppendingItemCategoryInputView2: View {
     @Binding var selected: CategoryCoreEntity?
     @FocusState private var isNewCategoryFocused: Bool
 
+    @State private var isEditing: Bool = false
+    @State private var editingSelected: CategoryCoreEntity? = nil
+    
     @State private var isSetting: Bool = false
+    
     @State private var isAdding: Bool = false
     @State private var newCategoryName: String = "새분류"
 
@@ -679,11 +683,16 @@ struct AppendingItemCategoryInputView2: View {
                                                     .clipShape(Circle())
 
                                                 if isSetting {
-                                                    Text(category.title)
-                                                        .font(.Pretendard(size: 13, weight: .semiBold))
-                                                        .foregroundStyle(
-                                                            isSelected
+                                                    Button {
+                                                        isEditing = true
+                                                        editingSelected = category
+                                                    } label: {
+                                                        Text(category.title)
+                                                            .font(.Pretendard(size: 13, weight: .semiBold))
+                                                            .foregroundStyle(
+                                                                isSelected
                                                                 ? Color.primary : Color(uiColor: .systemBackground))
+                                                    }
                                                 } else {
                                                     Text(category.title)
                                                         .font(.Pretendard(size: 13, weight: .semiBold))
@@ -720,6 +729,21 @@ struct AppendingItemCategoryInputView2: View {
                                                 LinearKeyframe(Angle.degrees(10), duration: 0.2)
                                                 LinearKeyframe(Angle.zero, duration: 0.1)
                                             }
+                                        }
+                                    }
+                                    .alert("\(editingSelected?.title ?? "-1")", isPresented: $isEditing) {
+                                        Button("삭제") { 
+                                            isEditing = false
+                                            if let deletion = editingSelected {
+                                                modelContext.delete(deletion)
+                                                editingSelected = nil
+                                            }
+                                        }
+                                        Button("수정") {
+                                            isEditing = false
+                                        }
+                                        Button("Cancel", role: .cancel) { 
+                                            isEditing = false
                                         }
                                     }
                                 }
