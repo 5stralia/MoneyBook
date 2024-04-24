@@ -607,9 +607,11 @@ struct AppendingItemCategoryInputView2: View {
     let categories: [CategoryCoreEntity]
     @Binding var selected: CategoryCoreEntity?
     @FocusState private var isNewCategoryFocused: Bool
+    @FocusState private var isEditCategoryFocused: Bool
 
     @State private var isEditing: Bool = false
     @State private var editingSelected: CategoryCoreEntity? = nil
+    @State private var editingCategoryName: String = ""
     
     @State private var isSetting: Bool = false
     
@@ -687,11 +689,29 @@ struct AppendingItemCategoryInputView2: View {
                                                         isEditing = true
                                                         editingSelected = category
                                                     } label: {
-                                                        Text(category.title)
-                                                            .font(.Pretendard(size: 13, weight: .semiBold))
-                                                            .foregroundStyle(
-                                                                isSelected
-                                                                ? Color.primary : Color(uiColor: .systemBackground))
+                                                        if editingSelected != nil && category == editingSelected {
+                                                            TextField("", text: $editingCategoryName)
+                                                                .font(.Pretendard(size: 13, weight: .semiBold))
+                                                                .foregroundStyle(Color(uiColor: .systemBackground))
+                                                                .multilineTextAlignment(.center)
+                                                                .focused($isEditCategoryFocused)
+                                                                .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
+                                                                    if let textField = obj.object as? UITextField {
+                                                                        textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                                                                    }
+                                                                }
+                                                                .onSubmit { 
+                                                                    category.title = editingCategoryName
+                                                                    isEditing = false
+                                                                    isSetting = false
+                                                                }
+                                                        } else {
+                                                            Text(category.title)
+                                                                .font(.Pretendard(size: 13, weight: .semiBold))
+                                                                .foregroundStyle(
+                                                                    isSelected
+                                                                    ? Color.primary : Color(uiColor: .systemBackground))
+                                                        }
                                                     }
                                                 } else {
                                                     Text(category.title)
@@ -736,14 +756,19 @@ struct AppendingItemCategoryInputView2: View {
                                             isEditing = false
                                             if let deletion = editingSelected {
                                                 modelContext.delete(deletion)
-                                                editingSelected = nil
                                             }
+                                            editingSelected = nil
                                         }
                                         Button("수정") {
                                             isEditing = false
+                                            isEditCategoryFocused = true
+                                            if let editting = editingSelected {
+                                                editingCategoryName = editting.title
+                                            }
                                         }
                                         Button("Cancel", role: .cancel) { 
                                             isEditing = false
+                                            editingSelected = nil
                                         }
                                     }
                                 }
