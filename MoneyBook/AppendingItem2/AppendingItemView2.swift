@@ -174,8 +174,13 @@ struct AppendingContentsView: View {
             VStack {
                 HStack {
                     Spacer()
-                    AppendingItemTypeView2(isPaid: $isExpense)
-                        .frame(width: 118, height: 32)
+                    AppendingItemTypeView2(
+                        isPaid: $isExpense,
+                        didChangeType: { _ in
+                            category = nil
+                        }
+                    )
+                    .frame(width: 118, height: 32)
                 }
                 .padding(.bottom, 8)
 
@@ -294,7 +299,8 @@ struct AppendingItemItemView<T: View>: View {
 
 struct AppendingItemTypeView2: View {
     @Binding var isPaid: Bool
-
+    let didChangeType: (_ newValue: Bool) -> Void
+    
     var body: some View {
         Capsule()
             .fill(isPaid ? Color.customOrange1.opacity(0.3) : Color.customIndigo1.opacity(0.3))
@@ -307,6 +313,7 @@ struct AppendingItemTypeView2: View {
                                 withAnimation {
                                     self.isPaid = true
                                 }
+                                didChangeType(true)
                             } label: {
                                 Text("지출")
                                     .font(.Pretendard(size: 15, weight: .bold))
@@ -320,6 +327,7 @@ struct AppendingItemTypeView2: View {
                                 withAnimation {
                                     self.isPaid = false
                                 }
+                                didChangeType(false)
                             } label: {
                                 Text("소득")
                                     .font(.Pretendard(size: 15, weight: .bold))
@@ -588,6 +596,8 @@ struct AppendingItemAmountInputButton: View {
 }
 
 struct AppendingItemCategoryInputView2: View {
+    @Environment(\.modelContext) var modelContext
+    
     struct AnimationValues {
         var angle = Angle.degrees(0)
         var offset = CGSize(width: 0, height: 0)
@@ -596,8 +606,11 @@ struct AppendingItemCategoryInputView2: View {
     @Binding var isExpense: Bool
     let categories: [CategoryCoreEntity]
     @Binding var selected: CategoryCoreEntity?
+    @FocusState private var isNewCategoryFocused: Bool
 
     @State private var isSetting: Bool = false
+    @State private var isAdding: Bool = false
+    @State private var newCategoryName: String = "새분류"
 
     var body: some View {
         VStack {
@@ -622,7 +635,8 @@ struct AppendingItemCategoryInputView2: View {
                 Spacer()
 
                 Button {
-                    // TODO: 카테고리 추가
+                    isAdding.toggle()
+                    isNewCategoryFocused.toggle()
                 } label: {
                     ZStack(alignment: .center) {
                         Color.black.opacity(0.2)
@@ -709,9 +723,35 @@ struct AppendingItemCategoryInputView2: View {
                                         }
                                     }
                                 }
+                                
+                                if isAdding && categories.count % 5 != 0 {
+                                    ZStack(alignment: .center) {
+                                        Color(uiColor: .systemBackground).opacity(0.24)
+                                            .clipShape(Circle())
+                                        
+                                        TextField("", text: $newCategoryName)
+                                            .font(.Pretendard(size: 13, weight: .semiBold))
+                                            .foregroundStyle(Color(uiColor: .systemBackground))
+                                            .multilineTextAlignment(.center)
+                                            .focused($isNewCategoryFocused)
+                                            .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
+                                                if let textField = obj.object as? UITextField {
+                                                    textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                                                }
+                                            }
+                                            .onSubmit { 
+                                                addCategory()
+                                            }
+                                    }
+                                    .frame(width: CGFloat(length), height: CGFloat(length))
+                                }
                             }
                         }
                         .padding([.leading, .trailing], 36)
+                        
+                        if isAdding && categories.count % 5 == 0 {
+                            // TODO: 카테고리 추가
+                        }
                     }
                     .padding([.top, .bottom], 10)
                 }
@@ -720,6 +760,11 @@ struct AppendingItemCategoryInputView2: View {
         .foregroundStyle(Color.white)
         .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
         .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
+    }
+    
+    private func addCategory() {
+        modelContext.insert(CategoryCoreEntity(title: newCategoryName, isExpense: isExpense))
+        isAdding = false
     }
 }
 
