@@ -42,7 +42,8 @@ struct ChartView: View {
 
         var result: [String: Double] = [:]
         group2.forEach { (item, totalValue) in
-            result.updateValue(totalValue, forKey: item.title)
+            guard let title = item?.title else { return }
+            result.updateValue(totalValue, forKey: title)
         }
 
         return result
@@ -50,7 +51,7 @@ struct ChartView: View {
     private var monthlyCategoryItems: [MonthlyCategoryItem] {
         let filteredItems = self.items
             .filter { item in
-                return item.category.isExpense == self.isExpense && item.timestamp.getYear() == self.year
+                return item.category?.isExpense == self.isExpense && item.timestamp.getYear() == self.year
                     && item.timestamp.getMonth() == self.month
             }
 
@@ -96,7 +97,7 @@ struct ChartView: View {
                     ScrollView {
                         VStack(spacing: 0) {
                             ChangingGraph(
-                                items: Array(self.items.filter({ $0.category.isExpense == self.isExpense }))
+                                items: Array(self.items.filter({ $0.category?.isExpense == self.isExpense }))
                                     .statisticsByMonth(targetYear: self.year, targetMonth: self.month)
                             )
                             .padding([.top, .bottom], 20)
@@ -177,7 +178,7 @@ struct ChartView: View {
     }
 
     private func groupedByCategory(items: [ItemCoreEntity]) -> [MonthlyCategoryItem] {
-        let items = items.filter { $0.category.isExpense == isExpense }
+        let items = items.filter { $0.category?.isExpense == isExpense }
         let sum = items.map(\.amount).reduce(0, +)
 
         let dict = Dictionary(grouping: items, by: { $0.category })
@@ -193,7 +194,7 @@ struct ChartView: View {
                 }
 
             return MonthlyCategoryItem(
-                ratio: Float(categorySum / sum), title: category.title, value: categorySum, color: color)
+                ratio: Float(categorySum / sum), title: category?.title ?? "", value: categorySum, color: color)
         }
     }
 

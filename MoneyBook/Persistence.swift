@@ -21,10 +21,13 @@ struct PersistenceController {
         [10000, 7200, 12300, 50000, 67300, 273000, 2300, 4500]
             .enumerated()
             .forEach { offset, amount in
-                result.container.mainContext.insert(
-                    ItemCoreEntity(
-                        amount: amount, category: expenseCategoryCoreEntity1, timestamp: Date(),
-                        title: "식비 TEST \(offset)"))
+                let newItem = ItemCoreEntity(
+                        amount: amount,
+                        timestamp: Date(),
+                        title: "식비 TEST \(offset)"
+                )
+                newItem.category = expenseCategoryCoreEntity1
+                result.container.mainContext.insert(newItem)
             }
 
         let expenseCategoryCoreEntity2 = CategoryCoreEntity(title: "쇼핑", isExpense: true)
@@ -32,20 +35,27 @@ struct PersistenceController {
         [10010, 7210, 12310, 50010, 67310, 273010, 2310, 4510]
             .enumerated()
             .forEach { offset, amount in
-                result.container.mainContext.insert(
-                    ItemCoreEntity(
-                        amount: amount, category: expenseCategoryCoreEntity2, timestamp: Date(),
-                        title: "쇼핑 TEST \(offset)"))
+                let newItem = ItemCoreEntity(
+                        amount: amount,
+                        timestamp: Date(),
+                        title: "쇼핑 TEST \(offset)"
+                )
+                newItem.category = expenseCategoryCoreEntity2
+                result.container.mainContext.insert(newItem)
             }
 
         let incomeCategoryCoreEntity = CategoryCoreEntity(title: "용돈", isExpense: false)
+        result.container.mainContext.insert(incomeCategoryCoreEntity)
         [700000, 200000]
             .enumerated()
             .forEach { offset, amount in
-                result.container.mainContext.insert(
-                    ItemCoreEntity(
-                        amount: amount, category: incomeCategoryCoreEntity, timestamp: Date(),
-                        title: "용돈 Test \(offset)"))
+                let newItem = ItemCoreEntity(
+                        amount: amount,
+                        timestamp: Date(),
+                        title: "용돈 Test \(offset)"
+                )
+                newItem.category = incomeCategoryCoreEntity
+                result.container.mainContext.insert(newItem)
             }
 
         return result

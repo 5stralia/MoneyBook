@@ -34,7 +34,7 @@ struct AppendingItemView2: View {
         if let item {
             self.item = item
 
-            _isExpense = State<Bool>(initialValue: item.category.isExpense)
+            _isExpense = State<Bool>(initialValue: item.category?.isExpense ?? true)
             _date = State<Date>(initialValue: item.timestamp)
             _category = State<CategoryCoreEntity?>(initialValue: item.category)
             _amount = State<Double>(initialValue: item.amount)
@@ -136,15 +136,9 @@ struct AppendingItemView2: View {
             item.title = title
             item.note = note
         } else {
-            self.modelContext.insert(
-                ItemCoreEntity(
-                    amount: amount,
-                    category: category,
-                    note: note,
-                    timestamp: date,
-                    title: title
-                )
-            )
+            let newItem = ItemCoreEntity(amount: amount, note: note, timestamp: date, title: title)
+            newItem.category = category
+            modelContext.insert(newItem)
         }
     }
 }
@@ -654,8 +648,7 @@ struct AppendingItemCategoryInputView2: View {
                     VStack(alignment: .leading) {
                         ForEach(Array(stride(from: 0, to: categories.endIndex, by: 5)), id: \.self) { i in
                             HStack {
-                                ForEach(Array(stride(from: i, to: min(categories.endIndex, i + 5), by: 1)), id: \.self)
-                                { j in
+                                ForEach(Array(stride(from: i, to: min(categories.endIndex, i + 5), by: 1)), id: \.self) { j in
                                     let category = categories[j]
                                     let isSelected = category == selected
 

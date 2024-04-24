@@ -12,7 +12,6 @@
 		0584B3592A40574F004758AE /* TimelineDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3582A40574F004758AE /* TimelineDateView.swift */; };
 		0584B35C2A40682C004758AE /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B35B2A40682C004758AE /* Date.swift */; };
 		0584B35E2A408B2C004758AE /* TimelineSummaryValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */; };
-		0584B3612A4A468F004758AE /* AppendingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3602A4A468F004758AE /* AppendingItemView.swift */; };
 		0584B3802A76647D004758AE /* ItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B37F2A76647D004758AE /* ItemEntity.swift */; };
 		05A719A82A8521AE00260837 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A719A72A8521AE00260837 /* ChartView.swift */; };
 		05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */; };
@@ -20,7 +19,6 @@
 		05A76A102A34115E00B231CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05A76A0F2A34115E00B231CB /* Assets.xcassets */; };
 		05A76A132A34115E00B231CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05A76A122A34115E00B231CB /* Preview Assets.xcassets */; };
 		05A76A152A34115E00B231CB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A142A34115E00B231CB /* Persistence.swift */; };
-		05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A162A34115E00B231CB /* MoneyBook.xcdatamodeld */; };
 		05A76A222A34115E00B231CB /* MoneyBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A212A34115E00B231CB /* MoneyBookTests.swift */; };
 		05A76A2C2A34115E00B231CB /* MoneyBookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A2B2A34115E00B231CB /* MoneyBookUITests.swift */; };
 		05A76A2E2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A2D2A34115E00B231CB /* MoneyBookUITestsLaunchTests.swift */; };
@@ -113,7 +111,6 @@
 		0584B3582A40574F004758AE /* TimelineDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDateView.swift; sourceTree = "<group>"; };
 		0584B35B2A40682C004758AE /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryValueView.swift; sourceTree = "<group>"; };
-		0584B3602A4A468F004758AE /* AppendingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemView.swift; sourceTree = "<group>"; };
 		0584B37F2A76647D004758AE /* ItemEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEntity.swift; sourceTree = "<group>"; };
 		05A719A72A8521AE00260837 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		05A76A082A34115D00B231CB /* MoneyBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,7 +119,6 @@
 		05A76A0F2A34115E00B231CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05A76A122A34115E00B231CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		05A76A142A34115E00B231CB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		05A76A172A34115E00B231CB /* MoneyBook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoneyBook.xcdatamodel; sourceTree = "<group>"; };
 		05A76A1D2A34115E00B231CB /* MoneyBookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoneyBookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A76A212A34115E00B231CB /* MoneyBookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookTests.swift; sourceTree = "<group>"; };
 		05A76A272A34115E00B231CB /* MoneyBookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoneyBookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,7 +207,6 @@
 		05189A092A38966100430226 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				05A76A162A34115E00B231CB /* MoneyBook.xcdatamodeld */,
 				05B42AC02B6BD76B0071A2E3 /* ItemCoreEntity.swift */,
 				05B42AC12B6BD76B0071A2E3 /* GroupCoreEntity.swift */,
 				05B42AC22B6BD76B0071A2E3 /* CategoryCoreEntity.swift */,
@@ -231,14 +226,6 @@
 				05B650122B52DFD900389A32 /* UINavigationController+swipe.swift */,
 			);
 			path = Extension;
-			sourceTree = "<group>";
-		};
-		0584B35F2A4A4666004758AE /* AppendingItem */ = {
-			isa = PBXGroup;
-			children = (
-				0584B3602A4A468F004758AE /* AppendingItemView.swift */,
-			);
-			path = AppendingItem;
 			sourceTree = "<group>";
 		};
 		0584B37E2A766474004758AE /* Entity */ = {
@@ -290,7 +277,6 @@
 				05B650142B53A6BB00389A32 /* Helper */,
 				05BA7BDD2B29DDCE00D159FB /* Resource */,
 				05A719A62A85219D00260837 /* Chart */,
-				0584B35F2A4A4666004758AE /* AppendingItem */,
 				05E025012BCE775700240601 /* AppendingItem2 */,
 				0584B35A2A406822004758AE /* Extension */,
 				05189A092A38966100430226 /* Model */,
@@ -614,7 +600,6 @@
 			files = (
 				05A76A152A34115E00B231CB /* Persistence.swift in Sources */,
 				05B42AB42B5FFC2B0071A2E3 /* EqualSizeHStack.swift in Sources */,
-				0584B3612A4A468F004758AE /* AppendingItemView.swift in Sources */,
 				05B76D492B25D3DE0048C757 /* MultiSelectView.swift in Sources */,
 				05B42AC52B6BD76B0071A2E3 /* CategoryCoreEntity.swift in Sources */,
 				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
@@ -629,7 +614,6 @@
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
 				05B42ABD2B6680E20071A2E3 /* SceneDelegate.swift in Sources */,
 				05E024FF2BCD5DA500240601 /* TimelineSummaryView2.swift in Sources */,
-				05A76A182A34115E00B231CB /* MoneyBook.xcdatamodeld in Sources */,
 				05B42AB22B5FFBE90071A2E3 /* MonthlyHotItemView.swift in Sources */,
 				05B42AB02B5FFB4D0071A2E3 /* MonthlySummaryView.swift in Sources */,
 				05B650112B52B07F00389A32 /* CategoryStatisticsView.swift in Sources */,
@@ -819,10 +803,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoneyBook/Preview Content\"";
-				DEVELOPMENT_TEAM = BG5DA8S34C;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyBook/Info.plist;
@@ -838,6 +822,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hoju.MoneyBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -850,10 +835,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoneyBook/Preview Content\"";
-				DEVELOPMENT_TEAM = BG5DA8S34C;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyBook/Info.plist;
@@ -869,6 +854,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hoju.MoneyBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1065,19 +1051,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		05A76A162A34115E00B231CB /* MoneyBook.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				05A76A172A34115E00B231CB /* MoneyBook.xcdatamodel */,
-			);
-			currentVersion = 05A76A172A34115E00B231CB /* MoneyBook.xcdatamodel */;
-			path = MoneyBook.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 05A76A002A34115D00B231CB /* Project object */;
 }

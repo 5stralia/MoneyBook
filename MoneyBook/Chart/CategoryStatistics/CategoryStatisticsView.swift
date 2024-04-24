@@ -18,7 +18,7 @@ struct CategoryStatisticsView: View {
     let category: String
 
     private var isExpense: Bool {
-        return self.items.first?.category.isExpense ?? true
+        return self.items.first?.category?.isExpense ?? true
     }
 
     internal init(year: Int, month: Int, category: String) {
@@ -81,8 +81,8 @@ struct CategoryStatisticsView: View {
 
                     ForEach(group.items) { item in
                         TimelineItemView(
-                            title: item.title, categoryName: item.category.title,
-                            amount: item.amount, isExpense: item.category.isExpense
+                            title: item.title, categoryName: item.category?.title ?? "",
+                            amount: item.amount, isExpense: item.category?.isExpense ?? true
                         )
                         .padding(.leading, 100)
                         .padding(.trailing, 20)
@@ -100,7 +100,7 @@ struct CategoryStatisticsView: View {
 
             let descriptor = FetchDescriptor<ItemCoreEntity>(
                 predicate: #Predicate {
-                    $0.category.title == category && $0.timestamp >= startDate && $0.timestamp < endDate
+                    $0.category?.title == category && $0.timestamp >= startDate && $0.timestamp < endDate
                 },
                 sortBy: [SortDescriptor<ItemCoreEntity>(\.timestamp)]
             )

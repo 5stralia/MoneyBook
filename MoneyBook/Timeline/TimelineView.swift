@@ -49,14 +49,18 @@ struct TimelineView: View {
     }
     private var earning: Double {
         self.items.filter {
-            !$0.category.isExpense && $0.timestamp.getYear() == self.year && $0.timestamp.getMonth() == self.month
+            !($0.category?.isExpense ?? true) &&
+            $0.timestamp.getYear() == self.year &&
+            $0.timestamp.getMonth() == self.month
         }
         .map(\.amount)
         .reduce(0, +)
     }
     private var paid: Double {
         self.items.filter {
-            $0.category.isExpense && $0.timestamp.getYear() == self.year && $0.timestamp.getMonth() == self.month
+            ($0.category?.isExpense ?? false) &&
+            $0.timestamp.getYear() == self.year &&
+            $0.timestamp.getMonth() == self.month
         }
         .map(\.amount)
         .reduce(0, +)
@@ -99,23 +103,23 @@ struct TimelineView: View {
                                         Button {
                                             editing = item
                                         } label: {
-                                            if item.category.isExpense {
+                                            if item.category?.isExpense ?? true {
                                                 HStack {
                                                     Spacer(minLength: 80)
                                                     TimelineItemView(
                                                         title: item.title,
-                                                        categoryName: item.category.title,
+                                                        categoryName: item.category?.title ?? "",
                                                         amount: item.amount,
-                                                        isExpense: item.category.isExpense
+                                                        isExpense: item.category?.isExpense ?? true
                                                     )
                                                 }
                                             } else {
                                                 HStack {
                                                     TimelineItemView(
                                                         title: item.title,
-                                                        categoryName: item.category.title,
+                                                        categoryName: item.category?.title ?? "",
                                                         amount: item.amount,
-                                                        isExpense: item.category.isExpense
+                                                        isExpense: item.category?.isExpense ?? false
                                                     )
                                                     Spacer(minLength: 80)
                                                 }
