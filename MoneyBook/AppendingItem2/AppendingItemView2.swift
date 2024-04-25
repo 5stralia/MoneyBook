@@ -503,37 +503,47 @@ struct AppendingItemAmountInputView: View {
                 currentValue.floating *= 10
             }
             currentValue.original = currentValue.original * 10 + Double(int)
+            if operation == nil {
+                value = currentValue.value
+            }
         case .doubleZero:
             currentValue.original = currentValue.original * 100
+            value = currentValue.value
         case .divide:
             calculate()
             prevValue = currentValue
             operation = .divide
             currentValue = Value()
+            value = prevValue.value
         case .multiplier:
             calculate()
             prevValue = currentValue
             operation = .multiplier
             currentValue = Value()
+            value = prevValue.value
         case .add:
             calculate()
             prevValue = currentValue
             operation = .add
             currentValue = Value()
+            value = prevValue.value
         case .subtraction:
             calculate()
             prevValue = currentValue
             operation = .subtraction
             currentValue = Value()
+            value = prevValue.value
         case .point:
             guard !isFloating else { break }
 
             isFloating = true
+            value = currentValue.value
         case .clear:
             prevValue = Value()
             operation = nil
             currentValue = Value()
             isFloating = false
+            value = currentValue.value
         case .remove:
             if currentValue.floating > 1 {
                 currentValue.original = Double(Int(currentValue.original / 10))
@@ -541,6 +551,7 @@ struct AppendingItemAmountInputView: View {
             } else {
                 currentValue.original = Double(Int(currentValue.original / 10))
             }
+            value = currentValue.value
         case .result:
             calculate()
             value = currentValue.value
