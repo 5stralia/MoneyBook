@@ -1,5 +1,5 @@
 //
-//  AppendingItemView2.swift
+//  AppendingItemView.swift
 //  MoneyBook
 //
 //  Created by Hoju Choi on 4/16/24.
@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct AppendingItemView2: View {
+struct AppendingItemView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) private var dismiss
 
@@ -107,10 +107,10 @@ struct AppendingItemView2: View {
             }
 
             if inputType == .date {
-                AppendingItemDateInputView2(isExpense: $isExpense, selected: $date)
+                AppendingItemDateInputView(isExpense: $isExpense, selected: $date)
                     .frame(height: 400)
             } else if inputType == .category {
-                AppendingItemCategoryInputView2(
+                AppendingItemCategoryInputView(
                     isExpense: $isExpense, categories: isExpense ? expenseCategories : incomeCategories,
                     selected: $category
                 )
@@ -608,7 +608,7 @@ struct AppendingItemAmountInputButton: View {
     }
 }
 
-struct AppendingItemCategoryInputView2: View {
+struct AppendingItemCategoryInputView: View {
     @Environment(\.modelContext) var modelContext
     
     struct AnimationValues {
@@ -830,7 +830,7 @@ struct AppendingItemCategoryInputView2: View {
     }
 }
 
-struct AppendingItemDateInputView2: View {
+struct AppendingItemDateInputView: View {
     @Binding var isExpense: Bool
     @Binding var selected: Date
 
@@ -853,6 +853,6 @@ struct AppendingItemDateInputView2: View {
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    AppendingItemView2()
+    AppendingItemView()
         .modelContainer(PersistenceController.preview.container)
 }

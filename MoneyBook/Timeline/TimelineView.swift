@@ -157,7 +157,7 @@ struct TimelineView: View {
                     }
 
                     NavigationLink {
-                        AppendingItemView2()
+                        AppendingItemView()
                     } label: {
                         TimelineAddButton()
                             .padding([.trailing, .bottom], 25)
@@ -200,7 +200,7 @@ struct TimelineView: View {
         .navigationDestination(
             item: $editing,
             destination: { item in
-                AppendingItemView2(item: item)
+                AppendingItemView(item: item)
             }
         )
         .onChange(of: scenePhase) { _, new in
