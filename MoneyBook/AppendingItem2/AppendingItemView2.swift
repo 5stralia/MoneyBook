@@ -68,19 +68,21 @@ struct AppendingItemView2: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                AppendingContentsView(
-                    isExpense: $isExpense,
-                    date: $date,
-                    category: $category,
-                    amount: amount.formatted(),
-                    title: $title,
-                    note: $note,
-                    inputType: $inputType
-                )
-                .padding([.top, .leading, .trailing], 20)
-                .padding(.bottom, 0)
-
-                Spacer()
+                ScrollView {
+                    AppendingContentsView(
+                        isExpense: $isExpense,
+                        date: $date,
+                        category: $category,
+                        amount: amount.formatted(),
+                        title: $title,
+                        note: $note,
+                        inputType: $inputType
+                    )
+                    .padding([.top, .leading, .trailing], 20)
+                    .padding(.bottom, 0)
+                    
+                    Spacer()
+                }
 
                 if isOKEnabled {
                     Button {
@@ -118,7 +120,7 @@ struct AppendingItemView2: View {
                     .frame(height: 400)
             }
         }
-        .ignoresSafeArea(edges: .bottom)
+        .ignoresSafeArea(.container, edges: .bottom)
         .toolbar(.hidden, for: .tabBar)
     }
 
