@@ -21,7 +21,7 @@ struct ChangingGraph: View {
 
     init(items: [DateEntity]) {
         if items.count > ChangingGraph.itemCount {
-            MyLogger.logger.warning(
+            MyLogger.error(
                 "ChangingGraph.items는 최대 \(ChangingGraph.itemCount)개까지 설정 가능. items.count: \(items.count)"
             )
             self.items = Array(items.prefix(5))

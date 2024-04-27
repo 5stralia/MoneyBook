@@ -40,7 +40,7 @@ struct MoneyBookApp: App {
 
                         }
                     } catch let error {
-                        MyLogger.logger.error("fetch categories error : \(error)")
+                        MyLogger.error("fetch categories error : \(error)")
                     }
                 })
                 .modelContainer(self.modelContainer)

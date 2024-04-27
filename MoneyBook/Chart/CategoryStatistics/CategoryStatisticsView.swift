@@ -109,7 +109,7 @@ struct CategoryStatisticsView: View {
                 let request = try modelContext.fetch(descriptor)
                 self.items = request
             } catch let error {
-                MyLogger.logger.error("\(error)")
+                MyLogger.error("\(error)")
             }
         }
     }
