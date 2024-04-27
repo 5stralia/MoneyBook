@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051899FF2A3761C500430226 /* TimelineSummaryView.swift */; };
+		05189A002A3761C500430226 /* TimelineSummaryColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051899FF2A3761C500430226 /* TimelineSummaryColorView.swift */; };
 		05797F382BD4939A00A5292F /* TimelineAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05797F372BD4939A00A5292F /* TimelineAddButton.swift */; };
 		0584B3592A40574F004758AE /* TimelineDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3582A40574F004758AE /* TimelineDateView.swift */; };
 		0584B35C2A40682C004758AE /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B35B2A40682C004758AE /* Date.swift */; };
-		0584B35E2A408B2C004758AE /* TimelineSummaryValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */; };
 		0584B3802A76647D004758AE /* ItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B37F2A76647D004758AE /* ItemEntity.swift */; };
+		059B7ECF2BDD18EB00E97865 /* AppendingItemDateInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059B7ECE2BDD18EB00E97865 /* AppendingItemDateInputView.swift */; };
+		059B7ED12BDD196100E97865 /* AppendingItemCategoryInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059B7ED02BDD196100E97865 /* AppendingItemCategoryInputView.swift */; };
+		059B7ED32BDD1A2F00E97865 /* AppendingItemAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059B7ED22BDD1A2F00E97865 /* AppendingItemAmountInputView.swift */; };
+		059B7ED52BDD1E2A00E97865 /* AppendingItemTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059B7ED42BDD1E2A00E97865 /* AppendingItemTypeView.swift */; };
+		059B7ED72BDD1E6500E97865 /* AppendingItemItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059B7ED62BDD1E6500E97865 /* AppendingItemItemView.swift */; };
 		05A719A82A8521AE00260837 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A719A72A8521AE00260837 /* ChartView.swift */; };
 		05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */; };
 		05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A0D2A34115D00B231CB /* ContentView.swift */; };
@@ -106,12 +110,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		051899FF2A3761C500430226 /* TimelineSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView.swift; sourceTree = "<group>"; };
+		051899FF2A3761C500430226 /* TimelineSummaryColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryColorView.swift; sourceTree = "<group>"; };
 		05797F372BD4939A00A5292F /* TimelineAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineAddButton.swift; sourceTree = "<group>"; };
 		0584B3582A40574F004758AE /* TimelineDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDateView.swift; sourceTree = "<group>"; };
 		0584B35B2A40682C004758AE /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryValueView.swift; sourceTree = "<group>"; };
 		0584B37F2A76647D004758AE /* ItemEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEntity.swift; sourceTree = "<group>"; };
+		059B7ECE2BDD18EB00E97865 /* AppendingItemDateInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemDateInputView.swift; sourceTree = "<group>"; };
+		059B7ED02BDD196100E97865 /* AppendingItemCategoryInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemCategoryInputView.swift; sourceTree = "<group>"; };
+		059B7ED22BDD1A2F00E97865 /* AppendingItemAmountInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemAmountInputView.swift; sourceTree = "<group>"; };
+		059B7ED42BDD1E2A00E97865 /* AppendingItemTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemTypeView.swift; sourceTree = "<group>"; };
+		059B7ED62BDD1E6500E97865 /* AppendingItemItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemItemView.swift; sourceTree = "<group>"; };
 		05A719A72A8521AE00260837 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		05A76A082A34115D00B231CB /* MoneyBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyBookApp.swift; sourceTree = "<group>"; };
@@ -236,6 +244,18 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
+		059B7ECD2BDD18BE00E97865 /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				059B7ECE2BDD18EB00E97865 /* AppendingItemDateInputView.swift */,
+				059B7ED02BDD196100E97865 /* AppendingItemCategoryInputView.swift */,
+				059B7ED22BDD1A2F00E97865 /* AppendingItemAmountInputView.swift */,
+				059B7ED42BDD1E2A00E97865 /* AppendingItemTypeView.swift */,
+				059B7ED62BDD1E6500E97865 /* AppendingItemItemView.swift */,
+			);
+			path = SubView;
+			sourceTree = "<group>";
+		};
 		05A719A62A85219D00260837 /* Chart */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,8 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				05A76A3F2A355DE100B231CB /* TimelineItemView.swift */,
-				051899FF2A3761C500430226 /* TimelineSummaryView.swift */,
-				0584B35D2A408B2C004758AE /* TimelineSummaryValueView.swift */,
+				051899FF2A3761C500430226 /* TimelineSummaryColorView.swift */,
 				0584B3582A40574F004758AE /* TimelineDateView.swift */,
 				05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */,
 				05797F372BD4939A00A5292F /* TimelineAddButton.swift */,
@@ -419,6 +438,7 @@
 		05E025012BCE775700240601 /* AppendingItem */ = {
 			isa = PBXGroup;
 			children = (
+				059B7ECD2BDD18BE00E97865 /* SubView */,
 				05E025022BCE776F00240601 /* AppendingItemView.swift */,
 			);
 			path = AppendingItem;
@@ -605,13 +625,13 @@
 				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
 				0584B3592A40574F004758AE /* TimelineDateView.swift in Sources */,
 				05B42ABF2B66810B0071A2E3 /* HomeQuickAction.swift in Sources */,
-				0584B35E2A408B2C004758AE /* TimelineSummaryValueView.swift in Sources */,
-				05189A002A3761C500430226 /* TimelineSummaryView.swift in Sources */,
-				05E025032BCE776F00240601 /* AppendingItemView2.swift in Sources */,
+				05189A002A3761C500430226 /* TimelineSummaryColorView.swift in Sources */,
+				05E025032BCE776F00240601 /* AppendingItemView.swift in Sources */,
 				0584B3802A76647D004758AE /* ItemEntity.swift in Sources */,
 				05B650132B52DFD900389A32 /* UINavigationController+swipe.swift in Sources */,
 				05A719A82A8521AE00260837 /* ChartView.swift in Sources */,
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
+				059B7ED72BDD1E6500E97865 /* AppendingItemItemView.swift in Sources */,
 				05B42ABD2B6680E20071A2E3 /* SceneDelegate.swift in Sources */,
 				05E024FF2BCD5DA500240601 /* TimelineSummaryView2.swift in Sources */,
 				05B42AB22B5FFBE90071A2E3 /* MonthlyHotItemView.swift in Sources */,
@@ -619,7 +639,10 @@
 				05B650112B52B07F00389A32 /* CategoryStatisticsView.swift in Sources */,
 				05A76A0E2A34115D00B231CB /* ContentView.swift in Sources */,
 				05B42AC42B6BD76B0071A2E3 /* GroupCoreEntity.swift in Sources */,
+				059B7ED32BDD1A2F00E97865 /* AppendingItemAmountInputView.swift in Sources */,
+				059B7ED12BDD196100E97865 /* AppendingItemCategoryInputView.swift in Sources */,
 				05D7E5552B4D851C00554496 /* Font+custom.swift in Sources */,
+				059B7ED52BDD1E2A00E97865 /* AppendingItemTypeView.swift in Sources */,
 				0584B35C2A40682C004758AE /* Date.swift in Sources */,
 				05DA4E1B2B518B7E00ED1C49 /* Color+custom.swift in Sources */,
 				05A76A0C2A34115D00B231CB /* MoneyBookApp.swift in Sources */,
@@ -629,6 +652,7 @@
 				05B6500E2B5267FF00389A32 /* Locale.swift in Sources */,
 				05B42AAE2B5FF8460071A2E3 /* ChangingGraph.swift in Sources */,
 				05B42AC32B6BD76B0071A2E3 /* ItemCoreEntity.swift in Sources */,
+				059B7ECF2BDD18EB00E97865 /* AppendingItemDateInputView.swift in Sources */,
 				05B42ABB2B6680DA0071A2E3 /* AppDelegate.swift in Sources */,
 				05797F382BD4939A00A5292F /* TimelineAddButton.swift in Sources */,
 				05B42AB62B5FFC410071A2E3 /* MonthlyCategoryItemView.swift in Sources */,

@@ -85,7 +85,7 @@ struct TimelineView: View {
                     }
                 )
 
-                TimelineSummaryView(paid: paid, earning: earning)
+                TimelineSummaryColorView(paid: paid, earning: earning)
 
                 ZStack(alignment: .bottomTrailing) {
                     ZStack(alignment: .topLeading) {
@@ -147,7 +147,7 @@ struct TimelineView: View {
                             .listStyle(.plain)
                         }
 
-                        TimelineSummaryView2(
+                        TimelineSummaryView(
                             total: (earning - paid).formatted(),
                             income: earning.formatted(),
                             expense: paid.formatted()

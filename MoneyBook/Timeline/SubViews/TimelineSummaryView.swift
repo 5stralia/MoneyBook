@@ -2,36 +2,82 @@
 //  TimelineSummaryView.swift
 //  MoneyBook
 //
-//  Created by Hoju Choi on 2023/06/12.
+//  Created by Hoju Choi on 4/15/24.
 //
 
 import SwiftUI
 
 struct TimelineSummaryView: View {
-    let paid: Double
-    let earning: Double
+    @State var isExpanded: Bool = false
 
-    var earningMultiplier: Double {
-        guard earning > 0 else { return 0 }
+    let total: String
+    let income: String
+    let expense: String
 
-        return earning / (paid + earning)
-    }
+    @State private var work: Task<Void, any Error>?
 
     var body: some View {
-        GeometryReader { metrics in
-            HStack(spacing: 0) {
-                Color.customIndigo1
-                    .frame(width: metrics.size.width * earningMultiplier)
-                Color.customOrange1
+        Button {
+            withAnimation(.easeOut) {
+                self.isExpanded.toggle()
             }
+
+            self.work?.cancel()
+            if self.isExpanded {
+                self.work = Task {
+                    try await Task.sleep(for: .seconds(3))
+                    withAnimation(.easeOut) {
+                        self.isExpanded = false
+                    }
+                }
+            }
+        } label: {
+            HStack {
+                TimelineSummaryItemView(
+                    title: "합계", value: self.total, titleColor: Color(uiColor: .systemGray2), valueColor: .customBlack2)
+
+                if self.isExpanded {
+                    Spacer()
+                    TimelineSummaryItemView(
+                        title: "수입", value: self.income, titleColor: .customIndigo1, valueColor: .customIndigo1)
+                    TimelineSummaryItemView(
+                        title: "지출", value: self.expense, titleColor: .customOrange1, valueColor: .customOrange1)
+                }
+            }
+            .padding([.top, .bottom], 10)
+            .padding([.leading, .trailing], 18)
+            .background(Color(uiColor: .systemBackground))
+            .clipShape(RoundedCorner())
+            .shadow(color: .black.opacity(0.16), radius: 6, y: 3)
         }
-        .frame(height: 5)
     }
 }
 
-struct TimelineSummaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        TimelineSummaryView(paid: 600000, earning: 800000)
-            .previewLayout(.sizeThatFits)
+struct TimelineSummaryItemView: View {
+    let title: String
+    let value: String
+    let titleColor: Color
+    let valueColor: Color
+
+    init(title: String, value: String, titleColor: Color = .primary, valueColor: Color = .primary) {
+        self.title = title
+        self.value = value
+        self.titleColor = titleColor
+        self.valueColor = valueColor
     }
+
+    var body: some View {
+        HStack(spacing: 6) {
+            Text(self.title)
+                .font(.Pretendard(size: 11, weight: .bold))
+                .foregroundStyle(titleColor)
+            Text(String(stringLiteral: self.value))
+                .font(.Pretendard(size: 14, weight: .semiBold))
+                .foregroundStyle(valueColor)
+        }
+    }
+}
+
+#Preview {
+    TimelineSummaryView(total: "-5,000,000", income: "5,000,000", expense: "10,000,000")
 }

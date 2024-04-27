@@ -7,9 +7,6 @@
     "- " : {
 
     },
-    "- %@" : {
-
-    },
     "( %@ %lld%% )" : {
       "localizations" : {
         "en" : {
@@ -42,10 +39,10 @@
     "+ " : {
 
     },
-    "+ %@" : {
+    "Back" : {
 
     },
-    "Back" : {
+    "Button" : {
 
     },
     "Cancel" : {
@@ -90,6 +87,9 @@
           }
         }
       }
+    },
+    "hello world" : {
+
     },
     "income" : {
       "extractionState" : "manual",
