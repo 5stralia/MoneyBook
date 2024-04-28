@@ -152,7 +152,7 @@ struct MonthlySummaryView: View {
                 .padding(.leading, 10)
 
                 HStack {
-                    Text("지출 합계")
+                    Text("Total")
                         .font(.Pretendard(size: 12))
                     Spacer()
                     Text(self.total.formatted())

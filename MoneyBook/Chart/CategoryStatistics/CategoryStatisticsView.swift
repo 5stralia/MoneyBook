@@ -59,7 +59,7 @@ struct CategoryStatisticsView: View {
                     .background(Color.backgroundColor(isExpense: self.isExpense))
                     HStack(spacing: 0) {
                         Spacer()
-                        Text("지출 합계")
+                        Text("Total")
                             .font(.Pretendard(size: 12, weight: .bold))
                         Text(Array(self.items).totalValue(year: self.year, month: self.month).formatted())
                             .font(.Pretendard(size: 19, weight: .semiBold))

@@ -83,6 +83,7 @@ struct AppendingItemView: View {
 
                     Spacer()
                 }
+                .scrollBounceBehavior(.basedOnSize)
 
                 if isOKEnabled {
                     Button {
@@ -120,8 +121,6 @@ struct AppendingItemView: View {
                     .frame(height: 400)
             }
         }
-        .ignoresSafeArea(.container, edges: .bottom)
-        .toolbar(.hidden, for: .tabBar)
     }
 
     private func submit() {
@@ -204,7 +203,7 @@ struct AppendingContentsView: View {
                         label: {
                             Text(dateFormatter.string(from: date))
                                 .font(.Pretendard(size: 18, weight: .bold))
-                            Text(weekDay)
+                            Text(LocalizedStringKey(weekDay))
                                 .font(.Pretendard(size: 12, weight: .bold))
                         }
                     )
@@ -248,7 +247,7 @@ struct AppendingContentsView: View {
                     },
                     label: {
                         VStack(alignment: .leading) {
-                            Text("메모")
+                            Text("Note")
                                 .font(.Pretendard(size: 15, weight: .bold))
                             TextField("", text: $note, axis: .vertical)
                                 .font(.Pretendard(size: 15, weight: .regular))

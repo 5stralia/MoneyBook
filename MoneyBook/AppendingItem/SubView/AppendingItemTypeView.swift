@@ -25,7 +25,7 @@ struct AppendingItemTypeView: View {
                                 }
                                 didChangeType(true)
                             } label: {
-                                Text("지출")
+                                Text("Income")
                                     .font(.Pretendard(size: 15, weight: .bold))
                                     .foregroundColor(.white)
                             }
@@ -39,7 +39,7 @@ struct AppendingItemTypeView: View {
                                 }
                                 didChangeType(false)
                             } label: {
-                                Text("소득")
+                                Text("Expense")
                                     .font(.Pretendard(size: 15, weight: .bold))
                                     .foregroundColor(.white)
                             }

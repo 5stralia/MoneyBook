@@ -40,16 +40,54 @@
 
     },
     "Back" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뒤로가기"
+          }
+        }
+      }
     },
     "Button" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버튼"
+          }
+        }
+      }
     },
     "Cancel" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "취소"
+          }
+        }
+      }
     },
     "Chart" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "차트"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "삭제"
+          }
+        }
+      }
     },
     "done" : {
       "extractionState" : "manual",
@@ -69,7 +107,24 @@
       }
     },
     "Done" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수정"
+          }
+        }
+      }
     },
     "expense" : {
       "extractionState" : "manual",
@@ -88,10 +143,20 @@
         }
       }
     },
+    "Expense" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지출"
+          }
+        }
+      }
+    },
     "Fri" : {
       "extractionState" : "stale",
       "localizations" : {
-        "en" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "금"
@@ -119,10 +184,20 @@
         }
       }
     },
+    "Income" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "소득"
+          }
+        }
+      }
+    },
     "Mon" : {
       "extractionState" : "stale",
       "localizations" : {
-        "en" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "월"
@@ -131,15 +206,39 @@
       }
     },
     "Month" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "월"
+          }
+        }
+      }
+    },
+    "Note" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메모"
+          }
+        }
+      }
     },
     "OK" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인"
+          }
+        }
+      }
     },
     "Sat" : {
       "extractionState" : "stale",
       "localizations" : {
-        "en" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "토"
@@ -148,9 +247,9 @@
       }
     },
     "Sun" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
-        "en" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "일"
@@ -161,7 +260,7 @@
     "Thu" : {
       "extractionState" : "stale",
       "localizations" : {
-        "en" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "목"
@@ -170,7 +269,14 @@
       }
     },
     "Timeline" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "타임라인"
+          }
+        }
+      }
     },
     "total" : {
       "extractionState" : "manual",
@@ -183,10 +289,20 @@
         }
       }
     },
+    "Total" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "합계"
+          }
+        }
+      }
+    },
     "Tue" : {
       "extractionState" : "stale",
       "localizations" : {
-        "en" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "화"
@@ -200,7 +316,7 @@
     "Wed" : {
       "extractionState" : "stale",
       "localizations" : {
-        "en" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "수"
@@ -209,25 +325,14 @@
       }
     },
     "Year" : {
-
-    },
-    "메모" : {
-
-    },
-    "삭제" : {
-
-    },
-    "소득" : {
-
-    },
-    "수정" : {
-
-    },
-    "지출" : {
-
-    },
-    "지출 합계" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "년"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

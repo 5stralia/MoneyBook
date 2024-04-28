@@ -88,9 +88,9 @@ struct ChartView: View {
                                 self.isExpense.toggle()
                             },
                             label: {
-                                Text(self.isExpense ? "지출" : "소득")
+                                Text(self.isExpense ? "Expense" : "Income")
                                     .font(.Pretendard(size: 18))
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(Color.customBlack2)
                             })
                     })
 

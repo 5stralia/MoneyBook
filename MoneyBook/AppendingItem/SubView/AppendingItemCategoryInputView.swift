@@ -173,14 +173,14 @@ struct AppendingItemCategoryInputView: View {
                                         }
                                     }
                                     .alert("\(editingSelected?.title ?? "-1")", isPresented: $isEditing) {
-                                        Button("삭제") {
+                                        Button("Delete") {
                                             isEditing = false
                                             if let deletion = editingSelected {
                                                 modelContext.delete(deletion)
                                             }
                                             editingSelected = nil
                                         }
-                                        Button("수정") {
+                                        Button("Edit") {
                                             isEditing = false
                                             isEditCategoryFocused = true
                                             if let editting = editingSelected {

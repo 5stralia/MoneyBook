@@ -45,7 +45,7 @@ struct MoneyBookWidgetsEntryView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("잔고")
+            Text("Balance")
                 .font(.title3)
                 .padding([.leading, .trailing], 16)
                 .padding(.top, 16)

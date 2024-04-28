@@ -166,7 +166,7 @@ struct MDatePickerCalendarDayOfWeekLabel: View {
     var body: some View {
         GridRow {
             ForEach(MDatePickerCalendarDayOfWeekLabel.daysOfWeek, id: \.self) { dayOfWeek in
-                Text(dayOfWeek)
+                Text(LocalizedStringKey(dayOfWeek))
                     .font(.Pretendard(size: 10, weight: .semiBold))
                     .frame(maxWidth: .infinity)
             }
