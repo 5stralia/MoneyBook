@@ -49,18 +49,16 @@ struct TimelineView: View {
     }
     private var earning: Double {
         self.items.filter {
-            !($0.category?.isExpense ?? true) &&
-            $0.timestamp.getYear() == self.year &&
-            $0.timestamp.getMonth() == self.month
+            !($0.category?.isExpense ?? true) && $0.timestamp.getYear() == self.year
+                && $0.timestamp.getMonth() == self.month
         }
         .map(\.amount)
         .reduce(0, +)
     }
     private var paid: Double {
         self.items.filter {
-            ($0.category?.isExpense ?? false) &&
-            $0.timestamp.getYear() == self.year &&
-            $0.timestamp.getMonth() == self.month
+            ($0.category?.isExpense ?? false) && $0.timestamp.getYear() == self.year
+                && $0.timestamp.getMonth() == self.month
         }
         .map(\.amount)
         .reduce(0, +)

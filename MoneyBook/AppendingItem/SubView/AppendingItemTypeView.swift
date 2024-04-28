@@ -10,7 +10,7 @@ import SwiftUI
 struct AppendingItemTypeView: View {
     @Binding var isPaid: Bool
     let didChangeType: (_ newValue: Bool) -> Void
-    
+
     var body: some View {
         Capsule()
             .fill(isPaid ? Color.customOrange1.opacity(0.3) : Color.customIndigo1.opacity(0.3))

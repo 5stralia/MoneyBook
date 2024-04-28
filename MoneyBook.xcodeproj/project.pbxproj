@@ -66,7 +66,7 @@
 		05D7E5552B4D851C00554496 /* Font+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D7E5542B4D851C00554496 /* Font+custom.swift */; };
 		05DA4E192B5180C800ED1C49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05DA4E182B5180C800ED1C49 /* Images.xcassets */; };
 		05DA4E1B2B518B7E00ED1C49 /* Color+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */; };
-		05E024FF2BCD5DA500240601 /* TimelineSummaryView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */; };
+		05E024FF2BCD5DA500240601 /* TimelineSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E024FE2BCD5DA500240601 /* TimelineSummaryView.swift */; };
 		05E025002BCE706F00240601 /* Color+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */; };
 		05E025032BCE776F00240601 /* AppendingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E025022BCE776F00240601 /* AppendingItemView.swift */; };
 /* End PBXBuildFile section */
@@ -140,7 +140,7 @@
 		05B42AB12B5FFBE90071A2E3 /* MonthlyHotItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyHotItemView.swift; sourceTree = "<group>"; };
 		05B42AB32B5FFC2B0071A2E3 /* EqualSizeHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualSizeHStack.swift; sourceTree = "<group>"; };
 		05B42AB52B5FFC410071A2E3 /* MonthlyCategoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCategoryItemView.swift; sourceTree = "<group>"; };
-		05B42AB92B6298940071A2E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		05B42AB92B6298940071A2E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05B42ABA2B6680DA0071A2E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05B42ABC2B6680E20071A2E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		05B42ABE2B66810B0071A2E3 /* HomeQuickAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQuickAction.swift; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 		05D7E5542B4D851C00554496 /* Font+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+custom.swift"; sourceTree = "<group>"; };
 		05DA4E182B5180C800ED1C49 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+custom.swift"; sourceTree = "<group>"; };
-		05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView2.swift; sourceTree = "<group>"; };
+		05E024FE2BCD5DA500240601 /* TimelineSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView.swift; sourceTree = "<group>"; };
 		05E025022BCE776F00240601 /* AppendingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -293,7 +293,6 @@
 		05A76A0A2A34115D00B231CB /* MoneyBook */ = {
 			isa = PBXGroup;
 			children = (
-				05B42AB92B6298940071A2E3 /* Info.plist */,
 				05B650142B53A6BB00389A32 /* Helper */,
 				05BA7BDD2B29DDCE00D159FB /* Resource */,
 				05A719A62A85219D00260837 /* Chart */,
@@ -352,7 +351,7 @@
 				05A76A3F2A355DE100B231CB /* TimelineItemView.swift */,
 				051899FF2A3761C500430226 /* TimelineSummaryColorView.swift */,
 				0584B3582A40574F004758AE /* TimelineDateView.swift */,
-				05E024FE2BCD5DA500240601 /* TimelineSummaryView2.swift */,
+				05E024FE2BCD5DA500240601 /* TimelineSummaryView.swift */,
 				05797F372BD4939A00A5292F /* TimelineAddButton.swift */,
 			);
 			path = SubViews;
@@ -394,6 +393,7 @@
 				05A76A0F2A34115E00B231CB /* Assets.xcassets */,
 				05BA7BDE2B29DDEE00D159FB /* Localizable.xcstrings */,
 				05B650092B52624800389A32 /* Colors.xcassets */,
+				05B42AB92B6298940071A2E3 /* Info.plist */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -633,7 +633,7 @@
 				05A76A402A355DE100B231CB /* TimelineItemView.swift in Sources */,
 				059B7ED72BDD1E6500E97865 /* AppendingItemItemView.swift in Sources */,
 				05B42ABD2B6680E20071A2E3 /* SceneDelegate.swift in Sources */,
-				05E024FF2BCD5DA500240601 /* TimelineSummaryView2.swift in Sources */,
+				05E024FF2BCD5DA500240601 /* TimelineSummaryView.swift in Sources */,
 				05B42AB22B5FFBE90071A2E3 /* MonthlyHotItemView.swift in Sources */,
 				05B42AB02B5FFB4D0071A2E3 /* MonthlySummaryView.swift in Sources */,
 				05B650112B52B07F00389A32 /* CategoryStatisticsView.swift in Sources */,
@@ -833,7 +833,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MoneyBook/Info.plist;
+				INFOPLIST_FILE = MoneyBook/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -865,7 +865,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MoneyBook/Info.plist;
+				INFOPLIST_FILE = MoneyBook/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -22,9 +22,9 @@ struct PersistenceController {
             .enumerated()
             .forEach { offset, amount in
                 let newItem = ItemCoreEntity(
-                        amount: amount,
-                        timestamp: Date(),
-                        title: "식비 TEST \(offset)"
+                    amount: amount,
+                    timestamp: Date(),
+                    title: "식비 TEST \(offset)"
                 )
                 newItem.category = expenseCategoryCoreEntity1
                 result.container.mainContext.insert(newItem)
@@ -36,9 +36,9 @@ struct PersistenceController {
             .enumerated()
             .forEach { offset, amount in
                 let newItem = ItemCoreEntity(
-                        amount: amount,
-                        timestamp: Date(),
-                        title: "쇼핑 TEST \(offset)"
+                    amount: amount,
+                    timestamp: Date(),
+                    title: "쇼핑 TEST \(offset)"
                 )
                 newItem.category = expenseCategoryCoreEntity2
                 result.container.mainContext.insert(newItem)
@@ -50,9 +50,9 @@ struct PersistenceController {
             .enumerated()
             .forEach { offset, amount in
                 let newItem = ItemCoreEntity(
-                        amount: amount,
-                        timestamp: Date(),
-                        title: "용돈 Test \(offset)"
+                    amount: amount,
+                    timestamp: Date(),
+                    title: "용돈 Test \(offset)"
                 )
                 newItem.category = incomeCategoryCoreEntity
                 result.container.mainContext.insert(newItem)

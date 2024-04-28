@@ -80,7 +80,7 @@ struct AppendingItemView: View {
                     )
                     .padding([.top, .leading, .trailing], 20)
                     .padding(.bottom, 0)
-                    
+
                     Spacer()
                 }
 
@@ -90,9 +90,9 @@ struct AppendingItemView: View {
                     } label: {
                         Text("OK")
                             .foregroundStyle(Color.white)
+                            .frame(height: 80)
+                            .frame(maxWidth: .infinity)
                     }
-                    .frame(height: 80)
-                    .frame(maxWidth: .infinity)
                     .background(isExpense ? Color.customOrange1 : Color.customIndigo1)
                     .clipShape(RoundedCorner(radius: 15, corners: [.topLeft, .topRight]))
                 } else {
@@ -108,7 +108,7 @@ struct AppendingItemView: View {
 
             if inputType == .date {
                 AppendingItemDateInputView(isExpense: $isExpense, selected: $date)
-                    .frame(height: 400)
+                    .frame(height: 430)
             } else if inputType == .category {
                 AppendingItemCategoryInputView(
                     isExpense: $isExpense, categories: isExpense ? expenseCategories : incomeCategories,
@@ -152,6 +152,10 @@ enum AppendingInputType: Hashable {
     case title
     case note
 }
+enum FocusType: Hashable {
+    case title
+    case note
+}
 
 struct AppendingContentsView: View {
     @Binding var isExpense: Bool
@@ -162,7 +166,7 @@ struct AppendingContentsView: View {
     @Binding var note: String
 
     @Binding var inputType: AppendingInputType?
-    @FocusState var focused: AppendingInputType?
+    @FocusState var focused: FocusType?
 
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -170,6 +174,12 @@ struct AppendingContentsView: View {
         formatter.timeStyle = .none
         return formatter
     }()
+
+    var weekDay: String {
+        let weekDays: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        let i = Calendar.current.component(.weekday, from: date)
+        return weekDays[i - 1]
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -194,7 +204,7 @@ struct AppendingContentsView: View {
                         label: {
                             Text(dateFormatter.string(from: date))
                                 .font(.Pretendard(size: 18, weight: .bold))
-                            Text("화")
+                            Text(weekDay)
                                 .font(.Pretendard(size: 12, weight: .bold))
                         }
                     )
@@ -264,7 +274,21 @@ struct AppendingContentsView: View {
             inputType = type
         }
 
-        focused = inputType
+        if type == .title {
+            if focused == .title {
+                focused = nil
+            } else {
+                focused = .title
+            }
+        } else if type == .note {
+            if focused == .note {
+                focused = nil
+            } else {
+                focused = .note
+            }
+        } else {
+            focused = nil
+        }
     }
 
     func backgroundColor(_ type: AppendingInputType?) -> Color {

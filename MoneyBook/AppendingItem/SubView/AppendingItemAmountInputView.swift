@@ -45,7 +45,7 @@ struct AppendingItemAmountInputView: View {
                     .foregroundStyle(Color(uiColor: .systemBackground))
                     .padding([.top, .bottom], 22)
                     .padding(.trailing, 10)
-                
+
                 let spacing: CGFloat = 3
                 let rows: CGFloat = 5
                 let length = (reader.size.width - (spacing * (rows - 1))) / rows
@@ -98,7 +98,7 @@ struct AppendingItemAmountInputView: View {
                             action: { calculate(.add) }, text: "+", isNumber: false, length: length)
                     }
                 }
-                
+
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
