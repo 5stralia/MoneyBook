@@ -11,9 +11,10 @@ import SwiftData
 
 @Model public class GroupCoreEntity {
     var title: String = "unknown"
-    var createdDate: Date
-    @Relationship var items: [ItemCoreEntity]?
-    @Relationship var categories: [CategoryCoreEntity]?
+    var createdDate: Date = Date()
+    
+    @Relationship(inverse: \CategoryCoreEntity.group) var categories: [CategoryCoreEntity]?
+    
     public init(createdDate: Date) {
         self.createdDate = createdDate
 

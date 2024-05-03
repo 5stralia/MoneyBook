@@ -10,11 +10,12 @@ import Foundation
 import SwiftData
 
 @Model public class ItemCoreEntity {
-    var amount: Double
-    @Relationship var category: CategoryCoreEntity?
-    var note: String
-    var timestamp: Date
-    var title: String
+    var amount: Double = 0
+    var note: String = ""
+    var timestamp: Date = Date()
+    var title: String = ""
+    
+    var category: CategoryCoreEntity?
 
     internal init(
         amount: Double,

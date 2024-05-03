@@ -2,15 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIApplicationShortcutItems</key>
-	<array>
-		<dict>
-			<key>UIApplicationShortcutItemType</key>
-			<string>add</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>add</string>
-		</dict>
-	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Thin.otf</string>
@@ -22,6 +13,19 @@
 		<string>Pretendard-ExtraBold.otf</string>
 		<string>Pretendard-Bold.otf</string>
 		<string>Pretendard-Black.otf</string>
+	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>add</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>add</string>
+		</dict>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
 	</array>
 </dict>
 </plist>
