@@ -22,6 +22,13 @@ struct ContentView: View {
                     .tabItem {
                         Label("Chart", systemImage: "chart.pie")
                     }
+                
+                NavigationStack {
+                    SettingView()
+                }
+                .tabItem {
+                    Label("Setting", systemImage: "gearshape.fill")
+                }
             }
             .toolbarBackground(.visible, for: .tabBar)
             .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)

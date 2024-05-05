@@ -30,3 +30,13 @@ import SwiftData
     }
 
 }
+
+extension ItemCoreEntity: Equatable {
+    public static func == (lhs: ItemCoreEntity, rhs: ItemCoreEntity) -> Bool {
+        return lhs.title == rhs.title &&
+        lhs.amount == rhs.amount &&
+        lhs.timestamp == rhs.timestamp &&
+        lhs.note == rhs.note &&
+        lhs.category == rhs.category
+    }
+}

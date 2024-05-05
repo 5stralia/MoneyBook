@@ -79,12 +79,34 @@
         }
       }
     },
+    "Data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데이터"
+          }
+        }
+      }
+    },
     "Delete" : {
       "localizations" : {
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "삭제"
+          }
+        }
+      }
+    },
+    "Delete All" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전체삭제"
           }
         }
       }
@@ -153,6 +175,17 @@
         }
       }
     },
+    "Export" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내보내기"
+          }
+        }
+      }
+    },
     "Fri" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -166,6 +199,17 @@
     },
     "hello world" : {
 
+    },
+    "Import" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "가져오기"
+          }
+        }
+      }
     },
     "income" : {
       "extractionState" : "manual",
@@ -242,6 +286,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "토"
+          }
+        }
+      }
+    },
+    "Setting" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정"
           }
         }
       }

@@ -15,7 +15,8 @@ import SwiftData
     
     @Relationship(inverse: \CategoryCoreEntity.group) var categories: [CategoryCoreEntity]?
     
-    public init(createdDate: Date) {
+    public init(title: String, createdDate: Date) {
+        self.title = title
         self.createdDate = createdDate
 
     }

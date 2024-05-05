@@ -15,7 +15,7 @@ struct TimelineView: View {
     @EnvironmentObject var homeQuickActionManager: HomeQuickActionManager
     @Environment(\.scenePhase) var scenePhase
 
-    @Query var items: [ItemCoreEntity]
+    @Query(sort: [SortDescriptor(\ItemCoreEntity.timestamp, order: .forward)]) var items: [ItemCoreEntity]
     @Query var categories: [CategoryCoreEntity]
 
     @State var editing: ItemCoreEntity?

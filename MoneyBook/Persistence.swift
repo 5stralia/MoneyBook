@@ -15,8 +15,12 @@ struct PersistenceController {
 
     @MainActor static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
+        
+        let group = GroupCoreEntity(title: "test 그룹", createdDate: Date())
+        result.container.mainContext.insert(group)
 
         let expenseCategoryCoreEntity1 = CategoryCoreEntity(title: "식비", isExpense: true)
+        expenseCategoryCoreEntity1.group = group
         result.container.mainContext.insert(expenseCategoryCoreEntity1)
         [10000, 7200, 12300, 50000, 67300, 273000, 2300, 4500]
             .enumerated()
@@ -31,6 +35,7 @@ struct PersistenceController {
             }
 
         let expenseCategoryCoreEntity2 = CategoryCoreEntity(title: "쇼핑", isExpense: true)
+        expenseCategoryCoreEntity2.group = group
         result.container.mainContext.insert(expenseCategoryCoreEntity2)
         [10010, 7210, 12310, 50010, 67310, 273010, 2310, 4510]
             .enumerated()
@@ -45,6 +50,7 @@ struct PersistenceController {
             }
 
         let incomeCategoryCoreEntity = CategoryCoreEntity(title: "용돈", isExpense: false)
+        incomeCategoryCoreEntity.group = group
         result.container.mainContext.insert(incomeCategoryCoreEntity)
         [700000, 200000]
             .enumerated()

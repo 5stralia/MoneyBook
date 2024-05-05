@@ -27,15 +27,20 @@ struct MoneyBookApp: App {
                     do {
                         let categories = try self.modelContainer.mainContext.fetch(descriptor)
                         if categories.isEmpty {
+                            let group = GroupCoreEntity(title: "default", createdDate: Date())
+                            modelContainer.mainContext.insert(group)
+                            
                             ["식비", "생활비", "교통비", "통신비", "기타"]
-                                .forEach { category in
-                                    self.modelContainer.mainContext.insert(
-                                        CategoryCoreEntity(title: category, isExpense: true))
+                                .forEach { title in
+                                    let category = CategoryCoreEntity(title: title, isExpense: true)
+                                    category.group = group
+                                    modelContainer.mainContext.insert(category)
                                 }
                             ["월급", "기타"]
-                                .forEach { category in
-                                    self.modelContainer.mainContext.insert(
-                                        CategoryCoreEntity(title: category, isExpense: false))
+                                .forEach { title in
+                                    let category = CategoryCoreEntity(title: title, isExpense: false)
+                                    category.group = group
+                                    modelContainer.mainContext.insert(category)
                                 }
 
                         }
