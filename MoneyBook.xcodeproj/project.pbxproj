@@ -12,6 +12,7 @@
 		05133CFB2BE5B29300EBAB0E /* SettingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05133CFA2BE5B29300EBAB0E /* SettingItemView.swift */; };
 		05133CFD2BE5BAA500EBAB0E /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05133CFC2BE5BAA500EBAB0E /* String+Localized.swift */; };
 		05189A002A3761C500430226 /* TimelineSummaryColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051899FF2A3761C500430226 /* TimelineSummaryColorView.swift */; };
+		0547F6A52C031ACE00B62D5B /* GroupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0547F6A42C031ACE00B62D5B /* GroupManager.swift */; };
 		05797F382BD4939A00A5292F /* TimelineAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05797F372BD4939A00A5292F /* TimelineAddButton.swift */; };
 		0584B3592A40574F004758AE /* TimelineDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B3582A40574F004758AE /* TimelineDateView.swift */; };
 		0584B35C2A40682C004758AE /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0584B35B2A40682C004758AE /* Date.swift */; };
@@ -120,6 +121,7 @@
 		05133CFA2BE5B29300EBAB0E /* SettingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemView.swift; sourceTree = "<group>"; };
 		05133CFC2BE5BAA500EBAB0E /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
 		051899FF2A3761C500430226 /* TimelineSummaryColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryColorView.swift; sourceTree = "<group>"; };
+		0547F6A42C031ACE00B62D5B /* GroupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManager.swift; sourceTree = "<group>"; };
 		05797F372BD4939A00A5292F /* TimelineAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineAddButton.swift; sourceTree = "<group>"; };
 		0584B3582A40574F004758AE /* TimelineDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDateView.swift; sourceTree = "<group>"; };
 		0584B35B2A40682C004758AE /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				05189A092A38966100430226 /* Model */,
 				05A76A3A2A355D2E00B231CB /* Timeline */,
 				05A76A0B2A34115D00B231CB /* MoneyBookApp.swift */,
+				0547F6A42C031ACE00B62D5B /* GroupManager.swift */,
 				05B42ABA2B6680DA0071A2E3 /* AppDelegate.swift */,
 				05B42ABE2B66810B0071A2E3 /* HomeQuickAction.swift */,
 				05B42ABC2B6680E20071A2E3 /* SceneDelegate.swift */,
@@ -654,6 +657,7 @@
 				05B42AC52B6BD76B0071A2E3 /* CategoryCoreEntity.swift in Sources */,
 				05A76A3D2A355D4B00B231CB /* TimelineView.swift in Sources */,
 				0584B3592A40574F004758AE /* TimelineDateView.swift in Sources */,
+				0547F6A52C031ACE00B62D5B /* GroupManager.swift in Sources */,
 				05133CFB2BE5B29300EBAB0E /* SettingItemView.swift in Sources */,
 				05B42ABF2B66810B0071A2E3 /* HomeQuickAction.swift in Sources */,
 				05189A002A3761C500430226 /* TimelineSummaryColorView.swift in Sources */,

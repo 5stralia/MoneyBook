@@ -12,9 +12,9 @@ import SwiftData
 @Model public class CategoryCoreEntity {
     var title: String = ""
     var isExpense: Bool = true
-    
+
     @Relationship(inverse: \ItemCoreEntity.category) var items: [ItemCoreEntity]?
-    
+
     var group: GroupCoreEntity?
 
     public init(title: String, isExpense: Bool) {

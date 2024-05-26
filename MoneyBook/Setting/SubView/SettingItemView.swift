@@ -10,14 +10,14 @@ import SwiftUI
 struct SettingItemView: View {
     let imageSystemName: String
     let title: String
-    
+
     var body: some View {
         HStack {
             Image(systemName: imageSystemName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.leading, 13)
-            
+
             Text(title)
                 .font(.Pretendard(size: 14, weight: .semiBold))
         }

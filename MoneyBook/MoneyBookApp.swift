@@ -29,7 +29,8 @@ struct MoneyBookApp: App {
                         if categories.isEmpty {
                             let group = GroupCoreEntity(title: "default", createdDate: Date())
                             modelContainer.mainContext.insert(group)
-                            
+                            GroupManager.shared.setGroup(group)
+
                             ["식비", "생활비", "교통비", "통신비", "기타"]
                                 .forEach { title in
                                     let category = CategoryCoreEntity(title: title, isExpense: true)
@@ -42,6 +43,16 @@ struct MoneyBookApp: App {
                                     category.group = group
                                     modelContainer.mainContext.insert(category)
                                 }
+
+                        } else {
+                            let groupCount =
+                                (try? modelContainer.mainContext.fetchCount(
+                                    FetchDescriptor(predicate: #Predicate<GroupCoreEntity> { _ in true }))) ?? 0
+                            if groupCount == 0 {
+                                let group = GroupCoreEntity(title: "default", createdDate: Date())
+                                modelContainer.mainContext.insert(group)
+                                GroupManager.shared.setGroup(group)
+                            }
 
                         }
                     } catch let error {

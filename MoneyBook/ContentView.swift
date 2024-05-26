@@ -22,7 +22,7 @@ struct ContentView: View {
                     .tabItem {
                         Label("Chart", systemImage: "chart.pie")
                     }
-                
+
                 NavigationStack {
                     SettingView()
                 }

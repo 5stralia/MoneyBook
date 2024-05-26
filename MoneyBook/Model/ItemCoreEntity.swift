@@ -14,7 +14,7 @@ import SwiftData
     var note: String = ""
     var timestamp: Date = Date()
     var title: String = ""
-    
+
     var category: CategoryCoreEntity?
 
     internal init(
@@ -33,10 +33,7 @@ import SwiftData
 
 extension ItemCoreEntity: Equatable {
     public static func == (lhs: ItemCoreEntity, rhs: ItemCoreEntity) -> Bool {
-        return lhs.title == rhs.title &&
-        lhs.amount == rhs.amount &&
-        lhs.timestamp == rhs.timestamp &&
-        lhs.note == rhs.note &&
-        lhs.category == rhs.category
+        return lhs.title == rhs.title && lhs.amount == rhs.amount && lhs.timestamp == rhs.timestamp
+            && lhs.note == rhs.note && lhs.category == rhs.category
     }
 }

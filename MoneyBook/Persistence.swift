@@ -15,9 +15,11 @@ struct PersistenceController {
 
     @MainActor static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
-        
+
         let group = GroupCoreEntity(title: "test 그룹", createdDate: Date())
         result.container.mainContext.insert(group)
+
+        GroupManager.shared.setGroup(group)
 
         let expenseCategoryCoreEntity1 = CategoryCoreEntity(title: "식비", isExpense: true)
         expenseCategoryCoreEntity1.group = group
@@ -72,7 +74,9 @@ struct PersistenceController {
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
 
         do {
-            self.container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            self.container = container
+            GroupManager.shared.modelContext = ModelContext(container)
         } catch {
             fatalError()
         }
@@ -98,5 +102,21 @@ struct PersistenceController {
         //            }
         //        })
         //        container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+}
+
+public actor DBAccessor {
+    let context: ModelContext
+
+    init(container: ModelContainer) {
+        self.context = ModelContext(container)
+    }
+
+    public func fetchAllItems() async throws -> [ItemCoreEntity] {
+        return try self.context.fetch(
+            FetchDescriptor(
+                predicate: #Predicate<ItemCoreEntity> { _ in true }
+            )
+        )
     }
 }

@@ -186,6 +186,12 @@
         }
       }
     },
+    "exporting" : {
+
+    },
+    "Exporting..." : {
+
+    },
     "Fri" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -237,6 +243,9 @@
           }
         }
       }
+    },
+    "Key" : {
+      "extractionState" : "manual"
     },
     "Mon" : {
       "extractionState" : "stale",

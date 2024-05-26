@@ -87,7 +87,8 @@ struct AppendingItemCategoryInputView: View {
 
                                     Button {
                                         if isSetting {
-
+                                            isEditing = true
+                                            editingSelected = category
                                         } else {
                                             selected = category
                                         }
@@ -98,41 +99,36 @@ struct AppendingItemCategoryInputView: View {
                                                     .clipShape(Circle())
 
                                                 if isSetting {
-                                                    Button {
-                                                        isEditing = true
-                                                        editingSelected = category
-                                                    } label: {
-                                                        if editingSelected != nil && category == editingSelected {
-                                                            TextField("", text: $editingCategoryName)
-                                                                .font(.Pretendard(size: 13, weight: .semiBold))
-                                                                .foregroundStyle(Color(uiColor: .systemBackground))
-                                                                .multilineTextAlignment(.center)
-                                                                .focused($isEditCategoryFocused)
-                                                                .onReceive(
-                                                                    NotificationCenter.default.publisher(
-                                                                        for: UITextField.textDidBeginEditingNotification
-                                                                    )
-                                                                ) { obj in
-                                                                    if let textField = obj.object as? UITextField {
-                                                                        textField.selectedTextRange =
-                                                                            textField.textRange(
-                                                                                from: textField.beginningOfDocument,
-                                                                                to: textField.endOfDocument)
-                                                                    }
+                                                    if editingSelected != nil && category == editingSelected {
+                                                        TextField("", text: $editingCategoryName)
+                                                            .font(.Pretendard(size: 13, weight: .semiBold))
+                                                            .foregroundStyle(Color(uiColor: .systemBackground))
+                                                            .multilineTextAlignment(.center)
+                                                            .focused($isEditCategoryFocused)
+                                                            .onReceive(
+                                                                NotificationCenter.default.publisher(
+                                                                    for: UITextField.textDidBeginEditingNotification
+                                                                )
+                                                            ) { obj in
+                                                                if let textField = obj.object as? UITextField {
+                                                                    textField.selectedTextRange =
+                                                                        textField.textRange(
+                                                                            from: textField.beginningOfDocument,
+                                                                            to: textField.endOfDocument)
                                                                 }
-                                                                .onSubmit {
-                                                                    category.title = editingCategoryName
-                                                                    isEditing = false
-                                                                    isSetting = false
-                                                                }
-                                                        } else {
-                                                            Text(category.title)
-                                                                .font(.Pretendard(size: 13, weight: .semiBold))
-                                                                .foregroundStyle(
-                                                                    isSelected
-                                                                        ? Color.primary
-                                                                        : Color(uiColor: .systemBackground))
-                                                        }
+                                                            }
+                                                            .onSubmit {
+                                                                category.title = editingCategoryName
+                                                                isEditing = false
+                                                                isSetting = false
+                                                            }
+                                                    } else {
+                                                        Text(category.title)
+                                                            .font(.Pretendard(size: 13, weight: .semiBold))
+                                                            .foregroundStyle(
+                                                                isSelected
+                                                                    ? Color.primary
+                                                                    : Color(uiColor: .systemBackground))
                                                     }
                                                 } else {
                                                     Text(category.title)
@@ -225,7 +221,30 @@ struct AppendingItemCategoryInputView: View {
                         .padding([.leading, .trailing], 36)
 
                         if isAdding && categories.count % 5 == 0 {
-                            // TODO: 카테고리 추가
+                            ZStack(alignment: .center) {
+                                Color(uiColor: .systemBackground).opacity(0.24)
+                                    .clipShape(Circle())
+
+                                TextField("", text: $newCategoryName)
+                                    .font(.Pretendard(size: 13, weight: .semiBold))
+                                    .foregroundStyle(Color(uiColor: .systemBackground))
+                                    .multilineTextAlignment(.center)
+                                    .focused($isNewCategoryFocused)
+                                    .onReceive(
+                                        NotificationCenter.default.publisher(
+                                            for: UITextField.textDidBeginEditingNotification)
+                                    ) { obj in
+                                        if let textField = obj.object as? UITextField {
+                                            textField.selectedTextRange = textField.textRange(
+                                                from: textField.beginningOfDocument, to: textField.endOfDocument
+                                            )
+                                        }
+                                    }
+                                    .onSubmit {
+                                        addCategory()
+                                    }
+                            }
+                            .frame(width: CGFloat(length), height: CGFloat(length))
                         }
                     }
                     .padding([.top, .bottom], 10)
@@ -238,7 +257,9 @@ struct AppendingItemCategoryInputView: View {
     }
 
     private func addCategory() {
-        modelContext.insert(CategoryCoreEntity(title: newCategoryName, isExpense: isExpense))
+        let entity = CategoryCoreEntity(title: newCategoryName, isExpense: isExpense)
+        entity.group = GroupManager.shared.currentGroup
+        modelContext.insert(entity)
         isAdding = false
     }
 }
