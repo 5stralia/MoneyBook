@@ -186,7 +186,7 @@ struct AppendingContentsView: View {
                 HStack {
                     Spacer()
                     AppendingItemTypeView(
-                        isPaid: $isExpense,
+                        isExpense: $isExpense,
                         didChangeType: { _ in
                             category = nil
                         }

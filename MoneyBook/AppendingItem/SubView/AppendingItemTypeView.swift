@@ -8,38 +8,38 @@
 import SwiftUI
 
 struct AppendingItemTypeView: View {
-    @Binding var isPaid: Bool
+    @Binding var isExpense: Bool
     let didChangeType: (_ newValue: Bool) -> Void
 
     var body: some View {
         Capsule()
-            .fill(isPaid ? Color.customOrange1.opacity(0.3) : Color.customIndigo1.opacity(0.3))
+            .fill(isExpense ? Color.customOrange1.opacity(0.3) : Color.customIndigo1.opacity(0.3))
             .overlay {
                 HStack(spacing: 0) {
                     Capsule()
-                        .fill(isPaid ? Color.customOrange1 : .clear)
+                        .fill(isExpense ? Color.customOrange1 : .clear)
                         .overlay {
                             Button {
                                 withAnimation {
-                                    self.isPaid = true
+                                    self.isExpense = true
                                 }
                                 didChangeType(true)
                             } label: {
-                                Text("Income")
+                                Text("Expense")
                                     .font(.Pretendard(size: 15, weight: .bold))
                                     .foregroundColor(.white)
                             }
                         }
                     Capsule()
-                        .fill(isPaid ? .clear : Color.customIndigo1)
+                        .fill(isExpense ? .clear : Color.customIndigo1)
                         .overlay {
                             Button {
                                 withAnimation {
-                                    self.isPaid = false
+                                    self.isExpense = false
                                 }
                                 didChangeType(false)
                             } label: {
-                                Text("Expense")
+                                Text("Income")
                                     .font(.Pretendard(size: 15, weight: .bold))
                                     .foregroundColor(.white)
                             }
@@ -50,5 +50,5 @@ struct AppendingItemTypeView: View {
 }
 
 #Preview {
-    AppendingItemTypeView(isPaid: .constant(true), didChangeType: { _ in })
+    AppendingItemTypeView(isExpense: .constant(true), didChangeType: { _ in })
 }
