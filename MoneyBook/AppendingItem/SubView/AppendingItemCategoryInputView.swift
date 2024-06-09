@@ -245,6 +245,7 @@ struct AppendingItemCategoryInputView: View {
                                     }
                             }
                             .frame(width: CGFloat(length), height: CGFloat(length))
+                            .padding(.leading, 36)
                         }
                     }
                     .padding([.top, .bottom], 10)
