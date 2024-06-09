@@ -117,7 +117,8 @@ struct MDatePickerCalendar: View {
     var remainders: [Int] = [6, 0, 1, 2, 3, 4, 5]
 
     var firstWeekDay: Int {
-        guard let firstDay = Calendar.current.date(bySetting: .day, value: 1, of: showingDate) else { return -1 }
+        let componenets = Calendar.current.dateComponents([.year, .month], from: showingDate)
+        guard let firstDay = Calendar.current.date(from: componenets) else { return -1 }
         return Calendar.current.component(.weekday, from: firstDay)
     }
 

@@ -185,13 +185,11 @@ struct AppendingContentsView: View {
             VStack {
                 HStack {
                     Spacer()
-                    AppendingItemTypeView(
-                        isExpense: $isExpense,
-                        didChangeType: { _ in
+                    Toggle(isOn: $isExpense, label: {})
+                        .toggleStyle(AppendingItemTypeToggleStyle())
+                        .onChange(of: isExpense) { _, _ in
                             category = nil
                         }
-                    )
-                    .frame(width: 118, height: 32)
                 }
                 .padding(.bottom, 8)
 
