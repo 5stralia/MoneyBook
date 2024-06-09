@@ -168,7 +168,9 @@ struct SettingView: View {
                 }
 
                 let category: CategoryCoreEntity
-                if let _category = group.categories?.first(where: { $0.title == categoryTitle && $0.isExpense == categoryIsExpense }) {
+                if let _category = group.categories?.first(where: {
+                    $0.title == categoryTitle && $0.isExpense == categoryIsExpense
+                }) {
                     category = _category
                 } else {
                     let newCategory = CategoryCoreEntity(
