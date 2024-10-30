@@ -53,7 +53,7 @@ struct MoneyBookWidgetsEntryView: View {
 
             HStack {
                 Spacer()
-                Text("200,000 남음")
+                Text("개발해야 하는디 말이지...")
                     .font(.body)
                     .fontWeight(.bold)
                     .foregroundStyle(Color.gray)
