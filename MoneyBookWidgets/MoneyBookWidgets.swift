@@ -7,30 +7,59 @@
 
 import SwiftUI
 import WidgetKit
+import SwiftData
 
 struct Provider: TimelineProvider {
+    private let modelContainer = PersistenceController.shared.container
+    
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), expense: 200000, income: 450000)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        let entry = SimpleEntry(date: Date(), expense: 200000, income: 450000)
-        completion(entry)
+        let descriptor = FetchDescriptor<ItemCoreEntity>()
+        
+        Task {
+            guard let items = try? await modelContainer.mainContext.fetch(descriptor) else {
+                completion(SimpleEntry(date: Date(), expense: 0, income: 0))
+                return
+            }
+            
+            let currentMonth = Calendar.current.component(.month, from: Date())
+            let filterdItems = items.filter { item in
+                let itemMonth = Calendar.current.component(.month, from: item.timestamp)
+                return currentMonth == itemMonth
+            }
+            
+            let expense = filterdItems.filter { $0.category?.isExpense == true }.map { $0.amount }.reduce(0, +)
+            let income = filterdItems.filter { $0.category?.isExpense == false }.map { $0.amount }.reduce(0, +)
+            let entry = SimpleEntry(date: Date(), expense: expense, income: income)
+            completion(entry)
+        }
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0..<5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, expense: 200000, income: 450000)
-            entries.append(entry)
+        let descriptor = FetchDescriptor<ItemCoreEntity>()
+        
+        Task {
+            guard let items = try? await modelContainer.mainContext.fetch(descriptor) else {
+                let timeline = Timeline(entries: [SimpleEntry(date: Date(), expense: 0, income: 0)], policy: .atEnd)
+                completion(timeline)
+                return
+            }
+            
+            let currentMonth = Calendar.current.component(.month, from: Date())
+            let filterdItems = items.filter { item in
+                let itemMonth = Calendar.current.component(.month, from: item.timestamp)
+                return currentMonth == itemMonth
+            }
+            
+            let expense = filterdItems.filter { $0.category?.isExpense == true }.map { $0.amount }.reduce(0, +)
+            let income = filterdItems.filter { $0.category?.isExpense == false }.map { $0.amount }.reduce(0, +)
+            let entry = SimpleEntry(date: Date(), expense: expense, income: income)
+            let timeline = Timeline(entries: [entry], policy: .atEnd)
+            completion(timeline)
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
     }
 }
 
@@ -50,23 +79,14 @@ struct MoneyBookWidgetsEntryView: View {
                 .padding([.leading, .trailing], 16)
                 .padding(.top, 16)
                 .padding(.bottom, 1)
-
-            HStack {
-                Spacer()
-                Text("개발해야 하는디 말이지...")
-                    .font(.body)
-                    .fontWeight(.bold)
-                    .foregroundStyle(Color.gray)
-            }
-            .padding([.leading, .trailing], 16)
-
+            
             Spacer()
 
-            Text("소득 450,000")
+            Text("소득 \(entry.income.formatted())")
                 .foregroundStyle(Color.customIndigo1)
                 .font(.system(size: 12))
                 .padding([.leading, .trailing], 4)
-            Text("지출 200,000")
+            Text("지출 \(entry.expense.formatted())")
                 .foregroundStyle(Color.customOrange1)
                 .font(.system(size: 12))
                 .padding([.leading, .trailing], 4)

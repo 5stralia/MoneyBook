@@ -74,6 +74,11 @@
 		05E024FF2BCD5DA500240601 /* TimelineSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E024FE2BCD5DA500240601 /* TimelineSummaryView.swift */; };
 		05E025002BCE706F00240601 /* Color+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */; };
 		05E025032BCE776F00240601 /* AppendingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E025022BCE776F00240601 /* AppendingItemView.swift */; };
+		05E79E322D16E6CA0014FFAE /* CategoryCoreEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AC22B6BD76B0071A2E3 /* CategoryCoreEntity.swift */; };
+		05E79E332D16E6EC0014FFAE /* ItemCoreEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AC02B6BD76B0071A2E3 /* ItemCoreEntity.swift */; };
+		05E79E342D16E8740014FFAE /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A76A142A34115E00B231CB /* Persistence.swift */; };
+		05E79E352D16EB3F0014FFAE /* GroupCoreEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B42AC12B6BD76B0071A2E3 /* GroupCoreEntity.swift */; };
+		05E79E362D16EB8A0014FFAE /* GroupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0547F6A42C031ACE00B62D5B /* GroupManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +192,7 @@
 		05DA4E1A2B518B7E00ED1C49 /* Color+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+custom.swift"; sourceTree = "<group>"; };
 		05E024FE2BCD5DA500240601 /* TimelineSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSummaryView.swift; sourceTree = "<group>"; };
 		05E025022BCE776F00240601 /* AppendingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendingItemView.swift; sourceTree = "<group>"; };
+		05E79E312D16E5CC0014FFAE /* MoneyBookWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoneyBookWidgetsExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +305,7 @@
 		05A769FF2A34115D00B231CB = {
 			isa = PBXGroup;
 			children = (
+				05E79E312D16E5CC0014FFAE /* MoneyBookWidgetsExtension.entitlements */,
 				05A76A0A2A34115D00B231CB /* MoneyBook */,
 				05A76A202A34115E00B231CB /* MoneyBookTests */,
 				05A76A2A2A34115E00B231CB /* MoneyBookUITests */,
@@ -719,8 +726,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				05BA7BEC2B2B38D800D159FB /* MoneyBookWidgetsBundle.swift in Sources */,
+				05E79E352D16EB3F0014FFAE /* GroupCoreEntity.swift in Sources */,
 				05E025002BCE706F00240601 /* Color+custom.swift in Sources */,
 				05BA7BEE2B2B38D800D159FB /* MoneyBookWidgets.swift in Sources */,
+				05E79E342D16E8740014FFAE /* Persistence.swift in Sources */,
+				05E79E362D16EB8A0014FFAE /* GroupManager.swift in Sources */,
+				05E79E332D16E6EC0014FFAE /* ItemCoreEntity.swift in Sources */,
+				05E79E322D16E6CA0014FFAE /* CategoryCoreEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -867,12 +879,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MoneyBook/MoneyBook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"MoneyBook/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BG5DA8S34C;
+				DEVELOPMENT_TEAM = BG5DA8S34C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyBook/Resource/Info.plist;
@@ -890,7 +900,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hoju.moneybook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = MoneyBook.Development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -905,12 +914,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MoneyBook/MoneyBook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"MoneyBook/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BG5DA8S34C;
+				DEVELOPMENT_TEAM = BG5DA8S34C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyBook/Resource/Info.plist;
@@ -928,7 +935,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hoju.moneybook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = MoneyBook.Development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1017,6 +1023,8 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MoneyBookWidgetsExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BG5DA8S34C;
@@ -1036,6 +1044,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hoju.moneybook.MoneyBookWidgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1050,6 +1059,8 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MoneyBookWidgetsExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BG5DA8S34C;
@@ -1069,6 +1080,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hoju.moneybook.MoneyBookWidgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

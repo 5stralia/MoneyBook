@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WidgetKit
 
 class SceneDelegate: NSObject, UIWindowSceneDelegate {
 
@@ -17,6 +18,10 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         if let shortcutItem = connectionOptions.shortcutItem {
             self.homeQuickActionManager.action = HomeQuickAction(type: shortcutItem.type)
         }
+    }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func windowScene(

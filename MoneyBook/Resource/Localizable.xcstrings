@@ -50,6 +50,7 @@
       }
     },
     "Button" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -202,9 +203,6 @@
           }
         }
       }
-    },
-    "hello world" : {
-
     },
     "Import" : {
       "extractionState" : "manual",
